@@ -1,75 +1,63 @@
-/* Configurações Gerais */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #000; /* Fundo Preto */
-    color: #fff;
-    height: 100%;
-}
-
-/* Container do Vídeo */
-.hero {
+/* Configuração do Palco Principal */
+.hero-container {
     position: relative;
-    height: 100vh;
+    height: 80vh; /* Ocupa 80% da altura da tela */
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden; /* Esconde o que sobrar do vídeo */
+    color: white;
     text-align: center;
-    overflow: hidden;
 }
 
+/* Camada do Vídeo (Atrás) */
 .video-background {
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Envia para trás de tudo */
+    pointer-events: none; /* Evita que cliques pausem o vídeo */
 }
 
-iframe {
-    width: 100vw; height: 56.25vw; /* Proporção 16:9 */
-    min-height: 100vh; min-width: 177.77vh;
+.video-background iframe {
+    width: 100vw;
+    height: 56.25vw; /* Mantém a proporção 16:9 */
+    min-height: 100vh;
+    min-width: 177.77vh;
     position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centraliza o vídeo */
 }
 
-/* Camada Escura para Contraste */
-.overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Ajuste o brilho aqui */
+/* Camada do Conteúdo (Na frente) */
+.hero-content {
+    z-index: 1; /* Traz o texto para a frente */
+    background: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente para dar leitura */
+    padding: 40px;
+    border-radius: 15px;
 }
 
-/* Conteúdo sobre o vídeo */
-.content {
-    z-index: 1;
-}
-
-.logo {
+.hero-logo {
     width: 150px;
     margin-bottom: 20px;
 }
 
-h1 span {
-    color: #D4AF37; /* Dourado */
-}
-
-/* Botão Estilo Doranovel */
-.btn-premium {
-    background-color: transparent;
-    color: #D4AF37;
-    border: 2px solid #D4AF37;
+.btn-dourado {
+    display: inline-block;
+    background-color: #d4af37; /* Dourado */
+    color: black;
     padding: 15px 30px;
-    font-size: 1.2rem;
+    text-decoration: none;
     font-weight: bold;
-    cursor: pointer;
-    border-radius: 8px;
+    border-radius: 5px;
+    margin-top: 20px;
     transition: 0.3s;
 }
 
-.btn-premium:hover {
-    background-color: #D4AF37;
-    color: #000;
+.btn-dourado:hover {
+    background-color: #f1c40f;
+    transform: scale(1.05);
 }
