@@ -1,4 +1,4 @@
-/* Configurações Gerais */
+/* Configurações de Cores e Tipografia */
 :root {
     --bg-black: #0a0a0a;
     --gold: #d4af37;
@@ -6,6 +6,7 @@
     --purple: #8e44ad;
     --blue: #3498db;
     --red: #e74c3c;
+    --orange: #f39c12;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -19,8 +20,9 @@ body {
 
 .gold { color: var(--gold); }
 .pink { color: var(--pink); }
+.orange { color: var(--orange); }
 
-/* Hero 1 - Vídeo e Navegação */
+/* HERO 1 - Vídeo e Logo */
 .hero-main {
     position: relative;
     height: 100vh;
@@ -39,6 +41,7 @@ body {
     min-height: 100vh; min-width: 177.77vh;
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
+    pointer-events: none;
 }
 
 .overlay {
@@ -51,9 +54,13 @@ body {
 .navbar {
     display: flex; justify-content: space-between; align-items: center;
     padding: 20px 5%;
+    z-index: 10;
 }
 
-.mini-logo { height: 80px; }
+.mini-logo {
+    height: 80px; /* Aumentado para maior visibilidade */
+    width: auto;
+}
 
 .links a { color: white; text-decoration: none; margin-right: 20px; font-size: 14px; }
 
@@ -71,7 +78,7 @@ body {
 
 .apps img { height: 40px; margin-right: 10px; cursor: pointer; }
 
-/* Hero 2 e 3 - Seções */
+/* HERO 2 e 3 - Seções e Container */
 .hero-categories, .hero-features {
     padding: 100px 5%;
     min-height: 80vh;
@@ -80,14 +87,18 @@ body {
 
 .container {
     display: flex; width: 100%; justify-content: space-between; align-items: center;
+    gap: 50px;
 }
 
+.text-side { flex: 1; }
+.text-side h2 { font-size: 2.5rem; margin-bottom: 20px; }
+
 .grid-side {
-    display: grid; grid-template-columns: repeat(2, 150px); gap: 20px;
+    display: grid; grid-template-columns: repeat(2, 180px); gap: 20px;
 }
 
 .card {
-    height: 180px; border-radius: 15px; display: flex;
+    height: 200px; border-radius: 15px; display: flex;
     align-items: flex-end; padding: 15px; font-weight: bold;
 }
 
@@ -95,6 +106,23 @@ body {
 .purple-card { background: var(--purple); }
 .blue-card { background: var(--blue); }
 .red-card { background: var(--red); }
+
+/* HERO 3 - Mockup de Celular */
+.phone-mockup {
+    width: 300px; /* Largura controlada para não virar banner */
+    height: 600px;
+    border: 12px solid #333; /* Moldura do smartphone */
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    background-color: #000;
+}
+
+.phone-mockup img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 /* Footer */
 .footer {
