@@ -1,0 +1,75 @@
+/* Configurações Gerais */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000; /* Fundo Preto */
+    color: #fff;
+    height: 100%;
+}
+
+/* Container do Vídeo */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.video-background {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+}
+
+iframe {
+    width: 100vw; height: 56.25vw; /* Proporção 16:9 */
+    min-height: 100vh; min-width: 177.77vh;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Camada Escura para Contraste */
+.overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Ajuste o brilho aqui */
+}
+
+/* Conteúdo sobre o vídeo */
+.content {
+    z-index: 1;
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+h1 span {
+    color: #D4AF37; /* Dourado */
+}
+
+/* Botão Estilo Doranovel */
+.btn-premium {
+    background-color: transparent;
+    color: #D4AF37;
+    border: 2px solid #D4AF37;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-premium:hover {
+    background-color: #D4AF37;
+    color: #000;
+}
