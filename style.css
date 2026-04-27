@@ -1,63 +1,104 @@
-/* Configuração do Palco Principal */
-.hero-container {
-    position: relative;
-    height: 80vh; /* Ocupa 80% da altura da tela */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden; /* Esconde o que sobrar do vídeo */
+/* Configurações Gerais */
+:root {
+    --bg-black: #0a0a0a;
+    --gold: #d4af37;
+    --pink: #ff4d94;
+    --purple: #8e44ad;
+    --blue: #3498db;
+    --red: #e74c3c;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-black);
     color: white;
-    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
 }
 
-/* Camada do Vídeo (Atrás) */
-.video-background {
+.gold { color: var(--gold); }
+.pink { color: var(--pink); }
+
+/* Hero 1 - Vídeo e Navegação */
+.hero-main {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.video-bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; /* Envia para trás de tudo */
-    pointer-events: none; /* Evita que cliques pausem o vídeo */
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -2; overflow: hidden;
 }
 
-.video-background iframe {
-    width: 100vw;
-    height: 56.25vw; /* Mantém a proporção 16:9 */
-    min-height: 100vh;
-    min-width: 177.77vh;
+.video-bg iframe {
+    width: 100vw; height: 56.25vw;
+    min-height: 100vh; min-width: 177.77vh;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.overlay {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centraliza o vídeo */
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+    z-index: -1;
 }
 
-/* Camada do Conteúdo (Na frente) */
-.hero-content {
-    z-index: 1; /* Traz o texto para a frente */
-    background: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente para dar leitura */
-    padding: 40px;
-    border-radius: 15px;
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 5%;
 }
 
-.hero-logo {
-    width: 150px;
-    margin-bottom: 20px;
+.mini-logo { height: 40px; }
+
+.links a { color: white; text-decoration: none; margin-right: 20px; font-size: 14px; }
+
+.btn-login {
+    border: 1px solid var(--gold); background: transparent;
+    color: var(--gold); padding: 8px 20px; border-radius: 5px; cursor: pointer;
 }
 
-.btn-dourado {
-    display: inline-block;
-    background-color: #d4af37; /* Dourado */
-    color: black;
-    padding: 15px 30px;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    margin-top: 20px;
-    transition: 0.3s;
+.hero-text {
+    flex-grow: 1; display: flex; flex-direction: column;
+    justify-content: center; padding-left: 5%;
 }
 
-.btn-dourado:hover {
-    background-color: #f1c40f;
-    transform: scale(1.05);
+.hero-text h1 { font-size: 3rem; margin-bottom: 15px; line-height: 1.2; }
+
+.apps img { height: 40px; margin-right: 10px; cursor: pointer; }
+
+/* Hero 2 e 3 - Seções */
+.hero-categories, .hero-features {
+    padding: 100px 5%;
+    min-height: 80vh;
+    display: flex; align-items: center;
 }
+
+.container {
+    display: flex; width: 100%; justify-content: space-between; align-items: center;
+}
+
+.grid-side {
+    display: grid; grid-template-columns: repeat(2, 150px); gap: 20px;
+}
+
+.card {
+    height: 180px; border-radius: 15px; display: flex;
+    align-items: flex-end; padding: 15px; font-weight: bold;
+}
+
+.pink-card { background: var(--pink); }
+.purple-card { background: var(--purple); }
+.blue-card { background: var(--blue); }
+.red-card { background: var(--red); }
+
+/* Footer */
+.footer {
+    text-align: center; padding: 50px; border-top: 1px solid #333;
+}
+
+.footer-logo { height: 60px; margin-bottom: 10px; }
