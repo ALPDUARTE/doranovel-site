@@ -1,73 +1,132 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doranovel | Premium Landpage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+/* Configurações de Cores e Tipografia */
+:root {
+    --bg-black: #0a0a0a;
+    --gold: #d4af37;
+    --pink: #ff4d94;
+    --purple: #8e44ad;
+    --blue: #3498db;
+    --red: #e74c3c;
+    --orange: #f39c12;
+}
 
-    <section class="hero-main">
-        <div class="video-bg">
-            <iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA,kQmfxQw_c0Y,PYQ2vLQx41M&controls=0&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media"></iframe>
-        </div>
-        <div class="overlay"></div>
-        <div class="content">
-            <nav class="navbar">
-                <img src="logo.png" alt="Logo" class="mini-logo">
-                <div class="links">
-                    <a href="#">About</a>
-                    <a href="#">Why Choose Us</a>
-                    <a href="#">Contact</a>
-                    <button class="btn-login">Login</button>
-                </div>
-            </nav>
-            <div class="hero-text">
-                <h1>Momentos <span class="gold">Dourados</span>,<br>Histórias <span class="gold">Sem Fim</span>.</h1>
-                <p>Sua plataforma premium para doramas e webnovels curados.</p>
-                <div class="apps">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
-                </div>
-            </div>
-        </div>
-    </section>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    <section class="hero-categories">
-        <div class="container">
-            <div class="text-side">
-                <h2>Séries e Livros <span class="gold">Curados</span> em <br><span class="pink">Categorias</span> de Cores.</h2>
-                <p>Explore nosso catálogo exclusivo, organizado por cores para sua melhor experiência.</p>
-            </div>
-            <div class="grid-side">
-                <div class="card pink-card">Romance</div>
-                <div class="card purple-card">Vingança</div>
-                <div class="card blue-card">CEO</div>
-                <div class="card red-card">Paixão</div>
-            </div>
-        </div>
-    </section>
+body {
+    background-color: var(--bg-black);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+}
 
-    <section class="hero-features">
-        <div class="container flex-reverse">
-            <div class="text-side">
-                <h2>Entretenimento <span class="orange">Interativo</span> e Totalmente <span class="gold">Grátis</span>.</h2>
-                <p>Checklists de progresso, abas integradas para vídeo e leitura, e download off-line.</p>
-            </div>
-            <div class="mobile-side">
-                <div class="phone-mockup">
-                    <img src="celular.png" alt="App Content">
-                </div>
-            </div>
-        </div>
-    </section>
+.gold { color: var(--gold); }
+.pink { color: var(--pink); }
+.orange { color: var(--orange); }
 
-    <footer class="footer">
-        <img src="logo.png" alt="Logo" class="footer-logo">
-        <p>www.doranovel.com | Copyright 2026</p>
-    </footer>
+/* HERO 1 - Vídeo e Logo */
+.hero-main {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-</body>
-</html>
+.video-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -2; overflow: hidden;
+}
+
+.video-bg iframe {
+    width: 100vw; height: 56.25vw;
+    min-height: 100vh; min-width: 177.77vh;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+    z-index: -1;
+}
+
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 5%;
+    z-index: 10;
+}
+
+.mini-logo {
+    height: 80px; /* Aumentado para maior visibilidade */
+    width: auto;
+}
+
+.links a { color: white; text-decoration: none; margin-right: 20px; font-size: 14px; }
+
+.btn-login {
+    border: 1px solid var(--gold); background: transparent;
+    color: var(--gold); padding: 8px 20px; border-radius: 5px; cursor: pointer;
+}
+
+.hero-text {
+    flex-grow: 1; display: flex; flex-direction: column;
+    justify-content: center; padding-left: 5%;
+}
+
+.hero-text h1 { font-size: 3rem; margin-bottom: 15px; line-height: 1.2; }
+
+.apps img { height: 40px; margin-right: 10px; cursor: pointer; }
+
+/* HERO 2 e 3 - Seções e Container */
+.hero-categories, .hero-features {
+    padding: 100px 5%;
+    min-height: 80vh;
+    display: flex; align-items: center;
+}
+
+.container {
+    display: flex; width: 100%; justify-content: space-between; align-items: center;
+    gap: 50px;
+}
+
+.text-side { flex: 1; }
+.text-side h2 { font-size: 2.5rem; margin-bottom: 20px; }
+
+.grid-side {
+    display: grid; grid-template-columns: repeat(2, 180px); gap: 20px;
+}
+
+.card {
+    height: 200px; border-radius: 15px; display: flex;
+    align-items: flex-end; padding: 15px; font-weight: bold;
+}
+
+.pink-card { background: var(--pink); }
+.purple-card { background: var(--purple); }
+.blue-card { background: var(--blue); }
+.red-card { background: var(--red); }
+
+/* HERO 3 - Mockup de Celular */
+.phone-mockup {
+    width: 300px; /* Largura controlada para não virar banner */
+    height: 600px;
+    border: 12px solid #333; /* Moldura do smartphone */
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    background-color: #000;
+}
+
+.phone-mockup img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Footer */
+.footer {
+    text-align: center; padding: 50px; border-top: 1px solid #333;
+}
+
+.footer-logo { height: 60px; margin-bottom: 10px; }
