@@ -109,25 +109,32 @@ body {
 
 /* HERO 3 - Mockup de Celular */
 .phone-mockup {
-   width: 300px;
+    width: 300px;
     height: 600px;
-    border: 12px solid #333;
+    border: 12px solid #1a1a1a; /* Um cinza bem escuro para parecer metal */
     border-radius: 40px;
     overflow: hidden;
     background-color: #000;
+    position: relative; /* Necessário para mover a imagem lá dentro */
     
-    /* A mágica acontece aqui: */
-    transform: perspective(1000px) rotateY(348deg) rotateX(15deg) rotateZ(5deg);
-    box-shadow: -20px 20px 50px rgba(0,0,0,0.7); /* Sombra mais forte para o 3D */
-    transition: transform 0.5s ease; /* Para ficar suave se mudarmos depois */
- }
+    /* Ajustamos a inclinação da moldura para aceitar a perspectiva da foto */
+    transform: perspective(1200px) rotateY(-15deg) rotateX(5deg) rotateZ(-2deg);
+    box-shadow: -30px 20px 60px rgba(0,0,0,0.8);
+    margin-left: auto; /* Empurra o celular mais para a direita da tela */
+}
 
 .phone-mockup img {
-    width: 208%;
-    height: 120%;
-    rotate: -40deg;
-    object-fit: cover;
-    }
+    position: absolute; /* Agora podemos mover a imagem com top/left */
+    width: 240%; /* Aumentamos para cobrir todo o espaço inclinado */
+    height: auto;
+    
+    /* O SEGREDO ESTÁ AQUI: Ajuste manual de posição e rotação */
+    top: -10%;      /* Move a imagem para cima (-) ou para baixo (+) */
+    left: -70%;     /* Move para a esquerda (-) ou direita (+) */
+    rotate: 12deg;  /* Gira a imagem para compensar a inclinação da moldura */
+    
+    object-fit: contain;
+}
 
 /* Footer */
 .footer {
