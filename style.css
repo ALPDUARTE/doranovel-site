@@ -354,24 +354,45 @@ body {
         gap: 20px; 
         padding: 0; 
     }
-/* --- ADICIONE ISTO LOGO ABAIXO DO BLOCO ACIMA (Ainda dentro do @media) --- */
-/* Removemos o espaço extra e a centralização vertical apenas no Hero 3 do celular */
+/* ============================================================
+   PROCURE ESTE BLOCO DENTRO DO @media (max-width: 768px)
+   E SUBSTITUA COMPLETAMENTE PELO CÓDIGO ABAIXO:
+   ============================================================ */
+
+/* Reduzimos o padding da seção inteira no mobile para comprimir o bloco */
+.hero-features {
+    padding-top: 10px;    /* Respiro mínimo no topo */
+    padding-bottom: 10px; /* Respiro mínimo na base */
+    min-height: auto;
+}
+
 .hero-features .container {
-    gap: 0px;            /* Tira qualquer espaço residual entre texto e imagem */
-    align-items: flex-start; /* Alinha o texto no topo, não no centro */
+    flex-direction: column;
+    gap: 0px; /* Sem espaço entre texto e imagem lateral */
 }
 
-/* Dá um empurrãozinho de leve no topo do texto para desgrudar do Hero 2 */
 .hero-features .text-side {
-    margin-top: 20px;
-    margin-bottom: 0px; /* Garante que não tenha margem em baixo do texto */
+    margin-bottom: 0px;
+    padding-bottom: 0px;
 }
 
-/* Remove qualquer margem extra que a imagem lateral possa ter */
+/* O TRUQUE MÁGICO DO RESPIRO ESTÁ AQUI: */
 .hero-features .mobile-side {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-top: 0px;
+    /* Forçamos o contêiner da imagem a subir "atropelando" o texto */
+    /* Como o celular tem ~580px de altura no mobile, mover -150px
+       deve compensar o vazio da rotação. */
+    margin-top: -150px !important; 
+    
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-features .phone-mockup {
+    /* Mantemos as dimensões que já funcionaram */
+    width: 280px;
+    height: 580px;
+    margin: 0 auto;
 }
     /* 4. Ajuste da Película de Filme (Hero 1) */
     .film-strip { height: 120px; }
