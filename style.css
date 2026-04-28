@@ -109,7 +109,7 @@ body {
     padding-bottom: 160px; /* Evita que o texto fique atrás da película */
 }
  .hero-text p { 
-        text-align: right; 
+        text-align: left; 
         font-size: 1rem; 
         padding-bottom: 40px !important; /* Aumentamos e usamos padding para não colapsar */
     }
