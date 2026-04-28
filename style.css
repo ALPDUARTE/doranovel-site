@@ -106,18 +106,73 @@ body {
 .hero-text {
     flex-grow: 1; display: flex; flex-direction: column;
     justify-content: center; padding-left: 5%;
+    padding-bottom: 160px; /* Evita que o texto fique atrás da película */
 }
 
 .hero-text h1 { font-size: 3.5rem; margin-bottom: 15px; line-height: 1.1; font-weight: 700; }
 
 .apps img { height: 40px; margin-right: 10px; cursor: pointer; }
 
+/* --- CARROSSEL PELÍCULA (RODAPÉ DO HERO 1) --- */
+.film-strip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 160px; /* Altura exata para tapar as legendas */
+    background-color: #111; /* Fundo escuro como filme */
+    z-index: 10;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+}
+
+/* "Furinhos" de Rolo de Filme */
+.film-strip::before,
+.film-strip::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    /* Usa gradiente radial para desenhar bolinhas */
+    background-image: radial-gradient(circle, var(--gold) 3px, transparent 4px);
+    background-size: 24px 12px;
+    background-repeat: repeat-x;
+    z-index: 12;
+}
+.film-strip::before { top: 6px; }
+.film-strip::after { bottom: 6px; }
+
+.film-track {
+    display: flex;
+    gap: 15px;
+    width: max-content;
+    animation: scrollHorizontal 35s linear infinite;
+    padding: 0 15px;
+}
+
+.film-track img {
+    height: 105px; /* Cabendo perfeitamente entre os furos */
+    width: 180px; /* Aparência paisagem/cinema */
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+}
+
+@keyframes scrollHorizontal {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
 /* --- HERO 2 e 3 --- */
 .hero-categories, .hero-features {
     padding: 100px 5%;
     min-height: 80vh;
     display: flex; align-items: center;
-    overflow: hidden; /* Evita que o carrossel crie barra de rolagem horizontal na tela */
+    overflow: hidden; 
 }
 
 .container {
@@ -131,13 +186,12 @@ body {
 /* --- HERO 2 - CARROSSEL ANIMADO --- */
 .carousel-wrapper {
     flex: 1.2;
-    height: 600px; /* Altura do contêiner visível */
+    height: 600px; 
     overflow: hidden;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Sombras nas bordas para as cartas sumirem suavemente (opcional) */
     mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
     -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
 }
@@ -145,7 +199,7 @@ body {
 .carousel-track {
     display: flex;
     gap: 20px;
-    transform: rotate(12deg) scale(1.1); /* Inclinação no estilo da sua imagem */
+    transform: rotate(12deg) scale(1.1); 
     transform-origin: center;
 }
 
@@ -155,7 +209,6 @@ body {
     gap: 20px;
 }
 
-/* Tamanho Maior dos Cartões */
 .card {
     width: 180px; 
     height: 240px; 
@@ -173,14 +226,13 @@ body {
 }
 
 .card:hover {
-    transform: scale(1.05); /* Pequeno zoom ao passar o mouse */
+    transform: scale(1.05); 
     box-shadow: 0 15px 30px rgba(0,0,0,0.6);
 }
 
-/* Área da Imagem Maior dentro do Cartão */
 .card-img {
     width: 100%;
-    height: 160px; /* Foto maior no centro */
+    height: 160px; 
     border-radius: 12px; 
     background-size: cover;
     background-position: center;
@@ -192,7 +244,6 @@ body {
     line-height: 1.2;
 }
 
-/* Cores e Imagens das Categorias */
 .card-encontros { background-color: var(--rosa-antigo); color: white; }
 .card-encontros .card-img { background-image: url('encontros e destinos.jpg'); }
 
@@ -217,17 +268,9 @@ body {
 .card-juventude { background-color: var(--amarelo-mostarda); color: white; }
 .card-juventude .card-img { background-image: url('juventude e sonhos.jpg'); }
 
-/* --- AS ANIMAÇÕES DE LOOPING --- */
-/* Colunas que descem */
-.col-down {
-    animation: scrollDown 20s linear infinite;
-}
-/* Coluna do meio que sobe */
-.col-up {
-    animation: scrollUp 20s linear infinite;
-}
+.col-down { animation: scrollDown 20s linear infinite; }
+.col-up { animation: scrollUp 20s linear infinite; }
 
-/* Usamos -50% porque a coluna tem o dobro do tamanho (cartões duplicados) */
 @keyframes scrollDown {
     0% { transform: translateY(-50%); }
     100% { transform: translateY(0); }
