@@ -179,6 +179,8 @@ body {
     object-fit: contain;
     transform: scale(1.1); /* Zoom suave para ocupar bem o espaço */
     position: relative;
+    /* Ajustamos a inclinação da moldura para aceitar a perspectiva da foto */
+    transform: perspective(1200px) rotateY(-15deg) rotateX(5deg) rotateZ(-2deg);
     top: 0px; 
     left: 0px;
 }
