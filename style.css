@@ -178,35 +178,35 @@ body {
 /* Lembre-se: os nomes dos arquivos devem estar idênticos no seu servidor */
 .card-encontros { 
     background-color: var(--rosa-antigo);
-    background-image: url('Encontros\ e\ Destinos.jpg'); 
+    background-image: url('encontros e destinos.jpg'); 
 }
 .card-suspense { 
     background-color: var(--branco-gelo);
-    background-image: url('Suspense&Mist[erio.jpg'); 
+    background-image: url('suspense&misterio.jpg'); 
 }
 .card-melodramas { 
     background-color: var(--carmesim);
-    background-image: url('Melodramas\ Intensos.jpg'); 
+    background-image: url('melodramas intensos.jpg'); 
 }
 .card-epicos { 
     background-color: var(--bronze);
-    background-image: url('Epicos\ Historicos.jpg'); 
+    background-image: url('epicos historicos.jpg'); 
 }
 .card-cotidiano { 
     background-color: var(--bege);
-    background-image: url('Cotidiano.jpg'); 
+    background-image: url('cotidiano.jpg'); 
 }
 .card-direito { 
     background-color: var(--azul-marinho);
-    background-image: url('Direito\ e\ Justica.jpg'); 
+    background-image: url('direito e justica.jpg'); 
 }
 .card-medicina { 
     background-color: var(--verde-esmeralda);
-    background-image: url('Medicina&Vida.jpg'); 
+    background-image: url('medicina&vida.jpg'); 
 }
 .card-juventude { 
     background-color: var(--amarelo-mostarda);
-    background-image: url('Juventude\ e\ Sonhos.jpg'); 
+    background-image: url('juventude e sonhos.jpg'); 
 }
 
 /* --- HERO 3 - Mockup de Celular --- */
