@@ -173,6 +173,17 @@ body {
     min-height: auto;
     display: flex; align-items: center;
     overflow: hidden; 
+    /* --- Ajuste de espaçamento exclusivo do HERO 2 --- */
+.hero-categories {
+    padding-top: 160px; /* Aumenta o respiro (espaço) na parte superior */
+    padding-bottom: 20px; /* Reduz drasticamente o espaço vazio na parte inferior */
+    min-height: auto; /* Remove a trava que deixava a tela esticada sobrando preto */
+}
+
+/* Dá um empurrãozinho extra APENAS no carrossel para ele descer um pouco mais que o texto */
+.carousel-wrapper {
+    margin-top: 50px; 
+}
 }
 
 .container {
