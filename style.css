@@ -3,7 +3,7 @@
     --bg-black: #0a0a0a;
     --gold: #d4af37;
     --orange: #f39c12;
-    --pink: #D48498; /* Tom base de destaque atualizado para o Rosa Antigo */
+    --pink: #D48498; 
     
     /* Novas Cores Premium das Categorias */
     --rosa-antigo: #D48498;
@@ -121,16 +121,16 @@ body {
 
 .container {
     display: flex; width: 100%; justify-content: space-between; align-items: center;
-    gap: 120px; /* Margem generosa entre textos e imagens laterais */
+    gap: 120px; 
 }
 
 .text-side { flex: 1; }
 .text-side h2 { font-size: 2.8rem; margin-bottom: 20px; font-weight: 700; }
 
-/* --- HERO 2 - Layout da Grade de Categorias --- */
+/* --- HERO 2 - Layout da Grade de Categorias COM IMAGENS --- */
 .grid-side {
     display: grid; 
-    grid-template-columns: repeat(4, 140px); /* 4 Colunas */
+    grid-template-columns: repeat(4, 140px); 
     gap: 15px;
 }
 
@@ -145,6 +145,28 @@ body {
     line-height: 1.3;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    /* O texto fica sempre branco pois usamos overlay escuro */
+    color: white; 
+    position: relative;
+    overflow: hidden;
+}
+
+/* Overlay Escuro para o texto ficar legível sobre a foto */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* Começa transparente no topo e escurece com a cor da categoria em baixo */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
+    z-index: 1;
+}
+
+/* Traz o texto para frente do Overlay */
+.card span {
+    position: relative;
+    z-index: 2;
 }
 
 .card:hover {
@@ -152,14 +174,40 @@ body {
     box-shadow: 0 10px 20px rgba(0,0,0,0.5);
 }
 
-.card-encontros { background-color: var(--rosa-antigo); color: white; }
-.card-suspense { background-color: var(--branco-gelo); color: var(--bg-black); }
-.card-melodramas { background-color: var(--carmesim); color: white; }
-.card-epicos { background-color: var(--bronze); color: white; }
-.card-cotidiano { background-color: var(--bege); color: var(--bg-black); }
-.card-direito { background-color: var(--azul-marinho); color: white; }
-.card-medicina { background-color: var(--verde-esmeralda); color: white; }
-.card-juventude { background-color: var(--amarelo-mostarda); color: white; }
+/* Inserindo as Imagens nos Cartões */
+/* Lembre-se: os nomes dos arquivos devem estar idênticos no seu servidor */
+.card-encontros { 
+    background-color: var(--rosa-antigo);
+    background-image: url('Encontros\ e\ Destinos.jpg'); 
+}
+.card-suspense { 
+    background-color: var(--branco-gelo);
+    background-image: url('Suspense&Mist[erio.jpg'); 
+}
+.card-melodramas { 
+    background-color: var(--carmesim);
+    background-image: url('Melodramas\ Intensos.jpg'); 
+}
+.card-epicos { 
+    background-color: var(--bronze);
+    background-image: url('Epicos\ Historicos.jpg'); 
+}
+.card-cotidiano { 
+    background-color: var(--bege);
+    background-image: url('Cotidiano.jpg'); 
+}
+.card-direito { 
+    background-color: var(--azul-marinho);
+    background-image: url('Direito\ e\ Justica.jpg'); 
+}
+.card-medicina { 
+    background-color: var(--verde-esmeralda);
+    background-image: url('Medicina&Vida.jpg'); 
+}
+.card-juventude { 
+    background-color: var(--amarelo-mostarda);
+    background-image: url('Juventude\ e\ Sonhos.jpg'); 
+}
 
 /* --- HERO 3 - Mockup de Celular --- */
 .phone-mockup {
@@ -177,7 +225,6 @@ body {
     width: 120%; 
     height: 120%;
     object-fit: contain;
-     /* Ajustamos a inclinação da moldura para aceitar a perspectiva da foto */
     transform: perspective(1200px) rotateY(334deg) rotateX(11deg) rotateZ(329deg);
     top: 0px; 
     left: 0px;
