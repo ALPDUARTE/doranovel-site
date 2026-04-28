@@ -354,7 +354,25 @@ body {
         gap: 20px; 
         padding: 0; 
     }
+/* --- ADICIONE ISTO LOGO ABAIXO DO BLOCO ACIMA (Ainda dentro do @media) --- */
+/* Removemos o espaço extra e a centralização vertical apenas no Hero 3 do celular */
+.hero-features .container {
+    gap: 0px;            /* Tira qualquer espaço residual entre texto e imagem */
+    align-items: flex-start; /* Alinha o texto no topo, não no centro */
+}
 
+/* Dá um empurrãozinho de leve no topo do texto para desgrudar do Hero 2 */
+.hero-features .text-side {
+    margin-top: 20px;
+    margin-bottom: 0px; /* Garante que não tenha margem em baixo do texto */
+}
+
+/* Remove qualquer margem extra que a imagem lateral possa ter */
+.hero-features .mobile-side {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+}
     /* 4. Ajuste da Película de Filme (Hero 1) */
     .film-strip { height: 120px; }
     .film-strip::before { top: 4px; }
