@@ -127,8 +127,7 @@ body {
     height: 120%;
     rotate: -40deg;
     object-fit: cover;
-    object-positions: 50% 10%;
-}
+    }
 
 /* Footer */
 .footer {
