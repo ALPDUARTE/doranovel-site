@@ -342,8 +342,17 @@ body {
     /* 2. Textos menores e centralizados */
     .hero-text { padding-left: 0; padding-bottom: 180px; align-items: center; }
     .hero-text h1 { font-size: 2.2rem; text-align: center; }
-    .hero-text p { text-align: center; font-size: 1rem; }
-    .apps { display: flex; justify-content: center; width: 100%; }
+    .hero-text p { 
+        text-align: center; 
+        font-size: 1rem; 
+        margin-bottom: 30px; /* ⬅️ Aqui está o respiro! Empurra os botões para baixo */
+    }
+    .apps { 
+        display: flex; 
+        justify-content: center; 
+        width: 100%; 
+        gap: 15px; /* ⬅️ Separa um botão do outro horizontalmente */
+    }
     
     .text-side h2 { font-size: 2.2rem; text-align: center; }
     .text-side p { text-align: center; margin-bottom: 30px; }
