@@ -107,33 +107,32 @@ body {
 .blue-card { background: var(--blue); }
 .red-card { background: var(--red); }
 
-/* HERO 3 - Mockup de Celular */
+/* HERO 3 - Mockup de Celular (Versão Simplificada) */
 .phone-mockup {
-    width: 300px;
+    width: 320px;
     height: 600px;
-    border: 12px solid #1a1a1a; /* Um cinza bem escuro para parecer metal */
+    /* Removemos a borda e a inclinação pesada para não brigar com a foto */
+    border: none; 
     border-radius: 40px;
     overflow: hidden;
-    background-color: #000;
-    position: relative; /* Necessário para mover a imagem lá dentro */
-    
-    /* Ajustamos a inclinação da moldura para aceitar a perspectiva da foto */
-    transform: perspective(1200px) rotateY(-15deg) rotateX(5deg) rotateZ(-2deg);
-    box-shadow: -30px 20px 60px rgba(0,0,0,0.8);
-    margin-left: auto; /* Empurra o celular mais para a direita da tela */
+    background-color: transparent; /* Deixe transparente para ver o fundo do site */
+    position: relative;
+    margin-left: auto;
 }
 
 .phone-mockup img {
-    position: absolute; /* Agora podemos mover a imagem com top/left */
-    width: 240%; /* Aumentamos para cobrir todo o espaço inclinado */
-    height: auto;
+    width: 100%; /* Voltamos para o tamanho normal */
+    height: 100%;
+    object-fit: contain; /* Isso garante que a foto inteira apareça sem cortes loucos */
     
-    /* O SEGREDO ESTÁ AQUI: Ajuste manual de posição e rotação */
-    top: -10%;      /* Move a imagem para cima (-) ou para baixo (+) */
-    left: -70%;     /* Move para a esquerda (-) ou direita (+) */
-    rotate: 12deg;  /* Gira a imagem para compensar a inclinação da moldura */
+    /* Agora usamos apenas UM comando para o ajuste fino */
+    /* Se a imagem estiver "torta", mexa apenas no rotate aqui */
+    transform: rotate(0deg) scale(1.3); 
     
-    object-fit: contain;
+    /* Se precisar subir ou descer a foto dentro da caixa */
+    position: relative;
+    top: 0px; 
+    left: 0px;
 }
 
 /* Footer */
