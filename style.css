@@ -319,3 +319,70 @@ body {
 }
 
 .footer-logo { height: 60px; margin-bottom: 10px; }
+/* =========================================
+   RESPONSIVIDADE - MODO CELULAR (MOBILE)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. Navbar e Logo centralizados */
+    .navbar { 
+        flex-direction: column; 
+        gap: 15px; 
+        padding: 20px 10px; 
+    }
+    .logo-container { justify-content: center; }
+    .links { 
+        display: flex; 
+        flex-wrap: wrap; 
+        justify-content: center; 
+        gap: 10px; 
+    }
+    .links a { margin-right: 0; font-size: 13px; }
+
+    /* 2. Textos menores e centralizados */
+    .hero-text { padding-left: 0; padding-bottom: 180px; align-items: center; }
+    .hero-text h1 { font-size: 2.2rem; text-align: center; }
+    .hero-text p { text-align: center; font-size: 1rem; }
+    .apps { display: flex; justify-content: center; width: 100%; }
+    
+    .text-side h2 { font-size: 2.2rem; text-align: center; }
+    .text-side p { text-align: center; margin-bottom: 30px; }
+
+    /* 3. Colocando as coisas "uma embaixo da outra" */
+    .container { 
+        flex-direction: column; 
+        gap: 20px; 
+        padding: 0; 
+    }
+
+    /* 4. Ajuste da Película de Filme (Hero 1) */
+    .film-strip { height: 120px; }
+    .film-strip::before { top: 4px; }
+    .film-strip::after { bottom: 4px; }
+    .film-track img { height: 80px; width: 140px; }
+
+    /* 5. Ajuste do Carrossel (Hero 2) */
+    .hero-categories { padding-top: 80px; }
+    .carousel-wrapper { 
+        height: 450px; 
+        width: 100vw; /* Força ocupar a tela toda */
+        margin-left: -5%; /* Compensa o padding lateral */
+    }
+    .carousel-track { 
+        transform: rotate(5deg) scale(0.9); /* Menos inclinado e um pouco menor */
+    }
+    .card { width: 130px; height: 180px; font-size: 11px; padding: 8px; }
+    .card-img { height: 110px; }
+
+    /* 6. Ajuste do Celular Gigante (Hero 3) */
+    .hero-features { padding: 50px 5%; }
+    .mobile-side { width: 100%; display: flex; justify-content: center; }
+    .phone-mockup { 
+        width: 280px;  /* Tamanho ideal para tela de celular */
+        height: 580px; 
+        margin: 0 auto; /* Garante que fique no centro */
+    }
+
+    /* 7. Footer */
+    .footer { padding: 30px 15px; }
+}
