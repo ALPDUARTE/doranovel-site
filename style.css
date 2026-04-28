@@ -169,8 +169,8 @@ body {
 
 /* --- HERO 2 e 3 --- */
 .hero-categories, .hero-features {
-    padding: 100px 5%;
-    min-height: 80vh;
+    padding: 0px 5%;
+    min-height: auto;
     display: flex; align-items: center;
     overflow: hidden; 
 }
