@@ -117,77 +117,126 @@ body {
     padding: 100px 5%;
     min-height: 80vh;
     display: flex; align-items: center;
+    overflow: hidden; /* Evita que o carrossel crie barra de rolagem horizontal na tela */
 }
 
 .container {
     display: flex; width: 100%; justify-content: space-between; align-items: center;
-    gap: 120px; 
+    gap: 50px; 
 }
 
-.text-side { flex: 1; }
-.text-side h2 { font-size: 2.8rem; margin-bottom: 20px; font-weight: 700; }
+.text-side { flex: 1; z-index: 2; }
+.text-side h2 { font-size: 3.5rem; margin-bottom: 20px; font-weight: 700; line-height: 1.1; }
 
-/* --- HERO 2 - Layout da Grade de Categorias --- */
-.grid-side {
-    display: grid; 
-    grid-template-columns: repeat(4, 140px); 
-    gap: 15px;
+/* --- HERO 2 - CARROSSEL ANIMADO --- */
+.carousel-wrapper {
+    flex: 1.2;
+    height: 600px; /* Altura do contêiner visível */
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Sombras nas bordas para as cartas sumirem suavemente (opcional) */
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
 }
 
+.carousel-track {
+    display: flex;
+    gap: 20px;
+    transform: rotate(12deg) scale(1.1); /* Inclinação no estilo da sua imagem */
+    transform-origin: center;
+}
+
+.carousel-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Tamanho Maior dos Cartões */
 .card {
-    height: 170px; 
-    border-radius: 12px; 
+    width: 180px; 
+    height: 240px; 
+    border-radius: 20px; 
     display: flex;
     flex-direction: column; 
     align-items: center; 
-    padding: 8px; 
+    padding: 12px; 
     font-weight: 700;
-    font-size: 12px; 
+    font-size: 14px; 
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.3);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    transform: scale(1.05); /* Pequeno zoom ao passar o mouse */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6);
 }
 
-/* Área da Imagem dentro do Cartão */
+/* Área da Imagem Maior dentro do Cartão */
 .card-img {
     width: 100%;
-    height: 110px; 
-    border-radius: 8px; 
+    height: 160px; /* Foto maior no centro */
+    border-radius: 12px; 
     background-size: cover;
     background-position: center;
+    margin-bottom: 10px;
 }
 
-/* Espaço para o texto no rodapé do cartão */
 .card span {
     margin-top: auto;
-    padding-top: 8px;
     line-height: 1.2;
 }
 
-/* Cores dos Fundos (Molduras) e das Fontes */
+/* Cores e Imagens das Categorias */
 .card-encontros { background-color: var(--rosa-antigo); color: white; }
-.card-suspense { background-color: var(--branco-gelo); color: var(--bg-black); }
-.card-melodramas { background-color: var(--carmesim); color: white; }
-.card-epicos { background-color: var(--bronze); color: white; }
-.card-cotidiano { background-color: var(--bege); color: var(--bg-black); }
-.card-direito { background-color: var(--azul-marinho); color: white; }
-.card-medicina { background-color: var(--verde-esmeralda); color: white; }
-.card-juventude { background-color: var(--amarelo-mostarda); color: white; }
-
-/* Inserindo as Imagens nos Cartões com os Nomes Corrigidos */
 .card-encontros .card-img { background-image: url('encontros e destinos.jpg'); }
+
+.card-suspense { background-color: var(--branco-gelo); color: var(--bg-black); }
 .card-suspense .card-img { background-image: url('suspense&misterio.jpg'); }
+
+.card-melodramas { background-color: var(--carmesim); color: white; }
 .card-melodramas .card-img { background-image: url('melodramas intensos.jpg'); }
+
+.card-epicos { background-color: var(--bronze); color: white; }
 .card-epicos .card-img { background-image: url('epicos historicos.jpg'); }
+
+.card-cotidiano { background-color: var(--bege); color: var(--bg-black); }
 .card-cotidiano .card-img { background-image: url('cotidiano.jpg'); }
+
+.card-direito { background-color: var(--azul-marinho); color: white; }
 .card-direito .card-img { background-image: url('direito e justica.jpg'); }
+
+.card-medicina { background-color: var(--verde-esmeralda); color: white; }
 .card-medicina .card-img { background-image: url('medicina&vida.jpg'); }
+
+.card-juventude { background-color: var(--amarelo-mostarda); color: white; }
 .card-juventude .card-img { background-image: url('juventude e sonhos.jpg'); }
+
+/* --- AS ANIMAÇÕES DE LOOPING --- */
+/* Colunas que descem */
+.col-down {
+    animation: scrollDown 20s linear infinite;
+}
+/* Coluna do meio que sobe */
+.col-up {
+    animation: scrollUp 20s linear infinite;
+}
+
+/* Usamos -50% porque a coluna tem o dobro do tamanho (cartões duplicados) */
+@keyframes scrollDown {
+    0% { transform: translateY(-50%); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes scrollUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+}
 
 /* --- HERO 3 - Mockup de Celular --- */
 .phone-mockup {
