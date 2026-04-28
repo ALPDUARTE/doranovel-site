@@ -126,6 +126,7 @@ body {
     width: 208%;
     height: 120%;
     rotate: -40deg;
+    object-fit: cover;
     object-positions: 50% 10%;
 }
 
