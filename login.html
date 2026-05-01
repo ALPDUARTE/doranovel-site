@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doranovel | Login</title>
+    <title>Doranovel | Acesso Inteligente</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
 
@@ -16,14 +17,7 @@
         }
         .logo-container { display: flex; align-items: center; gap: 15px; }
         .mini-logo { height: 60px; width: auto; }
-        .brand-name { 
-            font-size: 28px; 
-            font-weight: 700; 
-            color: #fff; 
-            display: flex; 
-            align-items: center; /* Centraliza o texto na mediana da logo */
-            line-height: 1; 
-        }
+        .brand-name { font-size: 28px; font-weight: 700; color: #fff; display: flex; align-items: center; line-height: 1; }
         .brand-gold { color: #E1AD01; }
         .back-link { color: #E1AD01; text-decoration: none; font-size: 14px; font-weight: 700; text-transform: uppercase; }
 
@@ -35,7 +29,7 @@
             border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
         .login-box h2 { font-size: 2rem; margin-bottom: 20px; color: #E1AD01; }
-        .input-group { margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; }
         .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #999; text-transform: uppercase; }
         .input-group input { 
             width: 100%; padding: 15px; background: #222; border: 1px solid #333; 
@@ -43,39 +37,39 @@
         }
         .input-group input:focus { border-color: #E1AD01; }
 
+        /* LINK ESQUECEU SENHA */
+        .forgot-password { text-align: right; margin-bottom: 20px; }
+        .forgot-password a { color: #999; font-size: 12px; text-decoration: none; transition: 0.3s; }
+        .forgot-password a:hover { color: #E1AD01; }
+
         .btn-access { 
             width: 100%; padding: 15px; background: #E1AD01; border: none; border-radius: 8px; 
             color: #000; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-bottom: 15px;
         }
         
-        /* BOTÃO GOOGLE CORRIGIDO */
         .social-login { 
             width: 100%; padding: 12px; background: #fff; border: none; 
             border-radius: 8px; color: #757575; cursor: pointer; display: flex; align-items: center; 
             justify-content: center; gap: 12px; font-weight: 700; margin-bottom: 20px;
             font-size: 14px; transition: 0.3s;
         }
-        .social-login:hover { background: #f1f1f1; }
         .google-icon { width: 20px; height: 20px; }
 
-        .signup-link { text-align: center; font-size: 14px; color: #999; }
-        .signup-link a { color: #E1AD01; text-decoration: none; font-weight: 700; }
-
-        /* BOX DE LOGADO (MENSAGEM DE DOWNLOAD) */
+        /* BOX DE LOGADO */
         .download-box { 
             flex: 1; max-width: 500px; text-align: center; padding: 40px; 
             background: linear-gradient(145deg, #0a0a0a, #151515); border-radius: 25px; border: 1px solid #E1AD01;
         }
-        .btn-download { 
-            display: inline-block; padding: 15px 40px; background: transparent; 
-            border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; 
-            text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; 
-        }
+        .btn-download { display: inline-block; padding: 15px 40px; background: transparent; border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; }
         .btn-logout { margin-top: 20px; background: transparent; border: 1px solid #ff4444; color: #ff4444; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 12px; }
 
         #logged-out-view, #logged-in-view { display: none; }
 
-        @media (max-width: 768px) { .login-wrapper { flex-direction: column; gap: 30px; } .download-box { order: -1; width: 100%; } }
+        @media (max-width: 768px) { 
+            .navbar { height: auto; flex-direction: column; padding: 15px 5% 10px; border-bottom: 3px solid #E1AD01 !important; }
+            .login-wrapper { flex-direction: column; gap: 30px; } 
+            .download-box { order: -1; width: 100%; } 
+        }
     </style>
 </head>
 <body>
@@ -99,28 +93,31 @@
                 <label>Senha</label>
                 <input type="password" id="password" placeholder="••••••••">
             </div>
-            <button class="btn-access" id="loginEmailBtn">Entrar</button>
+            
+            <div class="forgot-password">
+                <a href="#" id="forgotBtn">Esqueceu a senha?</a>
+            </div>
+
+            <button class="btn-access" id="loginSmartBtn">Entrar</button>
             
             <button class="social-login" id="googleBtn">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="google-icon" alt="Google Logo"> 
                 Entrar com Google
             </button>
-
-            <div class="signup-link">Não tem conta? <a href="#">Criar uma conta</a></div>
         </section>
 
         <section class="download-box" id="logged-in-view">
             <h3 style="color: #E1AD01; margin-bottom: 15px; font-size: 1.8rem;">Parabéns!</h3>
-            <p style="margin-bottom: 30px; color: #ccc;">Você está logado. Baixe o app para uma experiência completa.</p>
+            <p style="margin-bottom: 30px; color: #ccc;">Sua conta está ativa. Baixe agora o aplicativo oficial.</p>
             <a href="seu-app-download.apk" class="btn-download">BAIXAR APK</a>
             <br>
-            <button class="btn-logout" id="logoutBtn">Sair</button>
+            <button class="btn-logout" id="logoutBtn">Sair da Conta</button>
         </section>
     </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
@@ -137,6 +134,7 @@
         const loggedOutView = document.getElementById('logged-out-view');
         const loggedInView = document.getElementById('logged-in-view');
 
+        // MONITOR DE ESTADO
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loggedOutView.style.display = 'none';
@@ -147,6 +145,51 @@
             }
         });
 
+        // LOGIN SMART (JUMP): Tenta logar, se não existir, cadastra automaticamente
+        document.getElementById('loginSmartBtn').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+
+            try {
+                // Tenta entrar
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                // Se o erro for "usuário não encontrado", cadastra automaticamente
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                    try {
+                        await createUserWithEmailAndPassword(auth, email, password);
+                        alert("Conta criada com sucesso e logada!");
+                    } catch (signupError) {
+                        alert("Erro ao criar conta: " + signupError.message);
+                    }
+                } else {
+                    alert("Erro de acesso: " + error.message);
+                }
+            }
+        };
+
+        // RECUPERAÇÃO DE SENHA
+        document.getElementById('forgotBtn').onclick = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            if (!email) {
+                alert("Digite seu e-mail no campo acima para receber o link de recuperação.");
+                return;
+            }
+            try {
+                await sendPasswordResetEmail(auth, email);
+                alert("E-mail de recuperação enviado! Verifique sua caixa de entrada.");
+            } catch (error) {
+                alert("Erro ao enviar e-mail: " + error.message);
+            }
+        };
+
+        // GOOGLE E LOGOUT
         document.getElementById('googleBtn').onclick = () => signInWithRedirect(auth, provider);
         document.getElementById('logoutBtn').onclick = () => signOut(auth);
     </script>
