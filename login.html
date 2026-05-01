@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doranovel - Login Premium</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* Estilos para o Header Fixo e Transparente */
+        /* Estilos de Layout e Estética Seaquake */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Header Fixo com Transição */
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 100px; /* Head maior conforme solicitado */
+            height: 100px;
             background: transparent;
             transition: background 0.5s ease;
             display: flex;
@@ -20,20 +29,11 @@
             z-index: 1000;
         }
 
-        /* Classe que o JavaScript adicionará ao rolar */
         header.scrolled {
             background: #000000;
         }
 
-        body {
-            margin: 0;
-            padding-top: 100px; /* Evita que o conteúdo comece embaixo do head */
-            background: #000;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        /* Vídeo de fundo fixo */
+        /* Vídeo de Fundo */
         .video-background {
             position: fixed;
             right: 0;
@@ -41,69 +41,106 @@
             min-width: 100%;
             min-height: 100%;
             z-index: -1;
+            object-fit: cover;
         }
 
+        /* Container de Login */
         .login-boxer {
-            background: rgba(0, 0, 0, 0.7); /* Transparência para o conteúdo */
+            background: rgba(0, 0, 0, 0.8);
             padding: 40px;
-            border-radius: 8px;
+            border-radius: 12px;
             max-width: 400px;
-            margin: 50px auto;
+            margin: 150px auto 50px;
+            text-align: center;
+            border: 1px solid #333;
         }
 
-        /* Estilo para Mobile */
+        .btn-social {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .btn-facebook { background: #1877F2; color: white; }
+        .btn-google { background: #DB4437; color: white; }
+
         @media (max-width: 768px) {
-            header {
-                height: 120px; /* Head ainda maior no mobile */
-            }
-            .login-boxer {
-                width: 90%;
-            }
+            header { height: 120px; }
+            .login-boxer { width: 85%; margin-top: 130px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Vídeo de Fundo -->
     <video autoplay muted loop class="video-background">
-        <source src="background-seaquake.mp4" type="video/mp4">
+        <source src="seu-video-surf.mp4" type="video/mp4">
     </video>
 
-    <!-- Header Fixo -->
     <header id="mainHeader">
-        <img src="logo-seaquake.png" alt="Seaquake Logo" style="height: 60px;">
+        <img src="logo-seaquake.png" alt="Seaquake" style="height: 60px;">
     </header>
 
-    <!-- Conteúdo do Login -->
-    <main>
-        <div class="login-boxer">
-            <h2>Login</h2>
-            <form id="loginForm">
-                <input type="email" id="email" placeholder="E-mail" required>
-                <input type="password" id="password" placeholder="Senha" required>
-                <button type="submit" class="btn-entrar">ENTRAR</button>
-            </form>
-            
-            <div class="social-login">
-                <!-- Botões de login social nativos para Android Studio -->
-                <button onclick="loginGoogle()">Entrar com Google</button>
-                <button onclick="loginFacebook()">Entrar com Facebook</button>
-            </div>
-        </div>
-    </main>
+    <div class="login-boxer">
+        <h2>Acesse Doranovel</h2>
+        <p>Conecte-se para continuar</p>
+        
+        <button class="btn-social btn-facebook" id="btnFacebook">Entrar com Facebook</button>
+        <button class="btn-social btn-google" id="btnGoogle">Entrar com Google</button>
 
-    <script>
-        // Lógica para mudar a cor do Header ao rolar
-        window.onscroll = function() {
-            var header = document.getElementById("mainHeader");
-            if (window.pageYOffset > 50) {
-                header.classList.add("scrolled");
-            } else {
-                header.classList.remove("scrolled");
-            }
+        <div id="statusMessage" style="margin-top: 15px; color: #ffcc00;"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, FacebookAuthProvider, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            // Cole aqui seus dados do Firebase Console
+            apiKey: "SUA_API_KEY",
+            authDomain: "doranovel.firebaseapp.com",
+            projectId: "doranovel",
+            storageBucket: "doranovel.appspot.com",
+            messagingSenderId: "SEU_ID",
+            appId: "SEU_APP_ID"
         };
 
-        // As funções de login do Firebase (Redirect) permanecem as mesmas que configuramos
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // CORREÇÃO: Captura o resultado após o redirecionamento (O passo que faltava)
+        getRedirectResult(auth).then((result) => {
+            if (result) {
+                // Aqui o usuário é efetivamente registrado no Firebase
+                console.log("Usuário logado:", result.user);
+                window.location.href = "index.html"; // Redireciona para a home
+            }
+        }).catch((error) => {
+            document.getElementById("statusMessage").innerText = "Erro ao processar login: " + error.message;
+        });
+
+        // Funções de clique
+        document.getElementById("btnFacebook").addEventListener("click", () => {
+            const provider = new FacebookAuthProvider();
+            signInWithRedirect(auth, provider);
+        });
+
+        document.getElementById("btnGoogle").addEventListener("click", () => {
+            const provider = new GoogleAuthProvider();
+            signInWithRedirect(auth, provider);
+        });
+
+        // Efeito do Header
+        window.onscroll = function() {
+            var header = document.getElementById("mainHeader");
+            if (window.pageYOffset > 50) { header.classList.add("scrolled"); }
+            else { header.classList.remove("scrolled"); }
+        };
     </script>
 </body>
 </html>
