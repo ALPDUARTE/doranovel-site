@@ -6,98 +6,76 @@
     <title>Doranovel | Premium Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* --- BASE E NAVEGAÇÃO --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
 
-        /* NAVBAR FIXA */
         .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 5%;
-            background: transparent;
-            z-index: 10000;
-            transition: all 0.5s ease;
+            position: fixed; top: 0; width: 100%; height: 120px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%; background: transparent; z-index: 10000; transition: all 0.5s ease;
         }
-        .navbar.scrolled {
-            background: rgba(0, 0, 0, 0.95);
-            height: 90px;
-            border-bottom: 1px solid #d4af37;
-        }
+        .navbar.scrolled { background: rgba(0, 0, 0, 0.95); height: 90px; border-bottom: 1px solid #d4af37; }
         .mini-logo { height: 80px; transition: 0.4s; }
         .navbar.scrolled .mini-logo { height: 60px; }
-        .brand-gold { color: #d4af37; font-weight: 700; }
+        .brand-name { font-size: 32px; font-weight: 700; }
+        .brand-gold { color: #d4af37; }
         .links a { color: #fff; text-decoration: none; margin-left: 25px; font-size: 13px; text-transform: uppercase; font-weight: 700; }
-        .btn-login { border: 1px solid #d4af37; padding: 10px 20px; border-radius: 4px; color: #d4af37 !important; text-decoration: none; }
+        .btn-login { border: 1px solid #d4af37; padding: 10px 20px; border-radius: 4px; color: #d4af37 !important; }
 
-        /* HERO 1: VÍDEO E ROLO DE FILME REALISTA */
+        /* --- HERO 1: CINEMA --- */
         .hero-main { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .video-bg iframe { width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
         .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
-        
         .hero-text h1 { font-size: 3.5rem; text-transform: uppercase; margin-bottom: 15px; }
         .gold { color: #d4af37; }
 
-        /* CORREÇÃO DO ROLO DE FILME (Cinema Real) */
-        .film-strip { 
-            position: absolute; bottom: 0; width: 100%; background: #111; 
-            padding: 30px 0; border-top: 4px solid #222; border-bottom: 4px solid #222;
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
-        }
-        /* Furos da película (Perforations) */
-        .film-strip::before, .film-strip::after {
-            content: "";
-            position: absolute; width: 100%; height: 15px;
-            background-image: radial-gradient(circle, #000 40%, transparent 45%);
-            background-size: 40px 15px;
-            left: 0;
-        }
-        .film-strip::before { top: 7px; }
-        .film-strip::after { bottom: 7px; }
-
+        .film-strip { position: absolute; bottom: 0; width: 100%; background: #111; padding: 30px 0; border-top: 4px solid #222; border-bottom: 4px solid #222; }
+        .film-strip::before, .film-strip::after { content: ""; position: absolute; width: 100%; height: 15px; background-image: radial-gradient(circle, #000 40%, transparent 45%); background-size: 40px 15px; left: 0; }
+        .film-strip::before { top: 7px; } .film-strip::after { bottom: 7px; }
         .film-track { display: flex; width: calc(320px * 16); animation: scroll-film 40s linear infinite; }
-        .film-track img { 
-            height: 180px; width: 300px; object-fit: cover; 
-            margin: 0 10px; border: 1px solid #000; outline: 10px solid #1a1a1a; /* Frame do filme */
-        }
+        .film-track img { height: 180px; width: 300px; object-fit: cover; margin: 0 10px; border: 1px solid #000; outline: 10px solid #1a1a1a; }
         @keyframes scroll-film { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-320px * 8)); } }
 
-        /* HERO 2: TRÊS COLUNAS[cite: 1] */
-        .hero-categories { padding: 120px 5%; display: flex; align-items: center; min-height: 100vh; background: #050505; }
-        .categories-wrapper { flex: 1.5; height: 700px; overflow: hidden; display: flex; gap: 20px; transform: rotate(-5deg); }
-        .cat-col { display: flex; flex-direction: column; gap: 20px; }
-        .col-extremidade { animation: scrollUp 25s linear infinite; }
-        .col-meio { animation: scrollDown 25s linear infinite; }
+        /* --- HERO 2: CATEGORIAS (TRÊS COLUNAS ANIMADAS) --- */
+        .hero-categories { padding: 120px 5%; display: flex; align-items: center; min-height: 100vh; background: #050505; gap: 50px; }
+        .text-side { flex: 1; }
+        .text-side h2 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; }
+        
+        .categories-wrapper { 
+            flex: 1.5; height: 800px; overflow: hidden; 
+            display: flex; gap: 25px; transform: rotate(-6deg) skewX(-2deg); 
+        }
+        .cat-col { display: flex; flex-direction: column; gap: 25px; }
+        
+        /* Animações de Engrenagem */
+        .col-side { animation: scrollUp 25s linear infinite; }
+        .col-center { animation: scrollDown 25s linear infinite; }
+
         @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
         @keyframes scrollDown { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
-        .card { width: 220px; height: 300px; border-radius: 15px; border: 2px solid #333; overflow: hidden; }
-        .card img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* HERO 3: CELULAR AUMENTADO E CENTRALIZADO[cite: 1] */
-        .hero-features { 
-            padding: 150px 5%; display: flex; align-items: center; 
-            justify-content: center; background: #000; gap: 80px; 
+        .card { 
+            width: 240px; height: 320px; border-radius: 25px; 
+            position: relative; overflow: hidden; border: 4px solid rgba(255,255,255,0.1); 
+            display: flex; flex-direction: column;
         }
+        .card img { width: 100%; height: 75%; object-fit: cover; }
+        .card .info { 
+            height: 25%; display: flex; align-items: center; justify-content: center; 
+            font-weight: 700; font-size: 14px; text-align: center; padding: 5px;
+        }
+
+        /* --- HERO 3: MOCKUP --- */
+        .hero-features { padding: 150px 5%; display: flex; align-items: center; justify-content: center; background: #000; gap: 80px; }
         .feature-text { flex: 1; max-width: 500px; }
-        .feature-text h2 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 25px; }
-        
+        .feature-text h2 { font-size: 3.5rem; margin-bottom: 25px; }
         .phone-preview { flex: 1.2; display: flex; justify-content: center; }
-        .phone-preview img { 
-            width: 100%; max-width: 650px; /* Tamanho aumentado */
-            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.3));
-            transform: rotate(-2deg);
-        }
+        .phone-preview img { width: 100%; max-width: 650px; filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.3)); transform: rotate(-2deg); transition: 0.5s; }
+        .phone-preview img:hover { transform: scale(1.05) rotate(0deg); }
 
-        @media (max-width: 1024px) {
-            .hero-features { flex-direction: column; text-align: center; }
-            .feature-text { padding-right: 0; }
-            .phone-preview img { max-width: 450px; }
-        }
+        @media (max-width: 1024px) { .hero-categories, .hero-features { flex-direction: column; text-align: center; } .categories-wrapper { transform: none; height: 500px; } }
     </style>
 </head>
 <body>
@@ -115,69 +93,67 @@
         </div>
     </nav>
 
+    <!-- HERO 1 -->
     <section class="hero-main">
-        <div class="video-bg">
-            <iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA,kQmfxQw_c0Y,PYQ2vLQx41M,ofkR9kPWmJw,BksusGo9W0E,d3euksbk9EA&controls=0&showinfo=0&rel=0" frameborder="0"></iframe>
-        </div>
+        <div class="video-bg"><iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA,kQmfxQw_c0Y,PYQ2vLQx41M,ofkR9kPWmJw,BksusGo9W0E,d3euksbk9EA&controls=0&showinfo=0&rel=0" frameborder="0"></iframe></div>
         <div class="overlay"></div>
         <div class="hero-text">
             <h1>Momentos <span class="gold">Dourados</span>,<br>Desejos <span class="gold">Sem Fim</span>.</h1>
             <p>Sua plataforma premium para doramas e webnovels curados.</p>
         </div>
-        <!-- ROLO DE FILME CORRIGIDO -->
         <div class="film-strip">
             <div class="film-track">
                 <img src="cenas1a.jpg"> <img src="cenas1b.jpg"> <img src="cenas1c.jpg"> <img src="cenas2a.jpg">
                 <img src="cenas2b.jpg"> <img src="cenas2c.jpg"> <img src="cenas2d.jpg"> <img src="cena2e.jpg">
-                <!-- Duplicados para loop -->
                 <img src="cenas1a.jpg"> <img src="cenas1b.jpg"> <img src="cenas1c.jpg"> <img src="cenas2a.jpg">
                 <img src="cenas2b.jpg"> <img src="cenas2c.jpg"> <img src="cenas2d.jpg"> <img src="cena2e.jpg">
             </div>
         </div>
     </section>
 
-    <!-- HERO 2: EFEITO DE ENGRENAGEM[cite: 1] -->
+    <!-- HERO 2: TRÊS COLUNAS CORRIGIDAS -->
     <section class="hero-categories">
-        <div class="text-side" style="flex:1;">
-            <h2>Séries e Livros <span class="gold">Curados</span>.</h2>
-            <p>Catálogo exclusivo organizado por cores.</p>
+        <div class="text-side">
+            <h2>Séries e Livros <span class="brand-gold">Curados</span> em Categorias de <span style="color: #ff69b4;">Cores</span>.</h2>
+            <p>Explore nosso catálogo exclusivo, organizado por cores para sua melhor experiência.</p>
         </div>
         <div class="categories-wrapper">
-            <div class="cat-col col-extremidade">
-                <div class="card"><img src="cenas1a.jpg"></div><div class="card"><img src="cenas1b.jpg"></div>
-                <div class="card"><img src="cenas1a.jpg"></div><div class="card"><img src="cenas1b.jpg"></div>
+            <!-- COLUNA ESQUERDA (SOBE) -->
+            <div class="cat-col col-side">
+                <div class="card" style="background: #F8BBD0; color: #ad1457;"><img src="cenas1a.jpg"><div class="info">Encontros e Destinos 🌸</div></div>
+                <div class="card" style="background: #C8E6C9; color: #2e7d32;"><img src="cenas1b.jpg"><div class="info">Medicina & Vida 🏥</div></div>
+                <div class="card" style="background: #F8BBD0; color: #ad1457;"><img src="cenas1a.jpg"><div class="info">Encontros e Destinos 🌸</div></div>
+                <div class="card" style="background: #C8E6C9; color: #2e7d32;"><img src="cenas1b.jpg"><div class="info">Medicina & Vida 🏥</div></div>
             </div>
-            <div class="cat-col col-meio">
-                <div class="card"><img src="cenas2a.jpg"></div><div class="card"><img src="cenas2b.jpg"></div>
-                <div class="card"><img src="cenas2a.jpg"></div><div class="card"><img src="cenas2b.jpg"></div>
+            <!-- COLUNA CENTRAL (DESCE) -->
+            <div class="cat-col col-center">
+                <div class="card" style="background: #D7CCC8; color: #4e342e;"><img src="cenas2a.jpg"><div class="info">Cotidiano ☕</div></div>
+                <div class="card" style="background: #DCEDC8; color: #33691e;"><img src="cenas2b.jpg"><div class="info">Suspense & Mistério 🔍</div></div>
+                <div class="card" style="background: #D7CCC8; color: #4e342e;"><img src="cenas2a.jpg"><div class="info">Cotidiano ☕</div></div>
+                <div class="card" style="background: #DCEDC8; color: #33691e;"><img src="cenas2b.jpg"><div class="info">Suspense & Mistério 🔍</div></div>
             </div>
-            <div class="cat-col col-extremidade">
-                <div class="card"><img src="cenas2c.jpg"></div><div class="card"><img src="cenas2d.jpg"></div>
-                <div class="card"><img src="cenas2c.jpg"></div><div class="card"><img src="cenas2d.jpg"></div>
+            <!-- COLUNA DIREITA (SOBE) -->
+            <div class="cat-col col-side">
+                <div class="card" style="background: #FFECB3; color: #f9a825;"><img src="cenas2c.jpg"><div class="info">Juventude & Sonhos 🎓</div></div>
+                <div class="card" style="background: #E1BEE7; color: #6a1b9a;"><img src="cenas2d.jpg"><div class="info">Épicos Históricos 📜</div></div>
+                <div class="card" style="background: #FFECB3; color: #f9a825;"><img src="cenas2c.jpg"><div class="info">Juventude & Sonhos 🎓</div></div>
+                <div class="card" style="background: #E1BEE7; color: #6a1b9a;"><img src="cenas2d.jpg"><div class="info">Épicos Históricos 📜</div></div>
             </div>
         </div>
     </section>
 
-    <!-- HERO 3: CELULAR AMPLIADO[cite: 1] -->
+    <!-- HERO 3 -->
     <section class="hero-features">
         <div class="feature-text">
             <h2>Entretenimento <span class="gold">Interativo</span> e Totalmente Grátis.</h2>
-            <p>Checklists de progresso e download off-line.</p>
+            <p>Checklists de progresso, abas integradas para vídeo e leitura, e download off-line.</p>
         </div>
-        <div class="phone-preview">
-            <img src="celular.png" alt="App Preview">
-        </div>
+        <div class="phone-preview"><img src="celular.png" alt="App Preview"></div>
     </section>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        const firebaseConfig = {
-            apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
-            authDomain: "doranovel.firebaseapp.com",
-            projectId: "doranovel",
-            storageBucket: "doranovel.firebasestorage.app",
-            appId: "1:105334550592:web:eaf414923e311ae62eafa5"
-        };
+        const firebaseConfig = { apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY", authDomain: "doranovel.firebaseapp.com", projectId: "doranovel", storageBucket: "doranovel.firebasestorage.app", appId: "1:105334550592:web:eaf414923e311ae62eafa5" };
         initializeApp(firebaseConfig);
 
         window.onscroll = function() {
