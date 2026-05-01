@@ -12,7 +12,6 @@
     <a href="index.html" class="back-home">⬅ Voltar para o site</a>
 
     <div class="login-wrapper">
-        
         <div class="login-form-side">
             <div class="logo-container" style="justify-content: center; margin-bottom: 30px;">
                 <img src="logo.png" alt="Logo" class="mini-logo" style="height: 60px;">
@@ -22,7 +21,7 @@
             <h2>Bem-vindo de volta!</h2>
             <p>Acesse sua conta para continuar suas histórias.</p>
 
-            <form class="login-form">
+            <form class="login-form" id="loginForm">
                 <div class="input-group">
                     <label for="email">E-mail</label>
                     <input type="email" id="email" placeholder="Digite seu e-mail" required>
@@ -45,33 +44,64 @@
                         <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
                         Google
                     </button>
-                    <button type="button" class="btn-social">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook/Meta">
-                        Facebook
-                    </button>
                 </div>
             </form>
 
-            <p class="register-link">Ainda não tem conta? <a href="#">Cadastre-se grátis</a></p>
+            <p class="register-link">Ainda não tem conta? <a href="#" id="btnRegister">Cadastre-se grátis</a></p>
         </div>
 
         <div class="login-app-side">
             <div class="app-promo-content">
                 <h3>A melhor experiência <br>está no nosso <span class="gold">App</span>.</h3>
-                <p>Escaneie o QR Code abaixo para baixar o Doranovel gratuitamente e leve suas histórias para qualquer lugar.</p>
-                
+                <p>Escaneie o QR Code abaixo para baixar o Doranovel gratuitamente.</p>
                 <div class="qr-code-box">
                     <img src="qrcode.png" alt="QR Code para Download" class="qr-image">
                 </div>
-
-                <div class="apps-login">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
-                </div>
             </div>
         </div>
-
     </div>
 
+    <!-- Lógica de Autenticação Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
+            authDomain: "doranovel.firebaseapp.com",
+            projectId: "doranovel",
+            storageBucket: "doranovel.firebasestorage.app",
+            messagingSenderId: "105334550592",
+            appId: "1:105334550592:web:eaf414923e311ae62eafa5",
+            measurementId: "G-F1ZH3L20YH"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Função de Login
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => { alert("Login realizado! Agora você pode baixar o APK."); })
+                .catch((error) => { alert("Erro: " + error.message); });
+        });
+
+        // Função de Cadastro (Simplificada para teste)
+        document.getElementById('btnRegister').addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if(!email || !password) return alert("Preencha e-mail e senha para cadastrar.");
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(() => { alert("Conta criada com sucesso!"); })
+                .catch((error) => { alert("Erro no cadastro: " + error.message); });
+        });
+    </script>
 </body>
 </html>
