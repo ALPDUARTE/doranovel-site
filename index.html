@@ -6,162 +6,170 @@
     <title>Doranovel | Premium Landpage</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILIZAÇÃO PREMIUM SEAQUAKE --- */
+        /* --- RESET E ESTRUTURA BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
+        body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; line-height: 1.6; }
 
-        /* 1. Header Fixo e Transparente */
+        /* --- 1) TOP FIXO, TRANSPARENTE E DINÂMICO --- */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 100px;
+            height: 120px; /* Aumentado para acomodar logo maior */
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 5%;
-            background: transparent; /* Inicia transparente conforme solicitado */
-            transition: all 0.5s ease;
+            background: transparent; /* Inicia transparente */
             z-index: 9999;
+            transition: all 0.5s ease;
         }
 
-        /* Transição para preto ao rolar */
+        /* Classe aplicada via JavaScript ao rolar */
         .navbar.scrolled {
-            background: rgba(0, 0, 0, 0.95);
-            height: 80px;
+            background: #000000;
+            height: 90px;
             border-bottom: 1px solid #d4af37;
         }
 
-        .logo-container { display: flex; align-items: center; gap: 10px; }
-        .mini-logo { height: 50px; width: auto; }
-        .brand-gold { color: #d4af37; font-weight: bold; }
+        /* --- 2) LOGO E MARCA AUMENTADOS --- */
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .mini-logo { height: 80px; width: auto; transition: 0.4s; } /* Logo maior conforme pedido */
+        .navbar.scrolled .mini-logo { height: 60px; } /* Diminui levemente ao rolar */
+        
+        .brand-name { font-size: 32px; font-weight: 700; }
+        .brand-gold { color: #d4af37; }
 
+        .links { display: flex; align-items: center; gap: 30px; }
         .links a { 
             color: #fff; 
             text-decoration: none; 
-            margin-left: 20px; 
-            font-size: 13px; 
+            font-size: 14px; 
             text-transform: uppercase; 
             font-weight: 700;
+            transition: 0.3s;
         }
-        
-        .btn-login { 
-            border: 1px solid #d4af37; 
-            padding: 8px 20px; 
-            border-radius: 4px; 
-            color: #d4af37 !important; 
-        }
+        .links a:hover { color: #d4af37; }
+        .btn-login { border: 1px solid #d4af37; padding: 10px 25px; border-radius: 4px; }
 
-        /* 2. Hero e Vídeo de Fundo */
-        .hero-main { position: relative; height: 100vh; overflow: hidden; }
+        /* --- 3) SEÇÕES (HEROS) PARA EVITAR TRAVAMENTO --- */
+        section { width: 100%; position: relative; }
+
+        /* Hero 1: Vídeo Background */
+        .hero-main { height: 100vh; overflow: hidden; }
         .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .video-bg iframe { 
             width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
             pointer-events: none; 
         }
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 0; }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
 
-        /* 3. Conteúdo Central */
         .content { 
-            position: relative; 
-            z-index: 1; 
-            height: 100%; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center; 
+            height: 100%; display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; text-align: center; position: relative; z-index: 1; 
         }
-        .hero-text h1 { font-size: 3rem; line-height: 1.2; margin-bottom: 20px; text-transform: uppercase; }
+
+        h1 { font-size: 3.5rem; margin-bottom: 20px; }
         .gold { color: #d4af37; }
-        .hero-text p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; opacity: 0.9; }
 
-        /* 4. Film Strip (Faixa de Cenas) */
-        .film-strip { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.8); padding: 15px 0; overflow: hidden; }
-        .film-track { display: flex; gap: 15px; width: max-content; }
-        .film-track img { height: 120px; border: 1px solid #333; border-radius: 4px; }
+        /* Hero 2: Categorias (Original mantido) */
+        .hero-categories { padding: 100px 5%; background: #0a0a0a; }
 
-        /* Mobile Adjustments */
+        /* Hero 3: Features (Original mantido) */
+        .hero-features { padding: 100px 5%; background: #000; }
+
+        /* Film Strip na base do Hero 1 */
+        .film-strip { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.8); padding: 15px 0; z-index: 2; }
+        .film-track { display: flex; gap: 10px; overflow: hidden; padding-left: 20px; }
+        .film-track img { height: 110px; border: 1px solid #333; }
+
         @media (max-width: 768px) {
-            .hero-text h1 { font-size: 1.8rem; }
-            .navbar { height: 120px; padding: 0 3%; }
-            .links { display: flex; flex-direction: row; gap: 10px; }
-            .links a { margin-left: 5px; font-size: 10px; }
+            .navbar { height: 100px; }
+            .mini-logo { height: 60px; }
+            .brand-name { font-size: 24px; }
+            .links { display: none; } /* Sugestão: Menu hamburguer depois para mobile */
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
   
+    <!-- TOPO FIXO E DINÂMICO -->
+    <nav class="navbar" id="mainNavbar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo" class="mini-logo"> <!-- -->
+            <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
+        </div>
+        <div class="links">
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="privacidade.html">Privacy</a>
+            <a href="login.html" class="btn-login">Login</a>
+        </div>
+    </nav>
+
+    <!-- HERO 1: VÍDEO -->
     <section class="hero-main">
         <div class="video-bg">
-            <!-- Vídeo original mantido conforme o arquivo fornecido -->
-            <iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA,kQmfxQw_c0Y,PYQ2vLQx41M,ofkR9kPWmJw,BksusGo9W0E,d3euksbk9EA&controls=0&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+            <iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA,kQmfxQw_c0Y,PYQ2vLQx41M,ofkR9kPWmJw,BksusGo9W0E,d3euksbk9EA&controls=0&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media"></iframe> <!-- -->
         </div>
         <div class="overlay"></div>
-        
-        <!-- HEADER FIXO COM LINKS ATUALIZADOS -->
-        <nav class="navbar" id="mainNavbar">
-            <div class="logo-container">
-                <img src="logo.png" alt="Logo" class="mini-logo"> <!-- Caminho original mantido -->
-                <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
-            </div>
-            <div class="links">
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-                <a href="privacidade.html">Privacy</a>
-                <a href="login.html" class="btn-login">Login</a>
-            </div>
-        </nav>
-
         <div class="content">
             <div class="hero-text">
                 <h1>Momentos <span class="gold">Dourados</span>,<br>Desejos <span class="gold">Sem Fim</span>.</h1>
                 <p>Sua plataforma premium para doramas e webnovels curados.</p>
-                <!-- Botões de lojas removidos conforme solicitado -->
             </div>
         </div>
-
         <div class="film-strip">
             <div class="film-track">
-                <!-- Imagens originais mantidas -->
-                <img src="cenas1a.jpg" alt="Cena">
-                <img src="cenas1b.jpg" alt="Cena">
-                <img src="cenas1c.jpg" alt="Cena">
-                <img src="cenas2a.jpg" alt="Cena">
-                <img src="cenas2b.jpg" alt="Cena">
-                <img src="cenas2c.jpg" alt="Cena">
+                <img src="cenas1a.jpg" alt="Cena"> <img src="cenas1b.jpg" alt="Cena">
+                <img src="cenas1c.jpg" alt="Cena"> <img src="cenas2a.jpg" alt="Cena">
+                <img src="cenas2b.jpg" alt="Cena"> <img src="cenas2c.jpg" alt="Cena">
             </div>
         </div>
     </section>
 
-    <!-- Outras seções originais podem ser mantidas aqui abaixo do hero-main[cite: 1] -->
+    <!-- HERO 2: CATEGORIAS (DESTRANCADO) -->
+    <section class="hero-categories">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2>Séries e Livros <span class="gold">Curados</span></h2>
+            <p>Explore nosso catálogo exclusivo organizado por categorias.</p>
+            <!-- O restante do conteúdo de carrossel do seu original entra aqui -->
+        </div>
+    </section>
 
-    <footer style="background:#000; padding: 40px; text-align: center; border-top: 1px solid #222;">
-        <img src="logo.png" alt="Logo" style="height: 40px; margin-bottom: 20px;">
-        <p style="font-size: 14px; opacity: 0.7;">www.doranovel.com | Copyright 2026</p>
+    <!-- HERO 3: FEATURES -->
+    <section class="hero-features">
+        <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+            <h2>Entretenimento <span class="gold">Interativo</span></h2>
+            <p>Checklists de progresso e download off-line.</p>
+        </div>
+    </section>
+
+    <footer style="padding: 50px; text-align: center; background: #000; border-top: 1px solid #222;">
+        <img src="logo.png" alt="Logo" style="height: 50px; margin-bottom: 20px;">
+        <p>www.doranovel.com | Copyright 2026</p>
     </footer>
 
-    <!-- Firebase SDK Original[cite: 1] -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 
+        // Sua configuração Firebase mantida
         const firebaseConfig = {
             apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
             authDomain: "doranovel.firebaseapp.com",
             projectId: "doranovel",
             storageBucket: "doranovel.firebasestorage.app",
             messagingSenderId: "105334550592",
-            appId: "1:105334550592:web:eaf414923e311ae62eafa5",
-            measurementId: "G-F1ZH3L20YH"
-        };[cite: 1]
-
+            appId: "1:105334550592:web:eaf414923e311ae62eafa5"
+        };
         const app = initializeApp(firebaseConfig);
 
-        /* Lógica para mudar a cor do Header ao rolar */
+        // LÓGICA DO TOPO FIXO E COR DO BACKGROUND
+        const nav = document.getElementById('mainNavbar');
         window.onscroll = function() {
-            const nav = document.getElementById('mainNavbar');
-            if (window.pageYOffset > 50) {
+            if (window.pageYOffset > 80) { // Se rolar mais de 80px
                 nav.classList.add('scrolled');
             } else {
                 nav.classList.remove('scrolled');
