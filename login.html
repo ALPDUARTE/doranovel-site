@@ -3,137 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doranovel | Premium Landpage</title>
+    <title>Login | Doranovel</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* --- NOVAS MODIFICAÇÕES ESTÉTICAS --- */
-        
-        /* 1. Header Fixo e Transparente */
-        .navbar {
-            position: fixed !important;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100px; /* Head maior solicitado */
-            background: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 5%;
-            z-index: 2000;
-            transition: background 0.5s ease, height 0.5s ease;
-            border-bottom: none;
-        }
-
-        /* 2. Header quando o usuário rola a página */
-        .navbar.scrolled {
-            background: #000000 !important;
-            height: 80px;
-            border-bottom: 1px solid #AIzaSy; /* Detalhe sutil */
-        }
-
-        /* 3. Ajuste do Conteúdo Hero para não ser cortado pelo Header Fixo */
-        .hero-main {
-            padding-top: 0 !important;
-        }
-
-        /* 4. Garantir que a logo e o nome da marca apareçam sempre */
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .mini-logo {
-            height: 50px;
-            width: auto;
-        }
-
-        /* 5. Estilo do botão de login no Header */
-        .btn-login {
-            border: 1px solid #d4af37;
-            padding: 8px 20px !important;
-            border-radius: 4px;
-            background: transparent;
-            transition: 0.3s;
-        }
-
-        .btn-login:hover {
-            background: #d4af37;
-            color: #000 !important;
-        }
-
-        /* 6. Remoção visual dos botões de aplicativos (ajustado via CSS por segurança) */
-        .apps {
-            display: none !important;
-        }
-    </style>
 </head>
-<body>
-  
-    <section class="hero-main">
-        <div class="video-bg">
-            <!-- Seu vídeo original mantido -->
-            <iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA,kQmfxQw_c0Y,PYQ2vLQx41M,ofkR9kPWmJw,BksusGo9W0E,d3euksbk9EA&controls=0&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media"></iframe>
-        </div>
-        <div class="overlay"></div>
-        
-        <div class="content">
-            <!-- NAVBAR MODIFICADA -->
-            <nav class="navbar" id="mainNavbar">
-                <div class="logo-container">
-                    <img src="logo.png" alt="Logo" class="mini-logo">
-                    <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
+<body class="login-body">
+
+    <a href="index.html" class="back-home">⬅ Voltar para o site</a>
+
+    <div class="login-wrapper">
+        <div class="login-form-side">
+            <div class="logo-container" style="justify-content: center; margin-bottom: 30px;">
+                <img src="logo.png" alt="Logo" class="mini-logo" style="height: 60px;">
+                <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
+            </div>
+            
+            <h2>Bem-vindo de volta!</h2>
+            <p>Acesse sua conta para continuar suas histórias.</p>
+
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="Digite seu e-mail" required>
                 </div>
-                <div class="links">
-                    <a href="#">About</a>
-                    <a href="#">Why Choose Us</a>
-                    <a href="#">Contact</a>
-                    <a href="login.html" class="btn-login">Login</a>
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="Digite sua senha" required>
                 </div>
-            </nav>
+                <div class="forgot-password">
+                    <a href="#">Esqueceu a senha?</a>
+                </div>
+                <button type="submit" class="btn-submit">Entrar na Conta</button>
 
-            <div class="hero-text">
-                <h1>Momentos <span class="gold">Dourados</span>,<br>Desejos <span class="gold">Sem Fim</span>.</h1>
-                <p>Sua plataforma premium para doramas e webnovels curados.</p>
-                <!-- Botões de lojas removidos conforme solicitado -->
-            </div>
+                <div class="social-divider">
+                    <span>ou acesse rápido com</span>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" class="btn-social" id="btnGoogle">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+                        Google
+                    </button>
+                    <!-- BOTÃO FACEBOOK ADICIONADO AQUI -->
+                    <button type="button" class="btn-social" id="btnFacebook" style="background-color: #1877F2; color: white;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook">
+                        Facebook
+                    </button>
+                </div>
+            </form>
+
+            <p class="register-link">Ainda não tem conta? <a href="#" id="btnRegister">Cadastre-se grátis</a></p>
         </div>
 
-        <div class="film-strip">
-            <div class="film-track">
-                <img src="cenas1a.jpg" alt="Cena">
-                <img src="cenas1b.jpg" alt="Cena">
-                <img src="cenas1c.jpg" alt="Cena">
-                <img src="cenas2a.jpg" alt="Cena">
-                <img src="cenas2b.jpg" alt="Cena">
-                <img src="cenas2c.jpg" alt="Cena">
-                <img src="cenas2d.jpg" alt="Cena">
-                <img src="cena2e.jpg" alt="Cena">
+        <div class="login-app-side">
+            <div class="app-promo-content">
+                <h3>A melhor experiência <br>está no nosso <span class="gold">App</span>.</h3>
+                <p>Escaneie o QR Code abaixo para baixar o Doranovel gratuitamente.</p>
+                <div class="qr-code-box">
+                    <img src="qrcode.png" alt="QR Code para Download" class="qr-image">
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Outras seções mantidas para permitir rolagem (Heros seguintes) -->
-    <section class="hero-categories">
-        <div class="container">
-            <div class="text-side">
-                <h2>Séries e Livros <br><span class="gold">Curados</span> em <br><span class="pink">Categorias</span> de <br>Cores.</h2>
-            </div>
-            <!-- Conteúdo de categorias mantido -->
-        </div>
-    </section>
-
-    <footer class="footer">
-        <img src="logo.png" alt="Logo" class="footer-logo">
-        <p>www.doranovel.com | Copyright 2026</p>
-    </footer>
-
-    <!-- Firebase SDK e Lógica de Registro Corrigida -->
+    <!-- Lógica de Autenticação Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        // FacebookAuthProvider ADICIONADO NA IMPORTAÇÃO
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
@@ -141,31 +78,60 @@
             projectId: "doranovel",
             storageBucket: "doranovel.firebasestorage.app",
             messagingSenderId: "105334550592",
-            appId: "1:105334550592:web:eaf414923e311ae62eafa5"
+            appId: "1:105334550592:web:eaf414923e311ae62eafa5",
+            measurementId: "G-F1ZH3L20YH"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // RESOLUÇÃO DO REGISTRO: Captura o resultado do redirecionamento do Facebook/Google
-        getRedirectResult(auth).then((result) => {
-            if (result) {
-                console.log("Usuário registrado com sucesso:", result.user);
-                // Aqui os dados são efetivamente inseridos no Firebase Auth
-            }
-        }).catch((error) => {
-            console.error("Erro no registro:", error.message);
+        // --- LOGIN COM GOOGLE ---
+        const googleProvider = new GoogleAuthProvider();
+        document.getElementById('btnGoogle').addEventListener('click', () => {
+            signInWithPopup(auth, googleProvider)
+                .then((result) => {
+                    alert("Sucesso! Bem-vindo(a), " + result.user.displayName);
+                })
+                .catch((error) => {
+                    alert("Erro no Google Login: " + error.message);
+                });
         });
 
-        // Lógica de Scroll para o Header
-        window.onscroll = function() {
-            const nav = document.getElementById('mainNavbar');
-            if (window.pageYOffset > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        };
+        // --- LOGIN COM FACEBOOK (ADICIONADO AQUI) ---
+        const facebookProvider = new FacebookAuthProvider();
+        document.getElementById('btnFacebook').addEventListener('click', () => {
+            signInWithPopup(auth, facebookProvider)
+                .then((result) => {
+                    alert("Sucesso! Bem-vindo(a), " + result.user.displayName);
+                })
+                .catch((error) => {
+                    alert("Erro no Facebook Login: " + error.message);
+                });
+        });
+
+        // Login por E-mail
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => { alert("Login realizado!"); })
+                .catch((error) => { alert("Erro: " + error.message); });
+        });
+
+        // Cadastro
+        document.getElementById('btnRegister').addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if(!email || !password) return alert("Preencha e-mail e senha para cadastrar.");
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(() => { alert("Conta criada com sucesso!"); })
+                .catch((error) => { alert("Erro no cadastro: " + error.message); });
+        });
     </script>
 </body>
 </html>
