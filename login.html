@@ -3,124 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doranovel - Experiência Premium</title>
+    <title>Doranovel | Premium Landpage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
-        /* Reset e Base */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
-
-        /* 1. VÍDEO DE FUNDO FIXO */
-        .video-container {
-            position: fixed;
+        /* --- NOVAS MODIFICAÇÕES ESTÉTICAS --- */
+        
+        /* 1. Header Fixo e Transparente */
+        .navbar {
+            position: fixed !important;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        video {
-            min-width: 100%;
-            min-height: 100%;
-            object-fit: cover;
-            opacity: 0.6; /* Ajuste para dar contraste ao texto */
-        }
-
-        /* 2. HEADER FIXO E TRANSPARENTE */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 80px; /* Limitado conforme solicitado */
+            height: 100px; /* Head maior solicitado */
             background: transparent;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 5%;
-            z-index: 1000;
-            transition: background 0.4s ease;
+            z-index: 2000;
+            transition: background 0.5s ease, height 0.5s ease;
+            border-bottom: none;
         }
 
-        header.scrolled {
-            background: rgba(0, 0, 0, 0.9); /* Fica preto ao rolar */
-            border-bottom: 1px solid #d4af37;
+        /* 2. Header quando o usuário rola a página */
+        .navbar.scrolled {
+            background: #000000 !important;
+            height: 80px;
+            border-bottom: 1px solid #AIzaSy; /* Detalhe sutil */
         }
 
-        .logo-img { height: 50px; width: auto; }
+        /* 3. Ajuste do Conteúdo Hero para não ser cortado pelo Header Fixo */
+        .hero-main {
+            padding-top: 0 !important;
+        }
 
-        nav a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: bold; text-transform: uppercase; font-size: 13px; }
-        .btn-sair { border: 1px solid #d4af37; padding: 5px 15px; border-radius: 4px; color: #fff; background: transparent; cursor: pointer; }
-
-        /* 3. CONTEÚDO (HEROS) */
-        section {
-            height: 100vh;
+        /* 4. Garantir que a logo e o nome da marca apareçam sempre */
+        .logo-container {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 0 10%;
+            gap: 10px;
         }
 
-        h1 { font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
-        h1 span { color: #d4af37; }
-        p { font-size: 1.2rem; max-width: 600px; line-height: 1.6; }
+        .mini-logo {
+            height: 50px;
+            width: auto;
+        }
 
-        /* Estilo para Mobile */
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            header { height: 100px; }
+        /* 5. Estilo do botão de login no Header */
+        .btn-login {
+            border: 1px solid #d4af37;
+            padding: 8px 20px !important;
+            border-radius: 4px;
+            background: transparent;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            background: #d4af37;
+            color: #000 !important;
+        }
+
+        /* 6. Remoção visual dos botões de aplicativos (ajustado via CSS por segurança) */
+        .apps {
+            display: none !important;
         }
     </style>
 </head>
 <body>
+  
+    <section class="hero-main">
+        <div class="video-bg">
+            <!-- Seu vídeo original mantido -->
+            <iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA,kQmfxQw_c0Y,PYQ2vLQx41M,ofkR9kPWmJw,BksusGo9W0E,d3euksbk9EA&controls=0&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+        </div>
+        <div class="overlay"></div>
+        
+        <div class="content">
+            <!-- NAVBAR MODIFICADA -->
+            <nav class="navbar" id="mainNavbar">
+                <div class="logo-container">
+                    <img src="logo.png" alt="Logo" class="mini-logo">
+                    <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
+                </div>
+                <div class="links">
+                    <a href="#">About</a>
+                    <a href="#">Why Choose Us</a>
+                    <a href="#">Contact</a>
+                    <a href="login.html" class="btn-login">Login</a>
+                </div>
+            </nav>
 
-    <div class="video-container">
-        <!-- Certifique-se que o nome do arquivo abaixo esteja idêntico ao que você subiu no GitHub -->
-        <video autoplay muted loop playsinline>
-            <source src="background-seaquake.mp4" type="video/mp4">
-        </video>
-    </div>
+            <div class="hero-text">
+                <h1>Momentos <span class="gold">Dourados</span>,<br>Desejos <span class="gold">Sem Fim</span>.</h1>
+                <p>Sua plataforma premium para doramas e webnovels curados.</p>
+                <!-- Botões de lojas removidos conforme solicitado -->
+            </div>
+        </div>
 
-    <header id="mainHeader">
-        <a href="index.html">
-            <!-- Caso a imagem não carregue, o texto 'Doranovel' aparecerá -->
-            <img src="logo-doranovel.png" alt="Doranovel" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-            <span style="display:none; font-weight:bold; font-size:24px; color:#d4af37;">Doranovel</span>
-        </a>
-        <nav>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <button class="btn-sair" onclick="fazerLogout()">Sair</button>
-        </nav>
-    </header>
-
-    <!-- Hero 1 -->
-    <section>
-        <h1>Momentos <span>Dourados</span>,<br>Desejos Sem Fim.</h1>
-        <p>Sua plataforma premium para doramas e webnovels curados.</p>
+        <div class="film-strip">
+            <div class="film-track">
+                <img src="cenas1a.jpg" alt="Cena">
+                <img src="cenas1b.jpg" alt="Cena">
+                <img src="cenas1c.jpg" alt="Cena">
+                <img src="cenas2a.jpg" alt="Cena">
+                <img src="cenas2b.jpg" alt="Cena">
+                <img src="cenas2c.jpg" alt="Cena">
+                <img src="cenas2d.jpg" alt="Cena">
+                <img src="cena2e.jpg" alt="Cena">
+            </div>
+        </div>
     </section>
 
-    <!-- Hero 2 (Exemplo de rolagem) -->
-    <section style="background: rgba(0,0,0,0.4);">
-        <h1>Experiência <span>Underground</span></h1>
-        <p>Estética surf urbana sofisticada agora no seu Android.</p>
+    <!-- Outras seções mantidas para permitir rolagem (Heros seguintes) -->
+    <section class="hero-categories">
+        <div class="container">
+            <div class="text-side">
+                <h2>Séries e Livros <br><span class="gold">Curados</span> em <br><span class="pink">Categorias</span> de <br>Cores.</h2>
+            </div>
+            <!-- Conteúdo de categorias mantido -->
+        </div>
     </section>
 
-    <script>
-        // Efeito de mudar cor do header ao rolar
-        window.onscroll = function() {
-            var header = document.getElementById("mainHeader");
-            if (window.pageYOffset > 50) {
-                header.classList.add("scrolled");
-            } else {
-                header.classList.remove("scrolled");
-            }
+    <footer class="footer">
+        <img src="logo.png" alt="Logo" class="footer-logo">
+        <p>www.doranovel.com | Copyright 2026</p>
+    </footer>
+
+    <!-- Firebase SDK e Lógica de Registro Corrigida -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, getRedirectResult } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
+            authDomain: "doranovel.firebaseapp.com",
+            projectId: "doranovel",
+            storageBucket: "doranovel.firebasestorage.app",
+            messagingSenderId: "105334550592",
+            appId: "1:105334550592:web:eaf414923e311ae62eafa5"
         };
 
-        function fazerLogout() {
-            window.location.href = "login.html";
-        }
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // RESOLUÇÃO DO REGISTRO: Captura o resultado do redirecionamento do Facebook/Google
+        getRedirectResult(auth).then((result) => {
+            if (result) {
+                console.log("Usuário registrado com sucesso:", result.user);
+                // Aqui os dados são efetivamente inseridos no Firebase Auth
+            }
+        }).catch((error) => {
+            console.error("Erro no registro:", error.message);
+        });
+
+        // Lógica de Scroll para o Header
+        window.onscroll = function() {
+            const nav = document.getElementById('mainNavbar');
+            if (window.pageYOffset > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        };
     </script>
 </body>
 </html>
