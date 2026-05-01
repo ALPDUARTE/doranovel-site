@@ -6,75 +6,101 @@
     <title>Doranovel | Premium Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILO BASE E NAVEGAÇÃO --- */
+        /* --- ESTRUTURA BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
 
+        /* --- 1. NAVBAR COM TRANSIÇÃO DE COR --- */
         .navbar {
             position: fixed; top: 0; width: 100%; height: 120px;
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 5%; background: transparent; z-index: 10000; transition: all 0.5s ease;
+            padding: 0 5%; background: transparent; z-index: 10000; 
+            transition: background 0.4s ease, height 0.4s ease; /* Transição suave solicitada */
         }
-        .navbar.scrolled { background: rgba(0, 0, 0, 0.95); height: 90px; border-bottom: 1px solid #E1AD01; }
-        .mini-logo { height: 80px; width: auto; transition: 0.4s; }
+        
+        /* Esta classe será ativada via JavaScript ao rolar */
+        .navbar.scrolled { 
+            background: #000000 !important; /* Fundo preto sólido ao rolar */
+            height: 90px; 
+            border-bottom: 2px solid #E1AD01; 
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .mini-logo { height: 80px; transition: 0.4s; }
         .navbar.scrolled .mini-logo { height: 60px; }
         .brand-name { font-size: 32px; font-weight: 700; }
-        .brand-gold { color: #E1AD01; } /* Amarelo Mostarda para a marca */
+        .brand-gold { color: #E1AD01; }
 
-        .links a { color: #fff; text-decoration: none; margin-left: 25px; font-size: 13px; text-transform: uppercase; font-weight: 700; }
-        .btn-login { border: 1px solid #E1AD01; padding: 10px 20px; border-radius: 4px; color: #E1AD01 !important; text-decoration: none; }
+        .links a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 13px; text-transform: uppercase; font-weight: 700; }
+        .btn-login { border: 1px solid #E1AD01; padding: 8px 18px; border-radius: 4px; color: #E1AD01 !important; }
 
-        /* --- HERO 1: VÍDEO E PELÍCULA CINEMA --- */
+        /* --- 2. HERO 1: PELÍCULA DE FILME VISÍVEL --- */
         .hero-main { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .video-bg iframe { width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
         .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
-        .hero-text h1 { font-size: 3.5rem; text-transform: uppercase; margin-bottom: 15px; }
+        
+        .hero-text { text-align: center; z-index: 1; padding: 0 20px; }
+        .hero-text h1 { font-size: 3.5rem; margin-bottom: 20px; text-shadow: 2px 2px 10px #000; }
 
-        .film-strip { position: absolute; bottom: 0; width: 100%; background: #111; padding: 30px 0; border-top: 4px solid #222; border-bottom: 4px solid #222; }
-        .film-strip::before, .film-strip::after { content: ""; position: absolute; width: 100%; height: 15px; background-image: radial-gradient(circle, #000 40%, transparent 45%); background-size: 40px 15px; left: 0; }
-        .film-strip::before { top: 7px; } .film-strip::after { bottom: 7px; }
-        .film-track { display: flex; width: calc(320px * 16); animation: scroll-film 40s linear infinite; }
-        .film-track img { height: 180px; width: 300px; object-fit: cover; margin: 0 10px; border: 1px solid #000; outline: 10px solid #1a1a1a; }
+        /* Estilo da Película (Destaque Branco/Prata) */
+        .film-strip { 
+            position: absolute; bottom: 0; width: 100%; 
+            background: #1a1a1a; /* Cinza muito escuro para separar do preto absoluto */
+            padding: 35px 0; border-top: 2px solid #fff; border-bottom: 2px solid #fff; 
+        }
+        .film-strip::before, .film-strip::after {
+            content: "• • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • •";
+            position: absolute; width: 100%; color: #fff; font-size: 22px; letter-spacing: 28px; text-align: center;
+        }
+        .film-strip::before { top: 5px; } .film-strip::after { bottom: 5px; }
+
+        .film-track { display: flex; width: calc(320px * 16); animation: scroll-film 45s linear infinite; }
+        .film-track img { 
+            height: 180px; width: 290px; object-fit: cover; 
+            margin: 0 15px; border: 2px solid #fff; /* Moldura branca para destacar cenas */
+        }
         @keyframes scroll-film { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-320px * 8)); } }
 
-        /* --- HERO 2: CATEGORIAS (TRÊS COLUNAS COM CORES) --- */
-        .hero-categories { padding: 120px 5%; display: flex; align-items: center; min-height: 100vh; background: #050505; gap: 50px; }
-        .text-side { flex: 1; }
-        .text-side h2 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; }
-        
+        /* --- 3. HERO 2: COLUNAS ANIMADAS --- */
+        .hero-categories { padding: 120px 5%; display: flex; align-items: center; min-height: 100vh; background: #050505; gap: 40px; }
         .categories-wrapper { 
-            flex: 1.5; height: 800px; overflow: hidden; 
-            display: flex; gap: 25px; transform: rotate(-6deg) skewX(-2deg); 
+            flex: 1.5; height: 750px; overflow: hidden; display: flex; gap: 20px; 
+            transform: rotate(-5deg) skewX(-1deg); 
         }
-        .cat-col { display: flex; flex-direction: column; gap: 25px; }
-        
-        /* Animações de Engrenagem: Extremidades Sobem, Meio Desce */
-        .col-extremidade { animation: scrollUp 25s linear infinite; }
-        .col-meio { animation: scrollDown 25s linear infinite; }
-
+        .cat-col { display: flex; flex-direction: column; gap: 20px; }
+        .col-extremidade { animation: scrollUp 30s linear infinite; }
+        .col-meio { animation: scrollDown 30s linear infinite; }
         @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
         @keyframes scrollDown { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
 
-        .card { 
-            width: 240px; height: 320px; border-radius: 25px; 
-            position: relative; overflow: hidden; border: 3px solid rgba(255,255,255,0.1); 
-            display: flex; flex-direction: column;
-        }
+        .card { width: 230px; height: 310px; border-radius: 20px; overflow: hidden; position: relative; border: 2px solid rgba(255,255,255,0.1); }
         .card img { width: 100%; height: 75%; object-fit: cover; }
-        .card .info { 
-            height: 25%; display: flex; align-items: center; justify-content: center; 
-            font-weight: 700; font-size: 13px; text-align: center; padding: 5px; text-transform: uppercase;
+        .card .info { height: 25%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; padding: 5px; text-align: center; }
+
+        /* --- 4. HERO 3: CELULAR CENTRALIZADO --- */
+        .hero-features { padding: 100px 5%; display: flex; align-items: center; justify-content: center; background: #000; gap: 60px; }
+        .phone-preview img { width: 100%; max-width: 600px; filter: drop-shadow(0 0 30px rgba(225, 173, 1, 0.4)); }
+
+        /* --- 5. MOBILE LAYOUT (PROPORCIONAL E CENTRALIZADO) --- */
+        @media (max-width: 768px) {
+            .navbar { height: 100px; padding: 0 3%; }
+            .mini-logo { height: 55px; }
+            .brand-name { font-size: 22px; }
+            .links { display: none; } /* Menu oculto para mobile para evitar confusão */
+            
+            .hero-text h1 { font-size: 2.2rem; }
+            .film-strip { padding: 20px 0; }
+            .film-track img { height: 120px; width: 200px; }
+
+            .hero-categories, .hero-features { flex-direction: column; text-align: center; padding: 80px 5%; }
+            .categories-wrapper { transform: none; height: 500px; width: 100%; justify-content: center; }
+            .cat-col { gap: 15px; }
+            .card { width: 150px; height: 200px; }
+            
+            .phone-preview img { max-width: 90%; margin-top: 40px; }
+            .feature-text h2 { font-size: 2.2rem; }
         }
-
-        /* --- HERO 3: MOCKUP CELULAR --- */
-        .hero-features { padding: 150px 5%; display: flex; align-items: center; justify-content: center; background: #000; gap: 80px; }
-        .feature-text { flex: 1; max-width: 500px; }
-        .feature-text h2 { font-size: 3.5rem; margin-bottom: 25px; }
-        .phone-preview { flex: 1.2; display: flex; justify-content: center; }
-        .phone-preview img { width: 100%; max-width: 650px; filter: drop-shadow(0 0 30px rgba(225, 173, 1, 0.3)); transform: rotate(-2deg); }
-
-        @media (max-width: 1024px) { .hero-categories, .hero-features { flex-direction: column; text-align: center; } .categories-wrapper { transform: none; height: 500px; } }
     </style>
 </head>
 <body>
@@ -103,73 +129,54 @@
         <div class="film-strip">
             <div class="film-track">
                 <img src="cenas1a.jpg"> <img src="cenas1b.jpg"> <img src="cenas1c.jpg"> <img src="cenas2a.jpg">
-                <img src="cenas2b.jpg"> <img src="cenas2c.jpg"> <img src="cenas2d.jpg"> <img src="cena2e.jpg">
                 <img src="cenas1a.jpg"> <img src="cenas1b.jpg"> <img src="cenas1c.jpg"> <img src="cenas2a.jpg">
-                <img src="cenas2b.jpg"> <img src="cenas2c.jpg"> <img src="cenas2d.jpg"> <img src="cena2e.jpg">
             </div>
         </div>
     </section>
 
-    <!-- HERO 2: CATEGORIAS COM CORES OFICIAIS -->
+    <!-- HERO 2 -->
     <section class="hero-categories">
         <div class="text-side">
-            <h2>Séries e Livros <span class="brand-gold">Curados</span> em Categorias de Cores.</h2>
-            <p>Explore nosso catálogo exclusivo, organizado por cores para sua melhor experiência.</p>
+            <h2>Séries e Livros <span class="brand-gold">Curados</span> em Cores.</h2>
+            <p>Explore nosso catálogo exclusivo organizado por cores.</p>
         </div>
         <div class="categories-wrapper">
-            <!-- COLUNA ESQUERDA (SOBE) -->
             <div class="cat-col col-extremidade">
-                <div class="card" style="background: #D48498; color: #fff;"><img src="cenas1a.jpg"><div class="info">Encontros e Destinos 🌸</div></div>
-                <div class="card" style="background: #F0F0F0; color: #000;"><img src="cenas1b.jpg"><div class="info">Suspense & Mistério 🔍</div></div>
-                <div class="card" style="background: #D48498; color: #fff;"><img src="cenas1a.jpg"><div class="info">Encontros e Destinos 🌸</div></div>
-                <div class="card" style="background: #F0F0F0; color: #000;"><img src="cenas1b.jpg"><div class="info">Suspense & Mistério 🔍</div></div>
+                <div class="card" style="background: #D48498;"><img src="cenas1a.jpg"><div class="info">Encontros 🌸</div></div>
+                <div class="card" style="background: #F0F0F0; color: #000;"><img src="cenas1b.jpg"><div class="info">Suspense 🔍</div></div>
+                <div class="card" style="background: #D48498;"><img src="cenas1a.jpg"><div class="info">Encontros 🌸</div></div>
             </div>
-            <!-- COLUNA CENTRAL (DESCE) -->
             <div class="cat-col col-meio">
-                <div class="card" style="background: #A52A2A; color: #fff;"><img src="cenas2a.jpg"><div class="info">Melodramas Intensos ❤️‍🔥</div></div>
-                <div class="card" style="background: #CD7F32; color: #fff;"><img src="cenas2b.jpg"><div class="info">Épicos Históricos 📜</div></div>
-                <div class="card" style="background: #A52A2A; color: #fff;"><img src="cenas2a.jpg"><div class="info">Melodramas Intensos ❤️‍🔥</div></div>
-                <div class="card" style="background: #CD7F32; color: #fff;"><img src="cenas2b.jpg"><div class="info">Épicos Históricos 📜</div></div>
+                <div class="card" style="background: #A52A2A;"><img src="cenas2a.jpg"><div class="info">Melodramas ❤️‍🔥</div></div>
+                <div class="card" style="background: #CD7F32;"><img src="cenas2b.jpg"><div class="info">Históricos 📜</div></div>
+                <div class="card" style="background: #A52A2A;"><img src="cenas2a.jpg"><div class="info">Melodramas ❤️‍🔥</div></div>
             </div>
-            <!-- COLUNA DIREITA (SOBE) -->
             <div class="cat-col col-extremidade">
-                <div class="card" style="background: #D2B48C; color: #000;"><img src="cenas2c.jpg"><div class="info">Cotidiano ☕</div></div>
-                <div class="card" style="background: #000080; color: #fff;"><img src="cenas2d.jpg"><div class="info">Direito & Justiça ⚖️</div></div>
-                <div class="card" style="background: #50C878; color: #fff;"><img src="cenas2a.jpg"><div class="info">Medicina & Vida 🏥</div></div>
-                <div class="card" style="background: #E1AD01; color: #000;"><img src="cenas2b.jpg"><div class="info">Juventude & Sonhos 🎓</div></div>
+                <div class="card" style="background: #000080;"><img src="cenas2c.jpg"><div class="info">Justiça ⚖️</div></div>
+                <div class="card" style="background: #E1AD01; color: #000;"><img src="cenas2d.jpg"><div class="info">Sonhos 🎓</div></div>
+                <div class="card" style="background: #000080;"><img src="cenas2c.jpg"><div class="info">Justiça ⚖️</div></div>
             </div>
         </div>
     </section>
 
     <!-- HERO 3 -->
     <section class="hero-features">
-        <div class="feature-text">
-            <h2>Entretenimento <span class="brand-gold">Interativo</span> e Totalmente Grátis.</h2>
-            <p>Checklists de progresso, abas integradas para vídeo e leitura, e download off-line.</p>
+        <div class="text-side">
+            <h2>Entretenimento <span class="brand-gold">Interativo</span>.</h2>
+            <p>Totalmente grátis e offline.</p>
         </div>
         <div class="phone-preview"><img src="celular.png" alt="App Preview"></div>
     </section>
 
-    <footer style="padding: 50px; text-align: center; background: #000; border-top: 1px solid #222;">
-        <img src="logo.png" alt="Logo" style="height: 50px; margin-bottom: 20px;">
-        <p>www.doranovel.com | Copyright 2026</p>
-    </footer>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        const firebaseConfig = { 
-            apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY", 
-            authDomain: "doranovel.firebaseapp.com", 
-            projectId: "doranovel", 
-            storageBucket: "doranovel.firebasestorage.app", 
-            appId: "1:105334550592:web:eaf414923e311ae62eafa5" 
-        };[cite: 1]
-        initializeApp(firebaseConfig);
-
+    <script>
+        // CORREÇÃO DO TOPO: Muda para preto ao rolar
         window.onscroll = function() {
-            const nav = document.getElementById('mainNavbar');
-            if (window.pageYOffset > 50) { nav.classList.add('scrolled'); }
-            else { nav.classList.remove('scrolled'); }
+            var nav = document.getElementById('mainNavbar');
+            if (window.pageYOffset > 80) { // Ativa após 80px de rolagem
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
         };
     </script>
 </body>
