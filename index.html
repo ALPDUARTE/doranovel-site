@@ -6,11 +6,10 @@
     <title>Doranovel | Premium Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILO BASE --- */
+        /* --- ESTILO BASE (SITE INTACTO) --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
 
-        /* --- 1. NAVBAR (TOP) --- */
         .navbar {
             position: fixed; top: 0; width: 100%; height: 120px;
             display: flex; align-items: center; justify-content: space-between;
@@ -28,13 +27,12 @@
         .links a { color: #fff; text-decoration: none; margin-left: 25px; font-size: 13px; text-transform: uppercase; font-weight: 700; }
         .btn-login { border: 1px solid #E1AD01; padding: 12px 25px; border-radius: 4px; color: #E1AD01 !important; text-decoration: none; font-size: 13px; font-weight: 700; }
 
-        /* --- 2. HERO 1: PELÍCULA --- */
+        /* HERO 1 */
         .hero-main { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .video-bg iframe { width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
         .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
-        
-        .hero-text { z-index: 5; text-align: center; } /* Z-index para garantir prioridade */
+        .hero-text { z-index: 5; text-align: center; }
         .hero-text h1 { font-size: 4.5rem; text-transform: uppercase; margin-bottom: 20px; text-shadow: 3px 3px 15px #000; }
 
         .film-strip { position: absolute; bottom: 0; width: 100%; background: #111; padding: 50px 0; border-top: 4px solid #E1AD01; border-bottom: 4px solid #E1AD01; }
@@ -53,7 +51,7 @@
         .film-track img { height: 210px; width: 330px; object-fit: cover; margin: 0 15px; border: 2px solid #000; outline: 12px solid #1a1a1a; border-radius: 8px; }
         @keyframes scroll-film { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- 3. HERO 2: CATEGORIAS --- */
+        /* HERO 2 */
         .hero-categories { padding: 120px 5%; display: flex; align-items: center; min-height: 100vh; background: #050505; gap: 40px; }
         .text-side { flex: 0.8; }
         .text-side h2 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 25px; max-width: 450px; }
@@ -67,52 +65,71 @@
         .card img { width: 100%; height: 75%; object-fit: cover; }
         .card .info { height: 25%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; text-align: center; text-transform: uppercase; }
 
-        /* --- 4. HERO 3: MOCKUP --- */
+        /* HERO 3 */
         .hero-features { padding: 150px 5%; display: flex; align-items: center; justify-content: center; background: #000; gap: 80px; }
         .feature-text { flex: 1; }
         .feature-text h2 { font-size: 4rem; margin-bottom: 25px; line-height: 1.1; } 
         .phone-preview { flex: 1.2; display: flex; justify-content: center; }
         .phone-preview img { width: 100%; max-width: 680px; filter: drop-shadow(0 0 30px rgba(225, 173, 1, 0.3)); transform: rotate(-2deg); }
 
-        /* --- 5. RESPONSIVIDADE MOBILE (AJUSTES FINAIS) --- */
+        /* ----------------------------------------------------------- */
+        /* --- 5. ALTERAÇÕES EXCLUSIVAS PARA MOBILE (ATUALIZADO) --- */
+        /* ----------------------------------------------------------- */
         @media (max-width: 768px) {
-            /* AJUSTE PARA CENTRALIZAÇÃO VERTICAL TOTAL DO TÍTULO NO HERO 1 */
-            .hero-main {
-                display: flex;
-                flex-direction: column;
-                justify-content: center; /* Centraliza o conteúdo verticalmente */
-                align-items: center; /* Centraliza o conteúdo horizontalmente */
-            }
-
+            /* Correção do Topo: Linha dourada agora embaixo de tudo */
             .navbar { 
                 height: auto; 
                 flex-direction: column; 
-                padding: 15px 5%; 
-                align-items: flex-start; 
+                padding: 15px 5% 10px; /* Padding inferior para dar espaço antes da borda */
+                align-items: center;
+                background: #000; /* Fundo preto para garantir leitura */
+                border-bottom: 2px solid #E1AD01; /* Linha dourada agora abaixo do login e menu */
             } 
-            .logo-container { width: 100%; margin-bottom: 5px; }
-            .mini-logo { height: 55px; }
-            .brand-name { font-size: 24px; }
+            .navbar.scrolled { 
+                height: auto; 
+                padding: 10px 5%;
+            }
             
+            .logo-container { width: 100%; justify-content: center; margin-bottom: 15px; }
+            .mini-logo { height: 60px; }
+            .brand-name { font-size: 24px; justify-content: center; }
+            
+            /* Menu e Login: Alinhados horizontalmente abaixo da logo */
             .links { 
-                margin-top: 10px; 
                 width: 100%; 
-                justify-content: flex-end; 
-                gap: 12px; 
+                justify-content: center; 
+                gap: 15px; 
+                margin-top: 0;
             }
             .links a { font-size: 11px; margin-left: 0; }
-            .btn-login { padding: 8px 12px; font-size: 11px; }
+            .btn-login { padding: 8px 15px; font-size: 11px; }
 
-            /* TÍTULO PROPORCIONAL E CENTRALIZADO NO MOBILE */
-            .hero-text {
-                margin-top: -60px; /* Compensa a altura da película para centralizar melhor no vídeo */
-            }
-            .hero-text h1 { font-size: 2rem; padding: 0 10px; } 
+            /* Hero 1: Centralização Total */
+            .hero-main { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+            .hero-text { width: 100%; text-align: center; margin-top: -80px; }
+            .hero-text h1 { font-size: 2rem; padding: 0 15px; line-height: 1.2; } 
 
-            .hero-categories, .hero-features { flex-direction: column; text-align: center; padding: 80px 5%; }
-            .text-side { flex: none; }
-            .categories-wrapper { transform: none; height: 550px; width: 100%; flex: none; }
+            /* Hero 2: Centralização de Texto e Cards */
+            .hero-categories { flex-direction: column; text-align: center; padding: 60px 5%; }
+            .text-side { flex: none; width: 100%; text-align: center; margin-bottom: 30px; }
+            .text-side h2 { font-size: 2.2rem; margin: 0 auto 20px; text-align: center; width: 100%; }
+            .categories-wrapper { transform: none; height: 550px; width: 100%; flex: none; justify-content: center; }
+            .cat-col { flex: 0 0 160px; } /* Mantém as colunas centrais no mobile */
             .card { height: 240px; }
+
+            /* Hero 3: Proporção do Título e Centralização */
+            .hero-features { flex-direction: column; text-align: center; padding: 60px 5%; gap: 40px; }
+            .feature-text { width: 100%; text-align: center; }
+            .feature-text h2 { 
+                font-size: 2.2rem !important; /* Tamanho proporcional para não cortar a escrita */
+                width: 100%; 
+                text-align: center; 
+                margin: 0 auto 20px;
+                padding: 0 10px;
+                line-height: 1.2;
+            }
+            .phone-preview { width: 100%; display: flex; justify-content: center; }
+            .phone-preview img { max-width: 85%; }
         }
     </style>
 </head>
@@ -156,19 +173,16 @@
                 <div class="card" style="background: #D48498;"><img src="cenas1a.jpg"><div class="info">Encontros 🌸</div></div>
                 <div class="card" style="background: #F0F0F0; color: #000;"><img src="cenas1b.jpg"><div class="info">Suspense 🔍</div></div>
                 <div class="card" style="background: #D48498;"><img src="cenas1a.jpg"><div class="info">Encontros 🌸</div></div>
-                <div class="card" style="background: #F0F0F0; color: #000;"><img src="cenas1b.jpg"><div class="info">Suspense 🔍</div></div>
             </div>
             <div class="cat-col col-meio">
                 <div class="card" style="background: #A52A2A;"><img src="cenas2a.jpg"><div class="info">Melodramas ❤️‍🔥</div></div>
                 <div class="card" style="background: #CD7F32;"><img src="cenas2b.jpg"><div class="info">Históricos 📜</div></div>
                 <div class="card" style="background: #A52A2A;"><img src="cenas2a.jpg"><div class="info">Melodramas ❤️‍🔥</div></div>
-                <div class="card" style="background: #CD7F32;"><img src="cenas2b.jpg"><div class="info">Históricos 📜</div></div>
             </div>
             <div class="cat-col col-extremidade">
                 <div class="card" style="background: #000080;"><img src="cenas2c.jpg"><div class="info">Justiça ⚖️</div></div>
                 <div class="card" style="background: #E1AD01; color: #000;"><img src="cenas2d.jpg"><div class="info">Sonhos 🎓</div></div>
                 <div class="card" style="background: #000080;"><img src="cenas2c.jpg"><div class="info">Justiça ⚖️</div></div>
-                <div class="card" style="background: #E1AD01; color: #000;"><img src="cenas2d.jpg"><div class="info">Sonhos 🎓</div></div>
             </div>
         </div>
     </section>
