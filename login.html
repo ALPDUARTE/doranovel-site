@@ -6,20 +6,38 @@
     <title>Login | Doranovel</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos para a mensagem de sucesso pós-cadastro[cite: 3, 4] */
+        .success-message { display: none; text-align: center; color: #0a0a0a; }
+        .success-message h3 { font-size: 1.8rem; margin-bottom: 20px; font-weight: 700; }
+        .success-message p { font-size: 1rem; margin-bottom: 30px; font-weight: 500; line-height: 1.4; }
+        .btn-download-app {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #0a0a0a;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+        .btn-download-app:hover { transform: scale(1.05); }
+    </style>
 </head>
 <body class="login-body">
 
     <a href="index.html" class="back-home">⬅ Voltar para o site</a>
 
     <div class="login-wrapper">
+        <!-- LADO ESQUERDO: FORMULÁRIO (PARTE PRETA) -->
         <div class="login-form-side">
             <div class="logo-container" style="justify-content: center; margin-bottom: 30px;">
                 <img src="logo.png" alt="Logo" class="mini-logo" style="height: 60px;">
                 <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
             </div>
             
-            <h2>Bem-vindo de volta!</h2>
-            <p>Acesse sua conta para continuar suas histórias.</p>
+            <h2 id="loginTitle">Bem-vindo de volta!</h2>
+            <p id="loginSubtitle">Acesse sua conta para continuar suas histórias.</p>
 
             <form class="login-form" id="loginForm">
                 <div class="input-group">
@@ -54,18 +72,25 @@
             <p class="register-link">Ainda não tem conta? <a href="#" id="btnRegister">Cadastre-se grátis</a></p>
         </div>
 
-        <div class="login-app-side">
-            <div class="app-promo-content">
+        <!-- LADO DIREITO: PROMOÇÃO/SUCESSO (PARTE MOSTARDA) -->
+        <div class="login-app-side" id="rightSidePanel">
+            <!-- Conteúdo inicial antes do cadastro -->
+            <div id="initialPromo" class="app-promo-content">
                 <h3>A melhor experiência <br>está no nosso <span class="gold">App</span>.</h3>
-                <p>Escaneie o QR Code abaixo para baixar o Doranovel gratuitamente.</p>
-                <div class="qr-code-box">
-                    <img src="qrcode.png" alt="QR Code para Download" class="qr-image">
-                </div>
+                <p>Acesse seu conteúdo favorito com muito mais rapidez e fluidez.</p>
+            </div>
+
+            <!-- Conteúdo de sucesso após cadastro (Oculto inicialmente)[cite: 4] -->
+            <div id="successContent" class="success-message">
+                <h3>Parabéns!</h3>
+                <p>Agora você já é usuário do conteúdo da <strong>DORANOVEL</strong>.<br><br>
+                Para facilitar o acesso ao nosso conteúdo, clique no botão abaixo para baixar nosso aplicativo.</p>
+                <!-- O link abaixo será o seu Google Drive futuramente[cite: 4] -->
+                <a href="#" class="btn-download-app">Baixar Aplicativo</a>
             </div>
         </div>
     </div>
 
-    <!-- Lógica de Autenticação Firebase com Método Redirect -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { 
@@ -91,48 +116,37 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // --- CAPTURAR RESULTADO DO REDIRECIONAMENTO (Google/Facebook) ---
+        // Função para mostrar a mensagem de sucesso no painel mostarda[cite: 4]
+        function showSuccessPanel() {
+            document.getElementById('initialPromo').style.display = 'none';
+            document.getElementById('successContent').style.display = 'block';
+            // Opcional: Esconder o formulário para focar no sucesso
+            document.getElementById('loginForm').style.opacity = '0.3';
+            document.getElementById('loginForm').style.pointerEvents = 'none';
+        }
+
+        // --- CAPTURAR RESULTADO DO REDIRECIONAMENTO[cite: 4] ---
         getRedirectResult(auth)
             .then((result) => {
                 if (result) {
-                    alert("Sucesso! Bem-vindo(a), " + result.user.displayName);
-                    window.location.href = "index.html";
+                    showSuccessPanel(); // Ativa a mensagem de sucesso[cite: 4]
                 }
             })
             .catch((error) => {
-                console.error("Erro no retorno do login social:", error.code);
-                if (error.code === 'auth/account-exists-with-different-credential') {
-                    alert("Este e-mail já está vinculado a outro provedor de login.");
-                } else {
-                    alert("Erro na autenticação social: " + error.message);
-                }
+                console.error("Erro:", error.code);
             });
 
-        // --- LOGIN COM GOOGLE (REDIRECT) ---
-        const googleProvider = new GoogleAuthProvider();
+        // --- LOGIN COM GOOGLE[cite: 4] ---
         document.getElementById('btnGoogle').addEventListener('click', () => {
-            signInWithRedirect(auth, googleProvider);
+            signInWithRedirect(auth, new GoogleAuthProvider());
         });
 
-        // --- LOGIN COM FACEBOOK (REDIRECT)[cite: 4] ---
-        const facebookProvider = new FacebookAuthProvider();
-        // Nota: Removido addScope('email') para evitar o erro de 'Invalid Scopes' até o app estar 'Live'[cite: 1]
+        // --- LOGIN COM FACEBOOK[cite: 4] ---
         document.getElementById('btnFacebook').addEventListener('click', () => {
-            signInWithRedirect(auth, facebookProvider);
+            signInWithRedirect(auth, new FacebookAuthProvider());
         });
 
-        // Login por E-mail convencional[cite: 4]
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            signInWithEmailAndPassword(auth, email, password)
-                .then(() => { window.location.href = "index.html"; })
-                .catch((error) => { alert("Erro: " + error.message); });
-        });
-
-        // Cadastro por E-mail convencional[cite: 4]
+        // --- CADASTRO POR E-MAIL[cite: 4] ---
         document.getElementById('btnRegister').addEventListener('click', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -141,8 +155,19 @@
             if(!email || !password) return alert("Preencha e-mail e senha para cadastrar.");
 
             createUserWithEmailAndPassword(auth, email, password)
-                .then(() => { alert("Conta criada com sucesso!"); window.location.href = "index.html"; })
-                .catch((error) => { alert("Erro no cadastro: " + error.message); });
+                .then(() => { showSuccessPanel(); })
+                .catch((error) => { alert("Erro: " + error.message); });
+        });
+
+        // --- LOGIN POR E-MAIL[cite: 4] ---
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => { showSuccessPanel(); })
+                .catch((error) => { alert("Erro: " + error.message); });
         });
     </script>
 </body>
