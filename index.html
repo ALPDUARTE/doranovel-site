@@ -117,5 +117,23 @@
         <p>www.doranovel.com | Copyright 2026</p>
     </footer>
 
+    <!-- Firebase SDK e Configuração -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
+            authDomain: "doranovel.firebaseapp.com",
+            projectId: "doranovel",
+            storageBucket: "doranovel.firebasestorage.app",
+            messagingSenderId: "105334550592",
+            appId: "1:105334550592:web:eaf414923e311ae62eafa5",
+            measurementId: "G-F1ZH3L20YH"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
 </body>
 </html>
