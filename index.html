@@ -3,157 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doranovel | Premium Landpage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Doranovel - Home</title>
+    <style>
+        /* Estilo Base Seaquake / Doranovel */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* 1) HEADER FIXO E TRANSPARENTE */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100px; /* Head maior conforme solicitado */
+            background: transparent;
+            transition: background 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        /* Classe que o JS adicionará ao rolar */
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            height: 80px; /* Diminui levemente ao rolar para dar sofisticação */
+        }
+
+        .logo {
+            height: 60px;
+            transition: height 0.3s;
+        }
+
+        header.scrolled .logo {
+            height: 50px;
+        }
+
+        /* Menu simples */
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        /* 2) CONTEÚDO PRINCIPAL (BOXER) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            /* Vídeo de fundo seria aplicado aqui no CSS ou via tag <video> */
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('seu-fundo.jpg');
+            background-size: cover;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .gold-text { color: #d4af37; } /* Tom dourado/mostarda */
+
+        /* BOTÕES DAS LOJAS REMOVIDOS AQUI */
+
+        @media (max-width: 768px) {
+            header { height: 120px; } /* Head maior no Mobile */
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
 </head>
 <body>
-  
-    <section class="hero-main">
-        <div class="video-bg">
-            <!-- Playlist de vídeos curada para o fundo do site -->
-            <iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA,kQmfxQw_c0Y,PYQ2vLQx41M,ofkR9kPWmJw,BksusGo9W0E,d3euksbk9EA&controls=0&showinfo=0&rel=0" frameborder="0" allow="autoplay; encrypted-media"></iframe>
-        </div>
-        <div class="overlay"></div>
-        <div class="content">
-            <nav class="navbar">
-                <div class="logo-container">
-                    <img src="logo.png" alt="Logo" class="mini-logo">
-                    <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
-                </div>
-                <div class="links">
-                    <a href="#">About</a>
-                    <a href="#">Why Choose Us</a>
-                    <a href="#">Contact</a>
-                    <!-- Link direto para a página de login atualizada[cite: 4, 5] -->
-                    <a href="login.html" class="btn-login" id="navLoginBtn">Login</a>
-                </div>
-            </nav>
-            <div class="hero-text">
-                <h1>Momentos <span class="gold">Dourados</span>,<br>Desejos <span class="gold">Sem Fim</span>.</h1>
-                <p>Sua plataforma premium para doramas e webnovels curados.</p>
-                <div class="apps">
-                    <!-- Badges oficiais para download[cite: 5] -->
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
-                </div>
-            </div>
-        </div>
 
-        <div class="film-strip">
-            <div class="film-track">
-                <!-- Carrossel de imagens das cenas[cite: 5] -->
-                <img src="cenas1a.jpg" alt="Cena Dorama">
-                <img src="cenas1b.jpg" alt="Cena Dorama">
-                <img src="cenas1c.jpg" alt="Cena Dorama">
-                <img src="cenas2a.jpg" alt="Cena Dorama">
-                <img src="cenas2b.jpg" alt="Cena Dorama">
-                <img src="cenas2c.jpg" alt="Cena Dorama">
-                <img src="cenas2d.jpg" alt="Cena Dorama">
-                <img src="cena2e.jpg" alt="Cena Dorama">
-                <!-- Repetição para animação infinita -->
-                <img src="cenas1a.jpg" alt="Cena Dorama">
-                <img src="cenas1b.jpg" alt="Cena Dorama">
-                <img src="cenas1c.jpg" alt="Cena Dorama">
-                <img src="cenas2a.jpg" alt="Cena Dorama">
-                <img src="cenas2b.jpg" alt="Cena Dorama">
-                <img src="cenas2c.jpg" alt="Cena Dorama">
-                <img src="cenas2d.jpg" alt="Cena Dorama">
-                <img src="cena2e.jpg" alt="Cena Dorama">
-            </div>
-        </div>
+    <header id="mainHeader">
+        <img src="logo-doranovel.png" class="logo" alt="Doranovel">
+        <nav>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <button onclick="logout()" style="background:transparent; border:1px solid #d4af37; color:#fff; padding:5px 15px; border-radius:5px; cursor:pointer;">Sair</button>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Momentos <span class="gold-text">Dourados</span>,<br>Desejos Sem Fim.</h1>
+        <p>Sua plataforma premium para doramas e webnovels curados.</p>
+        
+        <!-- Espaço onde ficavam os botões das lojas agora está limpo -->
     </section>
 
-    <section class="hero-categories">
-        <div class="container">
-            <div class="text-side">
-                <h2>Séries e Livros <br><span class="gold">Curados</span> em <br><span class="pink">Categorias</span> de <br>Cores.</h2>
-                <p>Explore nosso catálogo exclusivo, organizado por cores para sua melhor experiência.</p>
-                <p style="opacity: 0.5; margin-top: 30px; font-size: 14px;">Descubra a variedade.</p>
-            </div>
-            
-            <div class="carousel-wrapper">
-                <div class="carousel-track">
-                    <!-- Colunas animadas com as categorias premium -->
-                    <div class="carousel-col col-down">
-                        <div class="card card-encontros"><div class="card-img"></div><span>Encontros e Destinos 🌸</span></div>
-                        <div class="card card-suspense"><div class="card-img"></div><span>Suspense & Mistério 🔍</span></div>
-                        <div class="card card-melodramas"><div class="card-img"></div><span>Melodramas Intensos ❤️‍🔥</span></div>
-                    </div>
-                    <div class="carousel-col col-up">
-                        <div class="card card-epicos"><div class="card-img"></div><span>Épicos Históricos 📜</span></div>
-                        <div class="card card-cotidiano"><div class="card-img"></div><span>Cotidiano ☕</span></div>
-                        <div class="card card-direito"><div class="card-img"></div><span>Direito & Justiça ⚖️</span></div>
-                    </div>
-                    <div class="carousel-col col-down">
-                        <div class="card card-medicina"><div class="card-img"></div><span>Medicina & Vida 🏥</span></div>
-                        <div class="card card-juventude"><div class="card-img"></div><span>Juventude & Sonhos 🎓</span></div>
-                        <div class="card card-encontros"><div class="card-img"></div><span>Encontros e Destinos 🌸</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="hero-features">
-        <div class="container">
-            <div class="text-side">
-                <h2>Entretenimento <span class="orange">Interativo</span> e Totalmente <span class="gold">Grátis</span>.</h2>
-                <p>Checklists de progresso, abas integradas para vídeo e leitura, e download off-line.</p>
-            </div>
-            <div class="mobile-side">
-                <div class="phone-mockup">
-                    <!-- Mockup para preview do App Android[cite: 5, 10] -->
-                    <img src="celular.png" alt="App Preview">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <img src="logo.png" alt="Logo" class="footer-logo">
-        <p>www.doranovel.com | Copyright 2026</p>
-    </footer>
-
-    <!-- Firebase SDK e Lógica de Estado do Usuário -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        // Configuração do Firebase unificada[cite: 4, 5]
-        const firebaseConfig = {
-            apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
-            authDomain: "doranovel.firebaseapp.com",
-            projectId: "doranovel",
-            storageBucket: "doranovel.firebasestorage.app",
-            messagingSenderId: "105334550592",
-            appId: "1:105334550592:web:eaf414923e311ae62eafa5",
-            measurementId: "G-F1ZH3L20YH"
+    <!-- Script para o efeito do Header -->
+    <script>
+        window.onscroll = function() {
+            var header = document.getElementById("mainHeader");
+            if (window.pageYOffset > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        // Monitorar se o usuário já está logado
-        const loginBtn = document.getElementById('navLoginBtn');
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // Se logado, transforma o botão de Login em Logout ou Perfil
-                loginBtn.textContent = "Sair";
-                loginBtn.href = "#";
-                loginBtn.onclick = () => {
-                    signOut(auth).then(() => {
-                        alert("Você saiu da conta.");
-                        window.location.reload();
-                    });
-                };
-            } else {
-                loginBtn.textContent = "Login";
-                loginBtn.href = "login.html";
-                loginBtn.onclick = null;
-            }
-        });
+        function logout() {
+            // Lógica de logout do Firebase que integraremos ao Android Studio
+            window.location.href = "login.html";
+        }
     </script>
 </body>
 </html>
