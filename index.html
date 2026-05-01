@@ -6,83 +6,93 @@
     <title>Doranovel | Premium Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILIZAÇÃO GERAL --- */
+        /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
 
-        /* --- 1. NAVBAR (TOP FIXO) --- */
+        /* --- 1. NAVBAR (TOP) --- */
         .navbar {
             position: fixed; top: 0; width: 100%; height: 120px;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 5%; background: transparent; z-index: 10000; transition: all 0.5s ease;
         }
         .navbar.scrolled { background: #000000 !important; height: 100px; border-bottom: 2px solid #E1AD01; }
-        .logo-container { display: flex; align-items: center; gap: 15px; }
         .mini-logo { height: 85px; width: auto; transition: 0.4s; }
         .navbar.scrolled .mini-logo { height: 65px; }
         .brand-name { font-size: 36px; font-weight: 700; }
         .brand-gold { color: #E1AD01; }
         .links a { color: #fff; text-decoration: none; margin-left: 25px; font-size: 13px; text-transform: uppercase; font-weight: 700; }
-        .btn-login { border: 1px solid #E1AD01; padding: 12px 25px; border-radius: 4px; color: #E1AD01 !important; text-decoration: none; }
+        .btn-login { border: 1px solid #E1AD01; padding: 12px 25px; border-radius: 4px; color: #E1AD01 !important; }
 
-        /* --- 2. HERO 1: VÍDEO E PELÍCULA REALISTA (35mm) --- */
+        /* --- 2. HERO 1: PELÍCULA REALISTA (CÓPIA image_2e3340.png) --- */
         .hero-main { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .video-bg iframe { width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
         .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
+        
         .hero-text h1 { font-size: 4.5rem; text-transform: uppercase; margin-bottom: 20px; text-shadow: 3px 3px 15px #000; }
 
-        /* Arte da Película (Furos Brancos e Verticais Arredondados) */
+        /* Estilização Idêntica à Película 35mm */
         .film-strip { 
             position: absolute; bottom: 0; width: 100%; background: #111; 
-            padding: 45px 0; border-top: 4px solid #E1AD01; border-bottom: 4px solid #E1AD01; 
+            padding: 50px 0; border-top: 4px solid #E1AD01; border-bottom: 4px solid #E1AD01; 
         }
+        /* Furos Retangulares Arredondados com Numeração e "TITLE" */
         .film-strip::before, .film-strip::after {
-            content: ""; position: absolute; width: 100%; height: 28px;
-            background-image: radial-gradient(ellipse at center, #fff 65%, transparent 75%);
-            background-size: 42px 28px; left: 0;
+            content: "1  TITLE  2  TITLE  3  TITLE  4  TITLE  5  TITLE  6  TITLE  7  TITLE  8  TITLE  9  TITLE";
+            position: absolute; width: 100%; color: #999; font-size: 10px; font-weight: bold;
+            letter-spacing: 58px; text-align: center;
+            background-image: linear-gradient(90deg, #fff 0%, #fff 25px, transparent 25px, transparent 45px);
+            background-size: 45px 22px; background-repeat: repeat-x;
+            height: 22px; z-index: 10;
         }
-        .film-strip::before { top: 8px; } .film-strip::after { bottom: 8px; }
+        .film-strip::before { top: 12px; padding-top: 15px; background-position: center top; } 
+        .film-strip::after { bottom: 12px; padding-bottom: 15px; background-position: center bottom; }
 
         .film-track { display: flex; width: max-content; animation: scroll-film 40s linear infinite; }
-        .film-track img { height: 200px; width: 320px; object-fit: cover; margin: 0 12px; border: 1px solid #000; outline: 12px solid #1a1a1a; }
+        .film-track img { height: 210px; width: 330px; object-fit: cover; margin: 0 15px; border: 2px solid #000; outline: 12px solid #1a1a1a; border-radius: 8px; }
         @keyframes scroll-film { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- 3. HERO 2: TRÊS COLUNAS (LATERAIS SOBEM, MEIO DESCE) ---[cite: 1] */
-        .hero-categories { padding: 120px 5%; display: flex; align-items: center; min-height: 100vh; background: #050505; gap: 60px; }
-        .text-side h2 { font-size: 4rem; line-height: 1.1; margin-bottom: 30px; }
+        /* --- 3. HERO 2: AJUSTE DE PROPORÇÃO (3 COLUNAS VISÍVEIS) ---[cite: 1] */
+        .hero-categories { padding: 120px 5%; display: flex; align-items: center; min-height: 100vh; background: #050505; gap: 40px; }
         
-        .categories-wrapper { flex: 1.5; height: 800px; overflow: hidden; display: flex; gap: 25px; transform: rotate(-6deg) skewX(-2deg); }
-        .cat-col { display: flex; flex-direction: column; gap: 25px; }
+        .text-side { flex: 0.8; } /* Reduzi o espaço do texto para caberem as colunas[cite: 1] */
+        .text-side h2 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 25px; max-width: 450px; }
         
-        /* Animações de Engrenagem: 1 e 3 SOBEM, 2 DESCE[cite: 1] */
-        .col-side { animation: scrollUp 25s linear infinite; }
-        .col-center { animation: scrollDown 25s linear infinite; }
+        .categories-wrapper { 
+            flex: 2.2; /* Aumentei o espaço da animação[cite: 1] */
+            height: 800px; overflow: hidden; display: flex; gap: 20px; 
+            transform: rotate(-6deg) skewX(-2deg); 
+        }
+        .cat-col { display: flex; flex-direction: column; gap: 20px; flex: 1; }
+        
+        /* Animação: Extremidades SOBEM, Meio DESCE[cite: 1] */
+        .col-extremidade { animation: scrollUp 25s linear infinite; }
+        .col-meio { animation: scrollDown 25s linear infinite; }
 
         @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
         @keyframes scrollDown { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
 
-        .card { width: 250px; height: 330px; border-radius: 25px; overflow: hidden; border: 3px solid rgba(255,255,255,0.1); }
+        .card { width: 100%; height: 320px; border-radius: 25px; overflow: hidden; border: 3px solid rgba(255,255,255,0.1); }
         .card img { width: 100%; height: 75%; object-fit: cover; }
-        .card .info { height: 25%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; text-align: center; text-transform: uppercase; padding: 5px; }
+        .card .info { height: 25%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; text-align: center; text-transform: uppercase; }
 
         /* --- 4. HERO 3: MOCKUP ---[cite: 1] */
         .hero-features { padding: 150px 5%; display: flex; align-items: center; justify-content: center; background: #000; gap: 80px; }
-        .feature-text h2 { font-size: 4rem; margin-bottom: 25px; }
-        .phone-preview img { width: 100%; max-width: 700px; filter: drop-shadow(0 0 35px rgba(225, 173, 1, 0.4)); transform: rotate(-2deg); }
+        .phone-preview img { width: 100%; max-width: 680px; filter: drop-shadow(0 0 30px rgba(225, 173, 1, 0.3)); transform: rotate(-2deg); }
 
-        /* --- 5. RESPONSIVIDADE MOBILE ---[cite: 1] */
+        /* --- 5. MOBILE (PRESERVADO) ---[cite: 1] */
         @media (max-width: 768px) {
             .navbar { height: 165px; flex-direction: column; padding: 15px 5%; justify-content: center; } 
-            .navbar.scrolled { height: 165px; border-bottom: 3px solid #E1AD01; }
             .mini-logo { height: 55px; }
             .brand-name { font-size: 24px; }
             .links { margin-top: 15px; width: 100%; justify-content: center; gap: 12px; }
             .links a { font-size: 11px; }
             .hero-text h1 { font-size: 2.5rem; }
             .hero-categories, .hero-features { flex-direction: column; text-align: center; padding: 100px 5%; }
-            .categories-wrapper { transform: none; height: 550px; width: 100%; justify-content: center; }
-            .card { width: 180px; height: 240px; }
+            .text-side { flex: none; }
+            .categories-wrapper { transform: none; height: 550px; width: 100%; flex: none; }
+            .card { height: 240px; }
         }
     </style>
 </head>
@@ -90,7 +100,7 @@
 
     <nav class="navbar" id="mainNavbar">
         <div class="logo-container">
-            <img src="logo.png" alt="Logo" class="mini-logo"> <!--[cite: 1] -->
+            <img src="logo.png" alt="Logo" class="mini-logo">
             <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
         </div>
         <div class="links">
@@ -103,14 +113,14 @@
 
     <!-- HERO 1 -->
     <section class="hero-main">
-        <div class="video-bg"><iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA" frameborder="0"></iframe></div> <!--[cite: 1] -->
+        <div class="video-bg"><iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA" frameborder="0"></iframe></div>
         <div class="overlay"></div>
         <div class="hero-text">
             <h1>Momentos <span class="brand-gold">Dourados</span>,<br>Desejos <span class="brand-gold">Sem Fim</span>.</h1>
         </div>
         <div class="film-strip">
             <div class="film-track">
-                <!-- Imagens repetidas para loop contínuo[cite: 1] -->
+                <!-- Imagens originais repetidas para loop infinito[cite: 1] -->
                 <img src="cenas1a.jpg"> <img src="cenas1b.jpg"> <img src="cenas1c.jpg"> <img src="cenas2a.jpg">
                 <img src="cenas2b.jpg"> <img src="cenas2c.jpg"> <img src="cenas2d.jpg"> <img src="cena2e.jpg">
                 <img src="cenas1a.jpg"> <img src="cenas1b.jpg"> <img src="cenas1c.jpg"> <img src="cenas2a.jpg">
@@ -119,45 +129,42 @@
         </div>
     </section>
 
-    <!-- HERO 2: TRÊS COLUNAS (INVERSÃO DE MOVIMENTO)[cite: 1] -->
+    <!-- HERO 2: 3 COLUNAS AJUSTADAS[cite: 1] -->
     <section class="hero-categories">
         <div class="text-side">
             <h2>Séries e Livros <span class="brand-gold">Curados</span> em Cores.</h2>
+            <p>Explore nosso catálogo exclusivo, organizado por cores para sua melhor experiência.</p>
         </div>
         <div class="categories-wrapper">
-            <!-- COLUNA ESQUERDA (SOBE) -->
-            <div class="cat-col col-side">
-                <div class="card" style="background: #D48498; color: #fff;"><img src="cenas1a.jpg"><div class="info">Encontros e Destinos 🌸</div></div>
-                <div class="card" style="background: #F0F0F0; color: #000;"><img src="cenas1b.jpg"><div class="info">Suspense & Mistério 🔍</div></div>
-                <div class="card" style="background: #D48498; color: #fff;"><img src="cenas1a.jpg"><div class="info">Encontros e Destinos 🌸</div></div>
+            <!-- COLUNA 1: SOBE[cite: 1] -->
+            <div class="cat-col col-extremidade">
+                <div class="card" style="background: #D48498;"><img src="cenas1a.jpg"><div class="info">Encontros 🌸</div></div>
+                <div class="card" style="background: #F0F0F0; color: #000;"><img src="cenas1b.jpg"><div class="info">Suspense 🔍</div></div>
+                <div class="card" style="background: #D48498;"><img src="cenas1a.jpg"><div class="info">Encontros 🌸</div></div>
             </div>
-            <!-- COLUNA CENTRAL (DESCE) -->
-            <div class="cat-col col-center">
-                <div class="card" style="background: #A52A2A; color: #fff;"><img src="cenas2a.jpg"><div class="info">Melodramas Intensos ❤️‍🔥</div></div>
-                <div class="card" style="background: #CD7F32; color: #fff;"><img src="cenas2b.jpg"><div class="info">Épicos Históricos 📜</div></div>
-                <div class="card" style="background: #A52A2A; color: #fff;"><img src="cenas2a.jpg"><div class="info">Melodramas Intensos ❤️‍🔥</div></div>
+            <!-- COLUNA 2: DESCE[cite: 1] -->
+            <div class="cat-col col-meio">
+                <div class="card" style="background: #A52A2A;"><img src="cenas2a.jpg"><div class="info">Melodramas ❤️‍🔥</div></div>
+                <div class="card" style="background: #CD7F32;"><img src="cenas2b.jpg"><div class="info">Históricos 📜</div></div>
+                <div class="card" style="background: #A52A2A;"><img src="cenas2a.jpg"><div class="info">Melodramas ❤️‍🔥</div></div>
             </div>
-            <!-- COLUNA DIREITA (SOBE) -->
-            <div class="cat-col col-side">
-                <div class="card" style="background: #D2B48C; color: #000;"><img src="cenas2c.jpg"><div class="info">Cotidiano ☕</div></div>
-                <div class="card" style="background: #000080; color: #fff;"><img src="cenas2d.jpg"><div class="info">Direito & Justiça ⚖️</div></div>
-                <div class="card" style="background: #D2B48C; color: #000;"><img src="cenas2c.jpg"><div class="info">Cotidiano ☕</div></div>
+            <!-- COLUNA 3: SOBE[cite: 1] -->
+            <div class="cat-col col-extremidade">
+                <div class="card" style="background: #000080;"><img src="cenas2c.jpg"><div class="info">Justiça ⚖️</div></div>
+                <div class="card" style="background: #E1AD01; color: #000;"><img src="cenas2d.jpg"><div class="info">Sonhos 🎓</div></div>
+                <div class="card" style="background: #000080;"><img src="cenas2c.jpg"><div class="info">Justiça ⚖️</div></div>
             </div>
         </div>
     </section>
 
-    <!-- HERO 3[cite: 1] -->
+    <!-- HERO 3 -->
     <section class="hero-features">
         <div class="feature-text">
-            <h2>Experiência <span class="brand-gold">Interativa</span>.</h2>
+            <h2>Entretenimento <span class="brand-gold">Interativo</span>.</h2>
+            <p>Totalmente grátis e offline.</p>
         </div>
         <div class="phone-preview"><img src="celular.png" alt="App Preview"></div>
     </section>
-
-    <footer style="padding: 60px; text-align: center; background: #000; border-top: 1px solid #222;">
-        <img src="logo.png" alt="Logo" style="height: 50px; margin-bottom: 20px;">
-        <p>www.doranovel.com | Copyright 2026</p>
-    </footer>
 
     <script>
         window.onscroll = function() {
