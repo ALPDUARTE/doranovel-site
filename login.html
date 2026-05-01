@@ -10,20 +10,18 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* NAVBAR (Mantendo a identidade do Index) */
         .navbar {
             width: 100%; height: 100px; display: flex; align-items: center; justify-content: space-between;
             padding: 0 5%; background: #000; border-bottom: 2px solid #E1AD01;
         }
         .mini-logo { height: 60px; }
-        .brand-name { font-size: 28px; font-weight: 700; color: #fff; }
+        .brand-name { font-size: 28px; font-weight: 700; color: #fff; display: flex; align-items: center; }
         .brand-gold { color: #E1AD01; }
         .back-link { color: #E1AD01; text-decoration: none; font-size: 14px; font-weight: 700; text-transform: uppercase; }
 
-        /* CONTAINER PRINCIPAL */
         .login-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; gap: 50px; }
 
-        /* LADO ESQUERDO: FORMULÁRIO */
+        /* BOX DE LOGIN */
         .login-box { 
             flex: 1; max-width: 450px; background: #111; padding: 40px; border-radius: 20px; 
             border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
@@ -44,10 +42,14 @@
         .social-login { 
             width: 100%; padding: 12px; background: transparent; border: 1px solid #444; 
             border-radius: 8px; color: #fff; cursor: pointer; display: flex; align-items: center; 
-            justify-content: center; gap: 10px; font-weight: 700;
+            justify-content: center; gap: 10px; font-weight: 700; margin-bottom: 20px;
         }
 
-        /* LADO DIREITO: DOWNLOAD (Dinâmico) */
+        /* LINK DE CADASTRO */
+        .signup-link { text-align: center; font-size: 14px; color: #999; }
+        .signup-link a { color: #E1AD01; text-decoration: none; font-weight: 700; }
+
+        /* BOX DE DOWNLOAD E MENSAGENS */
         .download-box { 
             flex: 1; max-width: 500px; text-align: center; padding: 40px; 
             background: linear-gradient(145deg, #0a0a0a, #151515); border-radius: 25px; border: 1px solid #E1AD01;
@@ -58,13 +60,20 @@
         .btn-download { 
             display: inline-block; padding: 15px 40px; background: transparent; 
             border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; 
-            text-decoration: none; font-weight: 700; text-transform: uppercase; 
-            transition: 0.4s; 
+            text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; 
         }
-        .btn-download:hover { background: #E1AD01; color: #000; box-shadow: 0 0 20px rgba(225, 173, 1, 0.4); }
+        .btn-download:hover { background: #E1AD01; color: #000; }
 
-        /* MENSAGEM PÓS-LOGIN (Invisível por padrão) */
-        #congrats-msg { display: none; }
+        /* BOTÃO DE LOGOUT */
+        .btn-logout { 
+            margin-top: 20px; background: transparent; border: 1px solid #ff4444; 
+            color: #ff4444; padding: 10px 20px; border-radius: 8px; cursor: pointer; 
+            font-weight: 700; text-transform: uppercase; font-size: 12px; transition: 0.3s;
+        }
+        .btn-logout:hover { background: #ff4444; color: #fff; }
+
+        /* ESTADOS DE EXIBIÇÃO */
+        #logged-out-view, #logged-in-view { display: none; }
 
         @media (max-width: 768px) {
             .login-wrapper { flex-direction: column; gap: 30px; }
@@ -83,8 +92,9 @@
     </nav>
 
     <main class="login-wrapper">
-        <!-- ÁREA DE LOGIN -->
-        <section class="login-box">
+        
+        <!-- VISÃO: NÃO LOGADO -->
+        <section class="login-box" id="logged-out-view">
             <h2>Acessar</h2>
             <div class="input-group">
                 <label>E-mail</label>
@@ -94,40 +104,38 @@
                 <label>Senha</label>
                 <input type="password" id="password" placeholder="••••••••">
             </div>
-            <button class="btn-access" id="loginBtn">Entrar</button>
+            <button class="btn-access" id="loginEmailBtn">Entrar</button>
+            
             <button class="social-login" id="googleBtn">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" width="18"> 
                 Entrar com Google
             </button>
+
+            <div class="signup-link">
+                Não tem conta? <a href="#" id="showSignup">Criar uma conta</a>
+            </div>
         </section>
 
-        <!-- ÁREA DE DOWNLOAD DO APP -->
-        <section class="download-box" id="promo-section">
-            <div id="default-promo">
-                <h3>O App já está disponível!</h3>
-                <p>Tenha uma experiência imersiva com leitura offline e notificações de novos capítulos diretamente no seu Android.</p>
-                <a href="seu-app-download.apk" class="btn-download">Baixar APK Grátis</a>
-            </div>
-            
-            <div id="congrats-msg">
-                <h3 style="color: #E1AD01;">Parabéns!</h3>
-                <p>Você está logado. Agora é só baixar o aplicativo oficial para não perder nenhum dorama!</p>
-                <a href="seu-app-download.apk" class="btn-download">Clique para Baixar</a>
-            </div>
+        <!-- VISÃO: LOGADO -->
+        <section class="download-box" id="logged-in-view">
+            <h3 style="color: #E1AD01;">Parabéns!</h3>
+            <p>Você está logado. Agora é só baixar o aplicativo oficial para não perder nenhum dorama!</p>
+            <a href="seu-app-download.apk" class="btn-download">CLIQUE PARA BAIXAR</a>
+            <br>
+            <button class="btn-logout" id="logoutBtn">Sair da Conta</button>
         </section>
+
     </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Sua Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
             authDomain: "doranovel.firebaseapp.com",
             projectId: "doranovel",
             storageBucket: "doranovel.firebasestorage.app",
-            messagingSenderId: "105334550592",
             appId: "1:105334550592:web:eaf414923e311ae62eafa5"
         };
 
@@ -135,16 +143,37 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // Autenticação Social
-        document.getElementById('googleBtn').onclick = () => signInWithRedirect(auth, provider);
+        // ELEMENTOS
+        const loggedOutView = document.getElementById('logged-out-view');
+        const loggedInView = document.getElementById('logged-in-view');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const googleBtn = document.getElementById('googleBtn');
 
-        // Monitorar Estado (Troca para mensagem de download após login)
+        // MONITOR DE ESTADO
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                document.getElementById('default-promo').style.display = 'none';
-                document.getElementById('congrats-msg').style.display = 'block';
+                loggedOutView.style.display = 'none';
+                loggedInView.style.display = 'block';
+            } else {
+                loggedOutView.style.display = 'block';
+                loggedInView.style.display = 'none';
             }
         });
+
+        // ACÇÕES
+        googleBtn.onclick = () => signInWithRedirect(auth, provider);
+        
+        logoutBtn.onclick = () => {
+            signOut(auth).then(() => {
+                window.location.reload(); // Recarrega para limpar o estado visual
+            });
+        };
+
+        // Exemplo simples de Alerta para Cadastro (como você pediu para ver como está funcionando)
+        document.getElementById('showSignup').onclick = (e) => {
+            e.preventDefault();
+            alert("Aqui abriremos o formulário de cadastro ou redirecionaremos para a página de registro do Firebase.");
+        };
     </script>
 </body>
 </html>
