@@ -65,6 +65,7 @@
         </div>
     </div>
 
+    <!-- Lógica de Autenticação Firebase com Método Redirect -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { 
@@ -73,10 +74,10 @@
             createUserWithEmailAndPassword, 
             GoogleAuthProvider, 
             FacebookAuthProvider, 
-            signInWithPopup 
+            signInWithRedirect, 
+            getRedirectResult 
         } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Configuração do Firebase[cite: 1, 4]
         const firebaseConfig = {
             apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
             authDomain: "doranovel.firebaseapp.com",
@@ -90,54 +91,48 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // --- LOGIN COM GOOGLE ---
+        // --- CAPTURAR RESULTADO DO REDIRECIONAMENTO (Google/Facebook) ---
+        getRedirectResult(auth)
+            .then((result) => {
+                if (result) {
+                    alert("Sucesso! Bem-vindo(a), " + result.user.displayName);
+                    window.location.href = "index.html";
+                }
+            })
+            .catch((error) => {
+                console.error("Erro no retorno do login social:", error.code);
+                if (error.code === 'auth/account-exists-with-different-credential') {
+                    alert("Este e-mail já está vinculado a outro provedor de login.");
+                } else {
+                    alert("Erro na autenticação social: " + error.message);
+                }
+            });
+
+        // --- LOGIN COM GOOGLE (REDIRECT) ---
         const googleProvider = new GoogleAuthProvider();
         document.getElementById('btnGoogle').addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider)
-                .then((result) => {
-                    alert("Sucesso! Bem-vindo(a), " + result.user.displayName);
-                    window.location.href = "index.html";
-                })
-                .catch((error) => {
-                    alert("Erro no Google Login: " + error.message);
-                });
+            signInWithRedirect(auth, googleProvider);
         });
 
-        // --- LOGIN COM FACEBOOK ---
+        // --- LOGIN COM FACEBOOK (REDIRECT)[cite: 4] ---
         const facebookProvider = new FacebookAuthProvider();
-        facebookProvider.addScope('email'); // Garante a captura do e-mail
-
+        // Nota: Removido addScope('email') para evitar o erro de 'Invalid Scopes' até o app estar 'Live'[cite: 1]
         document.getElementById('btnFacebook').addEventListener('click', () => {
-            signInWithPopup(auth, facebookProvider)
-                .then((result) => {
-                    alert("Sucesso! Bem-vindo(a), " + result.user.displayName);
-                    window.location.href = "index.html";
-                })
-                .catch((error) => {
-                    console.error("Erro Facebook:", error.code);
-                    if (error.code === 'auth/account-exists-with-different-credential') {
-                        alert("Este e-mail já está vinculado a outra conta (Google ou E-mail).");
-                    } else {
-                        alert("Erro no Facebook Login: " + error.message);
-                    }
-                });
+            signInWithRedirect(auth, facebookProvider);
         });
 
-        // --- LOGIN POR E-MAIL ---
+        // Login por E-mail convencional[cite: 4]
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             signInWithEmailAndPassword(auth, email, password)
-                .then(() => { 
-                    alert("Login realizado!"); 
-                    window.location.href = "index.html";
-                })
-                .catch((error) => { alert("Erro no Login: " + error.message); });
+                .then(() => { window.location.href = "index.html"; })
+                .catch((error) => { alert("Erro: " + error.message); });
         });
 
-        // --- CADASTRO ---
+        // Cadastro por E-mail convencional[cite: 4]
         document.getElementById('btnRegister').addEventListener('click', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -146,10 +141,7 @@
             if(!email || !password) return alert("Preencha e-mail e senha para cadastrar.");
 
             createUserWithEmailAndPassword(auth, email, password)
-                .then(() => { 
-                    alert("Conta criada com sucesso!"); 
-                    window.location.href = "index.html";
-                })
+                .then(() => { alert("Conta criada com sucesso!"); window.location.href = "index.html"; })
                 .catch((error) => { alert("Erro no cadastro: " + error.message); });
         });
     </script>
