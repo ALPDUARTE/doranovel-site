@@ -3,134 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Doranovel</title>
+    <title>Doranovel | Login & Acesso</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- ESTILO BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* NAVBAR (Mantendo a identidade do Index) */
+        .navbar {
+            width: 100%; height: 100px; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%; background: #000; border-bottom: 2px solid #E1AD01;
+        }
+        .mini-logo { height: 60px; }
+        .brand-name { font-size: 28px; font-weight: 700; color: #fff; }
+        .brand-gold { color: #E1AD01; }
+        .back-link { color: #E1AD01; text-decoration: none; font-size: 14px; font-weight: 700; text-transform: uppercase; }
+
+        /* CONTAINER PRINCIPAL */
+        .login-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; gap: 50px; }
+
+        /* LADO ESQUERDO: FORMULÁRIO */
+        .login-box { 
+            flex: 1; max-width: 450px; background: #111; padding: 40px; border-radius: 20px; 
+            border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        .login-box h2 { font-size: 2rem; margin-bottom: 20px; color: #E1AD01; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #999; text-transform: uppercase; }
+        .input-group input { 
+            width: 100%; padding: 15px; background: #222; border: 1px solid #333; 
+            border-radius: 8px; color: #fff; font-family: 'Montserrat'; outline: none; transition: 0.3s;
+        }
+        .input-group input:focus { border-color: #E1AD01; }
+
+        .btn-access { 
+            width: 100%; padding: 15px; background: #E1AD01; border: none; border-radius: 8px; 
+            color: #000; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-bottom: 15px;
+        }
+        .social-login { 
+            width: 100%; padding: 12px; background: transparent; border: 1px solid #444; 
+            border-radius: 8px; color: #fff; cursor: pointer; display: flex; align-items: center; 
+            justify-content: center; gap: 10px; font-weight: 700;
+        }
+
+        /* LADO DIREITO: DOWNLOAD (Dinâmico) */
+        .download-box { 
+            flex: 1; max-width: 500px; text-align: center; padding: 40px; 
+            background: linear-gradient(145deg, #0a0a0a, #151515); border-radius: 25px; border: 1px solid #E1AD01;
+        }
+        .download-box h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .download-box p { color: #ccc; margin-bottom: 30px; line-height: 1.6; }
+        
+        .btn-download { 
+            display: inline-block; padding: 15px 40px; background: transparent; 
+            border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; 
+            text-decoration: none; font-weight: 700; text-transform: uppercase; 
+            transition: 0.4s; 
+        }
+        .btn-download:hover { background: #E1AD01; color: #000; box-shadow: 0 0 20px rgba(225, 173, 1, 0.4); }
+
+        /* MENSAGEM PÓS-LOGIN (Invisível por padrão) */
+        #congrats-msg { display: none; }
+
+        @media (max-width: 768px) {
+            .login-wrapper { flex-direction: column; gap: 30px; }
+            .download-box { order: -1; width: 100%; }
+        }
+    </style>
 </head>
-<body class="login-body">
+<body>
 
-    <a href="index.html" class="back-home">⬅ Voltar para o site</a>
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo" class="mini-logo">
+            <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
+        </div>
+        <a href="index.html" class="back-link">Voltar ao Site</a>
+    </nav>
 
-    <div class="login-wrapper">
-        <div class="login-form-side">
-            <div class="logo-container" style="justify-content: center; margin-bottom: 30px;">
-                <img src="logo.png" alt="Logo" class="mini-logo" style="height: 60px;">
-                <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
+    <main class="login-wrapper">
+        <!-- ÁREA DE LOGIN -->
+        <section class="login-box">
+            <h2>Acessar</h2>
+            <div class="input-group">
+                <label>E-mail</label>
+                <input type="email" id="email" placeholder="seu@email.com">
+            </div>
+            <div class="input-group">
+                <label>Senha</label>
+                <input type="password" id="password" placeholder="••••••••">
+            </div>
+            <button class="btn-access" id="loginBtn">Entrar</button>
+            <button class="social-login" id="googleBtn">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" width="18"> 
+                Entrar com Google
+            </button>
+        </section>
+
+        <!-- ÁREA DE DOWNLOAD DO APP -->
+        <section class="download-box" id="promo-section">
+            <div id="default-promo">
+                <h3>O App já está disponível!</h3>
+                <p>Tenha uma experiência imersiva com leitura offline e notificações de novos capítulos diretamente no seu Android.</p>
+                <a href="seu-app-download.apk" class="btn-download">Baixar APK Grátis</a>
             </div>
             
-            <h2>Bem-vindo de volta!</h2>
-            <p>Acesse sua conta para continuar suas histórias.</p>
-
-            <form class="login-form" id="loginForm">
-                <div class="input-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" placeholder="Digite seu e-mail" required>
-                </div>
-                <div class="input-group">
-                    <label for="password">Senha</label>
-                    <input type="password" id="password" placeholder="Digite sua senha" required>
-                </div>
-                <div class="forgot-password">
-                    <a href="#">Esqueceu a senha?</a>
-                </div>
-                <button type="submit" class="btn-submit">Entrar na Conta</button>
-
-                <div class="social-divider">
-                    <span>ou acesse rápido com</span>
-                </div>
-
-                <div class="social-login">
-                    <button type="button" class="btn-social" id="btnGoogle">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
-                        Google
-                    </button>
-                    <!-- BOTÃO FACEBOOK ADICIONADO AQUI -->
-                    <button type="button" class="btn-social" id="btnFacebook" style="background-color: #1877F2; color: white;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook">
-                        Facebook
-                    </button>
-                </div>
-            </form>
-
-            <p class="register-link">Ainda não tem conta? <a href="#" id="btnRegister">Cadastre-se grátis</a></p>
-        </div>
-
-        <div class="login-app-side">
-            <div class="app-promo-content">
-                <h3>A melhor experiência <br>está no nosso <span class="gold">App</span>.</h3>
-                <p>Escaneie o QR Code abaixo para baixar o Doranovel gratuitamente.</p>
-                <div class="qr-code-box">
-                    <img src="qrcode.png" alt="QR Code para Download" class="qr-image">
-                </div>
+            <div id="congrats-msg">
+                <h3 style="color: #E1AD01;">Parabéns!</h3>
+                <p>Você está logado. Agora é só baixar o aplicativo oficial para não perder nenhum dorama!</p>
+                <a href="seu-app-download.apk" class="btn-download">Clique para Baixar</a>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <!-- Lógica de Autenticação Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        // FacebookAuthProvider ADICIONADO NA IMPORTAÇÃO
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+        // Sua Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
             authDomain: "doranovel.firebaseapp.com",
             projectId: "doranovel",
             storageBucket: "doranovel.firebasestorage.app",
             messagingSenderId: "105334550592",
-            appId: "1:105334550592:web:eaf414923e311ae62eafa5",
-            measurementId: "G-F1ZH3L20YH"
+            appId: "1:105334550592:web:eaf414923e311ae62eafa5"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
-        // --- LOGIN COM GOOGLE ---
-        const googleProvider = new GoogleAuthProvider();
-        document.getElementById('btnGoogle').addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider)
-                .then((result) => {
-                    alert("Sucesso! Bem-vindo(a), " + result.user.displayName);
-                })
-                .catch((error) => {
-                    alert("Erro no Google Login: " + error.message);
-                });
-        });
+        // Autenticação Social
+        document.getElementById('googleBtn').onclick = () => signInWithRedirect(auth, provider);
 
-        // --- LOGIN COM FACEBOOK (ADICIONADO AQUI) ---
-        const facebookProvider = new FacebookAuthProvider();
-        document.getElementById('btnFacebook').addEventListener('click', () => {
-            signInWithPopup(auth, facebookProvider)
-                .then((result) => {
-                    alert("Sucesso! Bem-vindo(a), " + result.user.displayName);
-                })
-                .catch((error) => {
-                    alert("Erro no Facebook Login: " + error.message);
-                });
-        });
-
-        // Login por E-mail
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            signInWithEmailAndPassword(auth, email, password)
-                .then(() => { alert("Login realizado!"); })
-                .catch((error) => { alert("Erro: " + error.message); });
-        });
-
-        // Cadastro
-        document.getElementById('btnRegister').addEventListener('click', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            if(!email || !password) return alert("Preencha e-mail e senha para cadastrar.");
-
-            createUserWithEmailAndPassword(auth, email, password)
-                .then(() => { alert("Conta criada com sucesso!"); })
-                .catch((error) => { alert("Erro no cadastro: " + error.message); });
+        // Monitorar Estado (Troca para mensagem de download após login)
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('default-promo').style.display = 'none';
+                document.getElementById('congrats-msg').style.display = 'block';
+            }
         });
     </script>
 </body>
