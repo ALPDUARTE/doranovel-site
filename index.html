@@ -6,11 +6,11 @@
     <title>Doranovel | Premium Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- RESET E BASE --- */
+        /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
 
-        /* --- 1. HEADER FIXO E DINÂMICO --- */
+        /* --- 1. NAVBAR FIXA E PREMIUM --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -38,48 +38,66 @@
         .links a { color: #fff; text-decoration: none; font-size: 13px; text-transform: uppercase; font-weight: 700; }
         .btn-login { border: 1px solid #d4af37; padding: 10px 20px; border-radius: 4px; color: #d4af37 !important; }
 
-        /* --- 2. HERO 1: VÍDEO E ROLO DE FILME ANIMADO --- */
+        /* --- 2. HERO 1: VÍDEO E ROLO DE CINEMA (004548.jpg) --- */
         .hero-main { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .video-bg iframe { width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 0; }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
         
-        .hero-text { position: relative; z-index: 1; text-align: center; }
-        .hero-text h1 { font-size: 3.5rem; text-transform: uppercase; margin-bottom: 15px; }
+        .hero-text { z-index: 1; text-align: center; }
+        .hero-text h1 { font-size: 3.5rem; margin-bottom: 15px; text-shadow: 2px 2px 8px #000; }
         .gold { color: #d4af37; }
 
-        /* ANIMAÇÃO DO ROLO DE FILME (Hero 1) */
-        .film-strip { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.8); padding: 15px 0; overflow: hidden; border-top: 2px solid #d4af37; border-bottom: 2px solid #d4af37; }
-        .film-track { display: flex; width: calc(250px * 16); animation: scroll-film 40s linear infinite; }
-        .film-track img { height: 130px; width: 230px; object-fit: cover; margin: 0 10px; border: 1px solid #333; }
-        @keyframes scroll-film { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-250px * 8)); } }
+        /* Estilização do Rolo de Filme */
+        .film-strip { 
+            position: absolute; bottom: 0; width: 100%; background: #000; 
+            padding: 20px 0; border-top: 3px solid #d4af37; border-bottom: 3px solid #d4af37; 
+        }
+        /* Perfurações do filme (pontos dourados) */
+        .film-strip::before, .film-strip::after {
+            content: "• • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • •";
+            position: absolute; width: 100%; color: #d4af37; font-size: 20px; letter-spacing: 25px; text-align: center;
+        }
+        .film-strip::before { top: 5px; }
+        .film-strip::after { bottom: 5px; }
 
-        /* --- 3. HERO 2: CATEGORIAS EM COLUNAS ANIMADAS --- */
+        .film-track { display: flex; width: calc(300px * 16); animation: scroll-film 35s linear infinite; }
+        .film-track img { height: 160px; width: 280px; object-fit: cover; margin: 0 10px; border: 2px solid #222; }
+        @keyframes scroll-film { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-300px * 8)); } }
+
+        /* --- 3. HERO 2: TRÊS COLUNAS ALTERNADAS (012535.jpg) --- */
         .hero-categories { padding: 120px 5%; display: flex; align-items: center; min-height: 100vh; background: #050505; }
-        .categories-grid { display: flex; gap: 20px; height: 600px; overflow: hidden; transform: rotate(-5deg) translateY(-50px); }
-        .cat-col { display: flex; flex-direction: column; gap: 20px; }
-        .col-up { animation: scroll-up 30s linear infinite; }
-        .col-down { animation: scroll-down 30s linear infinite; }
-        @keyframes scroll-up { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-        @keyframes scroll-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+        .text-side { flex: 1; padding-right: 50px; }
+        .text-side h2 { font-size: 3rem; margin-bottom: 20px; }
         
-        .card { width: 200px; height: 280px; border-radius: 15px; background: #111; overflow: hidden; position: relative; border: 2px solid #222; }
-        .card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
-        .card span { position: absolute; bottom: 15px; left: 10px; font-weight: bold; font-size: 14px; text-shadow: 2px 2px 4px #000; }
+        .categories-wrapper { 
+            flex: 1.5; height: 700px; overflow: hidden; 
+            transform: rotate(-6deg) skewX(-2deg); display: flex; gap: 20px; 
+        }
+        .cat-col { display: flex; flex-direction: column; gap: 20px; }
+        
+        /* Animação: Extremidades Sobem, Meio Desce */
+        .col-extremidade { animation: scrollUp 25s linear infinite; }
+        .col-meio { animation: scrollDown 25s linear infinite; }
 
-        /* --- 4. HERO 3: INTERATIVIDADE E MOCKUP --- */
+        @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+        @keyframes scrollDown { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+
+        .card { 
+            width: 220px; height: 300px; border-radius: 20px; background: #111; 
+            overflow: hidden; position: relative; border: 3px solid #333; 
+        }
+        .card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .card span { position: absolute; bottom: 15px; left: 15px; font-weight: bold; font-size: 14px; background: rgba(0,0,0,0.6); padding: 5px 10px; border-radius: 5px; }
+
+        /* --- 4. HERO 3: MOCKUP --- */
         .hero-features { padding: 100px 5%; display: flex; align-items: center; justify-content: space-between; background: #000; }
-        .feature-text { flex: 1; padding-right: 50px; }
-        .feature-text h2 { font-size: 3rem; margin-bottom: 25px; }
-        .phone-mockup { flex: 1; text-align: right; }
-        .phone-mockup img { width: 100%; max-width: 450px; filter: drop-shadow(0 0 20px #d4af37); transition: transform 0.5s ease; }
-        .phone-mockup img:hover { transform: scale(1.05) rotate(-2deg); }
+        .phone-preview img { width: 100%; max-width: 480px; filter: drop-shadow(0 0 25px #d4af37); }
 
         @media (max-width: 768px) {
-            .navbar { height: 100px; }
             .hero-text h1 { font-size: 2rem; }
-            .hero-categories, .hero-features { flex-direction: column; text-align: center; }
-            .categories-grid { transform: rotate(0); height: 400px; margin-top: 50px; }
+            .hero-categories { flex-direction: column; text-align: center; }
+            .categories-wrapper { transform: none; height: 500px; margin-top: 40px; }
         }
     </style>
 </head>
@@ -101,7 +119,7 @@
     <!-- HERO 1 -->
     <section class="hero-main">
         <div class="video-bg">
-            <iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA,kQmfxQw_c0Y,PYQ2vLQx41M,ofkR9kPWmJw,BksusGo9W0E,d3euksbk9EA&controls=0&showinfo=0&rel=0" frameborder="0"></iframe>
+            <iframe src="https://www.youtube.com/embed/hNcXRgX37PA?autoplay=1&mute=1&loop=1&playlist=hNcXRgX37PA,kQmfxQw_c0Y,PYQ2vLQx41M,ofkR9kPWmJw,BksusGo9W0E,d3euksbk9EA&controls=0&showinfo=0&rel=0" frameborder="0"></iframe> <!-- -->
         </div>
         <div class="overlay"></div>
         <div class="hero-text">
@@ -110,9 +128,9 @@
         </div>
         <div class="film-strip">
             <div class="film-track">
+                <!-- Imagens originais repetidas para loop infinito -->
                 <img src="cenas1a.jpg"> <img src="cenas1b.jpg"> <img src="cenas1c.jpg"> <img src="cenas2a.jpg">
                 <img src="cenas2b.jpg"> <img src="cenas2c.jpg"> <img src="cenas2d.jpg"> <img src="cena2e.jpg">
-                <!-- Duplicados para o loop infinito -->
                 <img src="cenas1a.jpg"> <img src="cenas1b.jpg"> <img src="cenas1c.jpg"> <img src="cenas2a.jpg">
                 <img src="cenas2b.jpg"> <img src="cenas2c.jpg"> <img src="cenas2d.jpg"> <img src="cena2e.jpg">
             </div>
@@ -121,39 +139,49 @@
 
     <!-- HERO 2 -->
     <section class="hero-categories">
-        <div class="feature-text">
-            <h2>Séries e Livros <span class="gold">Curados</span> em Categorias de Cores.</h2>
-            <p>Explore nosso catálogo exclusivo organizado para sua melhor experiência.</p>
+        <div class="text-side">
+            <h2>Séries e Livros <span class="gold">Curados</span> em Categorias.</h2>
+            <p>Explore nosso catálogo exclusivo, organizado para sua melhor experiência.</p>
         </div>
-        <div class="categories-grid">
-            <div class="cat-col col-up">
-                <div class="card"><img src="cenas1a.jpg"><span>Históricos 📜</span></div>
-                <div class="card" style="border-color: #ff69b4;"><img src="cenas1b.jpg"><span>Romance 🌸</span></div>
-                <div class="card"><img src="cenas1a.jpg"><span>Históricos 📜</span></div>
-                <div class="card" style="border-color: #ff69b4;"><img src="cenas1b.jpg"><span>Romance 🌸</span></div>
+        <div class="categories-wrapper">
+            <!-- COLUNA 1: SOBE -->
+            <div class="cat-col col-extremidade">
+                <div class="card" style="border-color: #ff69b4;"><img src="cenas1a.jpg"><span>Romance 🌸</span></div>
+                <div class="card"><img src="cenas1b.jpg"><span>Históricos 📜</span></div>
+                <div class="card" style="border-color: #ff69b4;"><img src="cenas1a.jpg"><span>Romance 🌸</span></div>
+                <div class="card"><img src="cenas1b.jpg"><span>Históricos 📜</span></div>
             </div>
-            <div class="cat-col col-down">
+            <!-- COLUNA 2: DESCE (MEIO) -->
+            <div class="cat-col col-meio">
                 <div class="card" style="border-color: #00ced1;"><img src="cenas2a.jpg"><span>Medicina 🏥</span></div>
                 <div class="card" style="border-color: #ffd700;"><img src="cenas2b.jpg"><span>Cotidiano ☕</span></div>
                 <div class="card" style="border-color: #00ced1;"><img src="cenas2a.jpg"><span>Medicina 🏥</span></div>
                 <div class="card" style="border-color: #ffd700;"><img src="cenas2b.jpg"><span>Cotidiano ☕</span></div>
+            </div>
+            <!-- COLUNA 3: SOBE -->
+            <div class="cat-col col-extremidade">
+                <div class="card" style="border-color: #ff1493;"><img src="cenas2c.jpg"><span>Dramas ❤️‍🔥</span></div>
+                <div class="card" style="border-color: #9370db;"><img src="cenas2d.jpg"><span>Mistério 🔍</span></div>
+                <div class="card" style="border-color: #ff1493;"><img src="cenas2c.jpg"><span>Dramas ❤️‍🔥</span></div>
+                <div class="card" style="border-color: #9370db;"><img src="cenas2d.jpg"><span>Mistério 🔍</span></div>
             </div>
         </div>
     </section>
 
     <!-- HERO 3 -->
     <section class="hero-features">
-        <div class="feature-text">
-            <h2>Entretenimento <span class="gold">Interativo</span> e Totalmente Grátis.</h2>
-            <p>Checklists de progresso, abas integradas e download off-line.</p>
+        <div class="text-side">
+            <h2>Experiência <span class="gold">Interativa</span></h2>
+            <p>Tudo o que você precisa em um só lugar.</p>
         </div>
-        <div class="phone-mockup">
-            <img src="celular.png" alt="Doranovel App Preview">
+        <div class="phone-preview">
+            <img src="celular.png" alt="App Preview">
         </div>
     </section>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        // Sua config original do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
             authDomain: "doranovel.firebaseapp.com",
