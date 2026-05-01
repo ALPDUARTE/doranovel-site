@@ -7,21 +7,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Estilos para a mensagem de sucesso pós-cadastro[cite: 3, 4] */
-        .success-message { display: none; text-align: center; color: #0a0a0a; }
-        .success-message h3 { font-size: 1.8rem; margin-bottom: 20px; font-weight: 700; }
-        .success-message p { font-size: 1rem; margin-bottom: 30px; font-weight: 500; line-height: 1.4; }
+        /* Estilos para a transição de sucesso[cite: 3, 4] */
+        .success-message { display: none; text-align: center; color: #0a0a0a; padding: 20px; }
+        .success-message h3 { font-size: 2rem; margin-bottom: 20px; font-weight: 700; color: #0a0a0a; }
+        .success-message p { font-size: 1.1rem; margin-bottom: 30px; font-weight: 500; line-height: 1.5; }
         .btn-download-app {
             display: inline-block;
-            padding: 15px 30px;
+            padding: 15px 35px;
             background-color: #0a0a0a;
             color: #d4af37;
             text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
-            transition: transform 0.3s;
+            font-size: 1.1rem;
+            transition: transform 0.3s, background-color 0.3s;
         }
-        .btn-download-app:hover { transform: scale(1.05); }
+        .btn-download-app:hover { transform: scale(1.05); background-color: #222; }
     </style>
 </head>
 <body class="login-body">
@@ -29,15 +30,15 @@
     <a href="index.html" class="back-home">⬅ Voltar para o site</a>
 
     <div class="login-wrapper">
-        <!-- LADO ESQUERDO: FORMULÁRIO (PARTE PRETA) -->
-        <div class="login-form-side">
+        <!-- LADO ESQUERDO: LOGIN/CADASTRO INTELIGENTE -->
+        <div class="login-form-side" id="leftPanel">
             <div class="logo-container" style="justify-content: center; margin-bottom: 30px;">
                 <img src="logo.png" alt="Logo" class="mini-logo" style="height: 60px;">
                 <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
             </div>
             
-            <h2 id="loginTitle">Bem-vindo de volta!</h2>
-            <p id="loginSubtitle">Acesse sua conta para continuar suas histórias.</p>
+            <h2>Bem-vindo de volta!</h2>
+            <p>Acesse sua conta para continuar suas histórias.</p>
 
             <form class="login-form" id="loginForm">
                 <div class="input-group">
@@ -69,24 +70,22 @@
                 </div>
             </form>
 
-            <p class="register-link">Ainda não tem conta? <a href="#" id="btnRegister">Cadastre-se grátis</a></p>
+            <p class="register-link">Ainda não tem conta? <a href="#" id="btnManualRegister">Cadastre-se grátis</a></p>
         </div>
 
-        <!-- LADO DIREITO: PROMOÇÃO/SUCESSO (PARTE MOSTARDA) -->
-        <div class="login-app-side" id="rightSidePanel">
-            <!-- Conteúdo inicial antes do cadastro -->
-            <div id="initialPromo" class="app-promo-content">
+        <!-- LADO DIREITO: MENSAGEM DINÂMICA (PARTE MOSTARDA) -->
+        <div class="login-app-side" id="rightPanel">
+            <div id="initialContent" class="app-promo-content">
                 <h3>A melhor experiência <br>está no nosso <span class="gold">App</span>.</h3>
                 <p>Acesse seu conteúdo favorito com muito mais rapidez e fluidez.</p>
             </div>
 
-            <!-- Conteúdo de sucesso após cadastro (Oculto inicialmente)[cite: 4] -->
+            <!-- MENSAGEM DE SUCESSO PÓS-CADASTRO -->
             <div id="successContent" class="success-message">
                 <h3>Parabéns!</h3>
                 <p>Agora você já é usuário do conteúdo da <strong>DORANOVEL</strong>.<br><br>
                 Para facilitar o acesso ao nosso conteúdo, clique no botão abaixo para baixar nosso aplicativo.</p>
-                <!-- O link abaixo será o seu Google Drive futuramente[cite: 4] -->
-                <a href="#" class="btn-download-app">Baixar Aplicativo</a>
+                <a href="#" class="btn-download-app" id="btnDownloadDrive">Baixar Aplicativo</a>
             </div>
         </div>
     </div>
@@ -116,58 +115,48 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Função para mostrar a mensagem de sucesso no painel mostarda[cite: 4]
-        function showSuccessPanel() {
-            document.getElementById('initialPromo').style.display = 'none';
+        // Função para atualizar a interface mostarda após sucesso
+        function showSuccessUI() {
+            document.getElementById('initialContent').style.display = 'none';
             document.getElementById('successContent').style.display = 'block';
-            // Opcional: Esconder o formulário para focar no sucesso
-            document.getElementById('loginForm').style.opacity = '0.3';
-            document.getElementById('loginForm').style.pointerEvents = 'none';
+            document.getElementById('leftPanel').style.opacity = '0.4';
+            document.getElementById('leftPanel').style.pointerEvents = 'none';
         }
 
-        // --- CAPTURAR RESULTADO DO REDIRECIONAMENTO[cite: 4] ---
+        // --- CAPTURAR RESULTADO DO REDIRECIONAMENTO (SOCIAL LOGIN)[cite: 4] ---
         getRedirectResult(auth)
             .then((result) => {
-                if (result) {
-                    showSuccessPanel(); // Ativa a mensagem de sucesso[cite: 4]
-                }
+                if (result) { showSuccessUI(); }
             })
-            .catch((error) => {
-                console.error("Erro:", error.code);
-            });
+            .catch((error) => { console.error("Erro Social:", error.code); });
 
-        // --- LOGIN COM GOOGLE[cite: 4] ---
-        document.getElementById('btnGoogle').addEventListener('click', () => {
-            signInWithRedirect(auth, new GoogleAuthProvider());
-        });
-
-        // --- LOGIN COM FACEBOOK[cite: 4] ---
-        document.getElementById('btnFacebook').addEventListener('click', () => {
-            signInWithRedirect(auth, new FacebookAuthProvider());
-        });
-
-        // --- CADASTRO POR E-MAIL[cite: 4] ---
-        document.getElementById('btnRegister').addEventListener('click', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            if(!email || !password) return alert("Preencha e-mail e senha para cadastrar.");
-
-            createUserWithEmailAndPassword(auth, email, password)
-                .then(() => { showSuccessPanel(); })
-                .catch((error) => { alert("Erro: " + error.message); });
-        });
-
-        // --- LOGIN POR E-MAIL[cite: 4] ---
+        // --- LOGIN/CADASTRO INTELIGENTE (E-MAIL)[cite: 4] ---
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
+            // Tenta login; se falhar por falta de conta, tenta cadastro[cite: 4]
             signInWithEmailAndPassword(auth, email, password)
-                .then(() => { showSuccessPanel(); })
-                .catch((error) => { alert("Erro: " + error.message); });
+                .then(() => { showSuccessUI(); })
+                .catch((error) => {
+                    if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                        createUserWithEmailAndPassword(auth, email, password)
+                            .then(() => { showSuccessUI(); })
+                            .catch((err) => { alert("Erro ao criar conta: " + err.message); });
+                    } else {
+                        alert("Erro: " + error.message);
+                    }
+                });
+        });
+
+        // Provedores Sociais[cite: 4]
+        document.getElementById('btnGoogle').addEventListener('click', () => {
+            signInWithRedirect(auth, new GoogleAuthProvider());
+        });
+
+        document.getElementById('btnFacebook').addEventListener('click', () => {
+            signInWithRedirect(auth, new FacebookAuthProvider());
         });
     </script>
 </body>
