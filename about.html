@@ -3,59 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Doranovel</title>
+    <title>Doranovel | Sobre Nós</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; line-height: 1.6; }
-        
-        .navbar { position: fixed; top: 0; width: 100%; height: 80px; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; z-index: 1000; border-bottom: 1px solid #d4af37; }
-        .logo { height: 40px; }
-        .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; font-size: 14px; text-transform: uppercase; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: #000; 
+            color: #fff; 
+            line-height: 1.6;
+        }
 
-        .container { max-width: 800px; margin: 120px auto 50px; padding: 0 20px; text-align: center; }
-        h1 { font-size: 2.5rem; margin-bottom: 30px; }
-        .gold { color: #d4af37; }
-        p { margin-bottom: 20px; font-size: 1.1rem; opacity: 0.9; }
+        /* --- HEADER: LOGO E NOME CENTRALIZADOS --- */
+        .navbar {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            background: #000;
+            border-bottom: 2px solid #E1AD01;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Espaço entre a logo e o texto */
+        }
+        .mini-logo {
+            height: 60px;
+            width: auto;
+        }
+        .brand-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+        .brand-gold { color: #E1AD01; }
         
-        .footer { padding: 40px 0; border-top: 1px solid #333; text-align: center; font-size: 14px; }
-        .footer a { color: #d4af37; text-decoration: none; }
+        .back-link {
+            color: #E1AD01;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* --- CONTEÚDO: ALINHADO À ESQUERDA --- */
+        .content-wrapper {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 5%;
+            text-align: left; /* Garante que o texto não fique centralizado */
+        }
+
+        .content-wrapper h2 {
+            font-size: 2.5rem;
+            color: #E1AD01;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .content-wrapper p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #ccc;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 3px solid #E1AD01; /* Detalhe lateral em ouro */
+        }
+
+        .features-list strong {
+            display: block;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .features-list span {
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .navbar { height: auto; flex-direction: column; padding: 20px 0; gap: 15px; }
+            .content-wrapper h2 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
+
     <nav class="navbar">
         <div class="logo-container">
-            <img src="logo.png" alt="Logo" class="logo">
+            <img src="logo.png" alt="Logo Doranovel" class="mini-logo">
+            <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
         </div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="contact.html">Contact</a>
-        </div>
+        <a href="index.html" class="back-link">Voltar</a>
     </nav>
 
-    <div class="container">
-        <h1>Sobre a <span class="gold">Doranovel</span></h1>
-        <p>A DORANOVEL é uma plataforma de entretenimento inovadora e gratuita, criada especialmente para ser consumida pelo celular.</p> 
-        <p>Seu conteúdo é composto por duas formas envolventes de narrativa:</p>
-         <P>Doramas em leitura: histórias cativantes em formato literário, ideais para quem gosta de mergulhar em tramas detalhadas.</P>
-         <p>Webnovelas em vídeo: curtas no formato vertical, pensados para a experiência mobile, rápidos e dinâmicos.</p>
-    <div>                          </div>
-        <h1>Diferenciais da Plataforma </h1>
-    <p> . Gratuita e tecnológica: acesso ilimitado sem custo, com uma interface moderna e intuitiva.</p>
-    <p> . Curadoria personalizada: todo o acervo de vídeos e livros é selecionado de acordo com os gostos e preferências do usuário.</p>
-    <p> . Classificação inteligente: organização simples e visual através de cards coloridos, que destacam categorias e gêneros, facilitando a navegação.</p>
-    <p> . Experiência mobile-first: projetada para o consumo rápido e confortável diretamente no celular.</p>
-    <div>                                       </div>
-       <h1>Por que escolher a DORANOVEL?</h1>
-    <p> . Imersão total: seja lendo ou assistindo, o usuário encontra histórias que se conectam com suas emoções.</p>
-    <p> . Variedade de gêneros: romance, drama, comédia, fantasia e muito mais, sempre organizados de forma clara.</p>
-    <p> . Acessibilidade: sem barreiras de pagamento, todos podem explorar o universo das narrativas asiáticas e das webnovelas.</p>
-    <p> . Design envolvente: os cards coloridos tornam a experiência não apenas funcional, mas também divertida e visualmente atraente.</p>
+    <main class="content-wrapper">
+        <h2>Por que escolher a <span class="brand-gold">DORANOVEL</span>?</h2>
         
-    </div>
+        <ul class="features-list">
+            <li>
+                <strong>Imersão total</strong>
+                <span>Seja lendo ou assistindo, o usuário encontra histórias que se conectam com suas emoções.</span>
+            </li>
+            <li>
+                <strong>Variedade de gêneros</strong>
+                <span>Romance, drama, comédia, fantasia e muito mais, sempre organizados de forma clara.</span>
+            </li>
+            <li>
+                <strong>Acessibilidade</strong>
+                <span>Sem barreiras de pagamento, todos podem explorar o universo das narrativas asiáticas e das webnovelas.</span>
+            </li>
+            <li>
+                <strong>Design envolvente</strong>
+                <span>Os cards coloridos tornam a experiência não apenas funcional, mas também divertida e visualmente atraente.</span>
+            </li>
+        </ul>
+    </main>
 
-    <footer class="footer">
-        <p>www.doranovel.com | <a href="privacidade.html">Política de Privacidade</a></p>
+    <footer style="margin-top: 50px; padding: 40px; text-align: center; border-top: 1px solid #222; color: #555; font-size: 12px;">
+        &copy; 2026 Doranovel | Premium Experience
     </footer>
+
 </body>
 </html>
