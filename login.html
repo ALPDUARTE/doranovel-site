@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doranovel | Acesso Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- ESTILO BASE PRESERVADO --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+
+        .navbar {
+            width: 100%; height: 100px; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%; background: #000; border-bottom: 2px solid #E1AD01;
+        }
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .mini-logo { height: 60px; width: auto; }
+        .brand-name { font-size: 28px; font-weight: 700; color: #fff; display: flex; align-items: center; line-height: 1; }
+        .brand-gold { color: #E1AD01; }
+        .back-link { color: #E1AD01; text-decoration: none; font-size: 14px; font-weight: 700; text-transform: uppercase; }
+
+        .login-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; gap: 50px; }
+
+        /* CAIXA DE ACESSO */
+        .login-box { 
+            flex: 1; max-width: 450px; background: #111; padding: 40px; border-radius: 20px; 
+            border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        }
+        .login-box h2 { font-size: 2rem; margin-bottom: 20px; color: #E1AD01; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #999; text-transform: uppercase; }
+        .input-group input { 
+            width: 100%; padding: 15px; background: #222; border: 1px solid #333; 
+            border-radius: 8px; color: #fff; font-family: 'Montserrat'; outline: none; transition: 0.3s;
+        }
+        .input-group input:focus { border-color: #E1AD01; }
+
+        .forgot-password { text-align: right; margin-bottom: 20px; }
+        .forgot-password a { color: #999; font-size: 12px; text-decoration: none; }
+
+        .btn-access { 
+            width: 100%; padding: 15px; background: #E1AD01; border: none; border-radius: 8px; 
+            color: #000; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-bottom: 15px;
+        }
+        
+        /* BOTÃO GOOGLE */
+        .social-login { 
+            width: 100%; padding: 12px; background: #fff; border: none; 
+            border-radius: 8px; color: #757575; cursor: pointer; display: flex; align-items: center; 
+            justify-content: center; gap: 12px; font-weight: 700; margin-bottom: 20px;
+            font-size: 14px; transition: 0.3s;
+        }
+        .google-icon { width: 20px; height: 20px; }
+
+        /* BOX DE DOWNLOAD */
+        .download-box { 
+            flex: 1; max-width: 500px; text-align: center; padding: 40px; 
+            background: linear-gradient(145deg, #0a0a0a, #151515); border-radius: 25px; border: 1px solid #E1AD01;
+        }
+        .btn-download { display: inline-block; padding: 15px 40px; background: transparent; border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; }
+        .btn-logout { margin-top: 20px; background: transparent; border: 1px solid #ff4444; color: #ff4444; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 12px; }
+
+        #logged-out-view, #logged-in-view { display: none; }
+
+        @media (max-width: 768px) { 
+            .navbar { height: auto; flex-direction: column; padding: 15px 5% 10px; border-bottom: 3px solid #E1AD01 !important; }
+            .login-wrapper { flex-direction: column; gap: 30px; } 
+            .download-box { order: -1; width: 100%; } 
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo" class="mini-logo">
+            <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
+        </div>
+        <a href="index.html" class="back-link">Voltar</a>
+    </nav>
+
+    <main class="login-wrapper">
+        <!-- ÁREA PARA QUEM NÃO ESTÁ LOGADO -->
+        <section class="login-box" id="logged-out-view">
+            <h2>Acessar</h2>
+            <div class="input-group">
+                <label>E-mail</label>
+                <input type="email" id="email" placeholder="seu@email.com">
+            </div>
+            <div class="input-group">
+                <label>Senha</label>
+                <input type="password" id="password" placeholder="••••••••">
+            </div>
+            <div class="forgot-password"><a href="#" id="forgotBtn">Esqueceu a senha?</a></div>
+            <button class="btn-access" id="loginSmartBtn">Entrar</button>
+            
+            <button class="social-login" id="googleBtn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="google-icon" alt="Google Logo"> 
+                Entrar com Google
+            </button>
+        </section>
+
+        <!-- ÁREA PARA QUEM ESTÁ LOGADO -->
+        <section class="download-box" id="logged-in-view">
+            <h3 style="color: #E1AD01; margin-bottom: 15px; font-size: 1.8rem;">Bem-vindo!</h3>
+            <p id="user-greeting" style="margin-bottom: 10px; color: #fff; font-weight: 700;"></p>
+            <p style="margin-bottom: 30px; color: #ccc;">Acesso liberado. Baixe agora o app oficial da Doranovel.</p>
+            <a href="doranovel-v1.apk" class="btn-download">BAIXAR APP</a>
+            <br>
+            <button class="btn-logout" id="logoutBtn">Sair da Conta</button>
+        </section>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        // IMPORTANTE: Alterado para incluir signInWithPopup[cite: 3]
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
+            authDomain: "doranovel.firebaseapp.com",
+            projectId: "doranovel",
+            storageBucket: "doranovel.firebasestorage.app",
+            appId: "1:105334550592:web:eaf414923e311ae62eafa5"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const loggedOutView = document.getElementById('logged-out-view');
+        const loggedInView = document.getElementById('logged-in-view');
+        const userGreeting = document.getElementById('user-greeting');
+
+        // MONITOR DE ESTADO - ATUALIZA A TELA AUTOMATICAMENTE
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loggedOutView.style.display = 'none';
+                loggedInView.style.display = 'block';
+                userGreeting.innerText = user.displayName ? "Olá, " + user.displayName : "Olá!";
+            } else {
+                loggedOutView.style.display = 'block';
+                loggedInView.style.display = 'none';
+            }
+        });
+
+        // GOOGLE LOGIN CORRIGIDO: Voltamos para signInWithPopup[cite: 3]
+        document.getElementById('googleBtn').onclick = () => {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    console.log("Logado com sucesso via Google!");
+                })
+                .catch((error) => {
+                    alert("Erro no login Google: " + error.message);
+                });
+        };
+
+        // SMART LOGIN (LOGIN OU CADASTRO AUTOMÁTICO)
+        document.getElementById('loginSmartBtn').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            if (!email || !password) return alert("Preencha os campos.");
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-login-credentials') {
+                    try {
+                        await createUserWithEmailAndPassword(auth, email, password);
+                    } catch (err) { alert("Erro no cadastro: " + err.message); }
+                } else { alert("Erro: " + error.message); }
+            }
+        };
+
+        // LOGOUT E RESET
+        document.getElementById('logoutBtn').onclick = () => signOut(auth);
+        document.getElementById('forgotBtn').onclick = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            if (!email) return alert("Insira o e-mail.");
+            await sendPasswordResetEmail(auth, email);
+            alert("E-mail de recuperação enviado!");
+        };
+    </script>
+</body>
+</html>
