@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acervo Premium | Doranovel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #0a0a0a; color: #fff; padding: 20px; }
+        
+        .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid #E1AD01; }
+        .gold { color: #E1AD01; font-weight: 700; }
+
+        /* GRID DO ACERVO REAL (FIRESTORE) */
+        .acervo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .video-card { background: #1a1a1a; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
+        .video-card img { width: 100%; height: 220px; object-fit: cover; }
+        .video-card .info { padding: 10px; }
+        .video-card h3 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; }
+        .btn-play { width: 100%; padding: 8px; background: #E1AD01; border: none; border-radius: 4px; font-weight: 700; font-size: 10px; cursor: pointer; }
+
+        #loading { text-align: center; margin-top: 50px; color: #E1AD01; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <span style="font-size: 20px;"><span class="gold">Dora</span>novel App</span>
+        <button onclick="location.href='login.html'" style="background:none; border:1px solid #ff4444; color:#ff4444; padding:5px 10px; border-radius:4px; font-size:10px;">SAIR</button>
+    </div>
+
+    <div id="loading">Conectando ao Acervo Doranovel...</div>
+    <div class="acervo-grid" id="container-acervo"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
+            authDomain: "doranovel.firebaseapp.com",
+            projectId: "doranovel",
+            storageBucket: "doranovel.firebasestorage.app",
+            appId: "1:105334550592:web:eaf414923e311ae62eafa5"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // LÓGICA OPERACIONAL: Só libera o acervo se o usuário estiver logado[cite: 3]
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+            } else {
+                carregarDadosReais();
+            }
+        });
+
+        async function carregarDadosReais() {
+            const container = document.getElementById('container-acervo');
+            const loader = document.getElementById('loading');
+            
+            try {
+                // Busca a coleção de vídeos reais no Firestore[cite: 3]
+                const querySnapshot = await getDocs(collection(db, "Doranovel"));
+                loader.style.display = "none";
+                
+                querySnapshot.forEach((doc) => {
+                    const video = doc.data();
+                    container.innerHTML += `
+                        <div class="video-card">
+                            <img src="${video.capa}" alt="${video.titulo}">
+                            <div class="info">
+                                <h3>${video.titulo}</h3>
+                                <button class="btn-play" onclick="alert('Iniciando Stream...')">ASSISTIR</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                loader.innerText = "Erro ao conectar com o Firebase.";
+            }
+        }
+    </script>
+</body>
+</html>
