@@ -1,96 +1,172 @@
-<!-- ADICIONE ESTE ESTILO AO SEU <style> -->
-<style>
-    /* ... seus estilos anteriores ... */
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doranovel | Acesso Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- ESTILO BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+        .navbar { width: 100%; height: 100px; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; background: #000; border-bottom: 2px solid #E1AD01; }
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .mini-logo { height: 60px; width: auto; }
+        .brand-name { font-size: 28px; font-weight: 700; color: #fff; display: flex; align-items: center; line-height: 1; }
+        .brand-gold { color: #E1AD01; }
+        .back-link { color: #E1AD01; text-decoration: none; font-size: 14px; font-weight: 700; text-transform: uppercase; }
+        .login-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; gap: 50px; }
+        .login-box { flex: 1; max-width: 450px; background: #111; padding: 40px; border-radius: 20px; border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .login-box h2 { font-size: 2rem; margin-bottom: 20px; color: #E1AD01; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #999; text-transform: uppercase; }
+        .input-group input { width: 100%; padding: 15px; background: #222; border: 1px solid #333; border-radius: 8px; color: #fff; font-family: 'Montserrat'; outline: none; transition: 0.3s; }
+        .input-group input:focus { border-color: #E1AD01; }
+        .forgot-password { text-align: right; margin-bottom: 20px; }
+        .forgot-password a { color: #999; font-size: 12px; text-decoration: none; }
+        .btn-access { width: 100%; padding: 15px; background: #E1AD01; border: none; border-radius: 8px; color: #000; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-bottom: 15px; }
+        .social-login { width: 100%; padding: 12px; background: #fff; border: none; border-radius: 8px; color: #757575; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: 700; margin-bottom: 20px; font-size: 14px; transition: 0.3s; }
+        .google-icon { width: 20px; height: 20px; }
+        .download-box { flex: 1; max-width: 500px; text-align: center; padding: 40px; background: linear-gradient(145deg, #0a0a0a, #151515); border-radius: 25px; border: 1px solid #E1AD01; }
+        .btn-download { display: inline-block; padding: 15px 40px; background: transparent; border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; cursor: pointer; }
+        .btn-logout { margin-top: 20px; background: transparent; border: 1px solid #ff4444; color: #ff4444; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 12px; }
 
-    .download-step-overlay {
-        display: none;
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 400px;
-        background: #1a1a1a;
-        border: 2px solid #E1AD01;
-        border-radius: 15px;
-        padding: 20px;
-        z-index: 9999;
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
-        animation: slideUp 0.5s ease-out;
-    }
+        /* ESTILO DA MENSAGEM DE ORIENTAÇÃO */
+        .instrucao-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+        }
+        .instrucao-card {
+            background: #111; padding: 30px; border-radius: 20px; border: 2px solid #E1AD01; text-align: center; max-width: 400px;
+        }
+        .instrucao-card h4 { color: #E1AD01; margin-bottom: 15px; font-size: 1.5rem; }
+        .instrucao-card p { color: #ccc; margin-bottom: 20px; line-height: 1.5; }
+        .btn-entendi { background: #E1AD01; color: #000; border: none; padding: 12px 30px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
 
-    @keyframes slideUp {
-        from { bottom: -100px; opacity: 0; }
-        to { bottom: 20px; opacity: 1; }
-    }
+        #logged-out-view, #logged-in-view { display: none; }
+        @media (max-width: 768px) { .navbar { height: auto; flex-direction: column; padding: 15px 5% 10px; border-bottom: 3px solid #E1AD01 !important; } .login-wrapper { flex-direction: column; gap: 30px; } .download-box { order: -1; width: 100%; } }
+    </style>
+</head>
+<body>
 
-    .step-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 15px;
-        text-align: left;
-    }
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo" class="mini-logo">
+            <span class="brand-name"><span class="brand-gold">Dora</span>novel</span>
+        </div>
+        <a href="index.html" class="back-link">Voltar</a>
+    </nav>
 
-    .step-number {
-        background: #E1AD01;
-        color: #000;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        flex-shrink: 0;
-    }
-
-    .btn-entendido {
-        width: 100%;
-        padding: 10px;
-        background: #333;
-        color: #E1AD01;
-        border: 1px solid #E1AD01;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-</style>
-
-<!-- ADICIONE ESTE HTML ANTES DO FECHAMENTO DO </body> -->
-<div id="stepOverlay" class="download-step-overlay">
-    <h4 style="color:#E1AD01; margin-bottom: 15px; text-align: center;">Quase lá!</h4>
-    
-    <div class="step-item">
-        <div class="step-number">1</div>
-        <p style="font-size: 14px;">O download começou. Aguarde a barra de progresso no topo do celular.</p>
+    <!-- OVERLAY DE INSTRUÇÃO -->
+    <div id="instrucaoOverlay" class="instrucao-overlay">
+        <div class="instrucao-card">
+            <h4>Download Iniciado!</h4>
+            <p>O download do seu app começou. Assim que terminar, clique na notificação de <b>"Download concluído"</b> no topo da sua tela para instalar o Doranovel.</p>
+            <button class="btn-entendi" onclick="fecharAviso()">ENTENDI</button>
+        </div>
     </div>
 
-    <div class="step-item">
-        <div class="step-number">2</div>
-        <p style="font-size: 14px;">Quando terminar, deslize a tela para baixo e clique em <b>"app-debug_2.apk"</b>.</p>
-    </div>
+    <main class="login-wrapper">
+        <section class="login-box" id="logged-out-view">
+            <h2>Acessar</h2>
+            <div class="input-group">
+                <label>E-mail</label>
+                <input type="email" id="email" placeholder="seu@email.com">
+            </div>
+            <div class="input-group">
+                <label>Senha</label>
+                <input type="password" id="password" placeholder="••••••••">
+            </div>
+            <div class="forgot-password"><a href="#" id="forgotBtn">Esqueceu a senha?</a></div>
+            <button class="btn-access" id="loginSmartBtn">Entrar</button>
+            <button class="social-login" id="googleBtn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="google-icon" alt="Google Logo"> 
+                Entrar com Google
+            </button>
+        </section>
 
-    <div class="step-item">
-        <div class="step-number">3</div>
-        <p style="font-size: 14px;">Se o Android perguntar, autorize a instalação de "Fontes Desconhecidas".</p>
-    </div>
+        <section class="download-box" id="logged-in-view">
+            <h3 style="color: #E1AD01; margin-bottom: 15px; font-size: 1.8rem;">Bem-vindo!</h3>
+            <p id="user-greeting" style="margin-bottom: 10px; color: #fff; font-weight: 700;"></p>
+            <p style="margin-bottom: 30px; color: #ccc;">Acesso liberado. Baixe agora o app oficial da Doranovel.</p>
+            
+            <a href="https://github.com/ALPDUARTE/doranovel-site/raw/main/app-debug_2.apk" id="downloadLink" class="btn-download">BAIXAR APP</a>
+            
+            <br>
+            <button class="btn-logout" id="logoutBtn">Sair da Conta</button>
+        </section>
+    </main>
 
-    <button class="btn-entendido" onclick="document.getElementById('stepOverlay').style.display='none'">OK, ENTENDI</button>
-</div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-<!-- AJUSTE NO SEU SCRIPT -->
-<script>
-    const downloadLink = document.getElementById('downloadLink');
-    const stepOverlay = document.getElementById('stepOverlay');
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
+            authDomain: "doranovel.firebaseapp.com",
+            projectId: "doranovel",
+            storageBucket: "doranovel.firebasestorage.app",
+            appId: "1:105334550592:web:eaf414923e311ae62eafa5"
+        };
 
-    downloadLink.onclick = () => {
-        // Mostra o passo a passo assim que o download inicia
-        stepOverlay.style.display = 'block';
-        
-        // Opcional: Se quiser esconder após 15 segundos automaticamente
-        setTimeout(() => {
-            stepOverlay.style.display = 'none';
-        }, 15000);
-    };
-</script>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        const loggedOutView = document.getElementById('logged-out-view');
+        const loggedInView = document.getElementById('logged-in-view');
+        const userGreeting = document.getElementById('user-greeting');
+        const downloadLink = document.getElementById('downloadLink');
+        const overlay = document.getElementById('instrucaoOverlay');
+
+        // FUNÇÃO PARA MOSTRAR O AVISO
+        downloadLink.onclick = () => {
+            overlay.style.display = 'flex';
+        };
+
+        // FUNÇÃO GLOBAL PARA FECHAR (usada no botão do card)
+        window.fecharAviso = () => {
+            overlay.style.display = 'none';
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loggedOutView.style.display = 'none';
+                loggedInView.style.display = 'block';
+                userGreeting.innerText = user.displayName ? "Olá, " + user.displayName : "Olá!";
+            } else {
+                loggedOutView.style.display = 'block';
+                loggedInView.style.display = 'none';
+            }
+        });
+
+        // LOGIN / CADASTRO LÓGICA MANTIDA
+        document.getElementById('googleBtn').onclick = () => {
+            signInWithPopup(auth, provider).catch((error) => { alert("Erro: " + error.message); });
+        };
+
+        document.getElementById('loginSmartBtn').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            if (!email || !password) return alert("Preencha os campos.");
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                    try { await createUserWithEmailAndPassword(auth, email, password); } 
+                    catch (err) { alert("Erro no cadastro: " + err.message); }
+                } else { alert("Erro: " + error.message); }
+            }
+        };
+
+        document.getElementById('logoutBtn').onclick = () => signOut(auth);
+        document.getElementById('forgotBtn').onclick = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            if (!email) return alert("Insira o e-mail.");
+            await sendPasswordResetEmail(auth, email);
+            alert("E-mail de recuperação enviado!");
+        };
+    </script>
+</body>
+</html>
