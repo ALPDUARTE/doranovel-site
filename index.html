@@ -6,7 +6,7 @@
     <title>Doranovel | Acesso Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILO MANTIDO CONFORME ORIGINAL --- */
+        /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
         .navbar { width: 100%; height: 100px; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; background: #000; border-bottom: 2px solid #E1AD01; }
@@ -28,8 +28,21 @@
         .social-login { width: 100%; padding: 12px; background: #fff; border: none; border-radius: 8px; color: #757575; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: 700; margin-bottom: 20px; font-size: 14px; transition: 0.3s; }
         .google-icon { width: 20px; height: 20px; }
         .download-box { flex: 1; max-width: 500px; text-align: center; padding: 40px; background: linear-gradient(145deg, #0a0a0a, #151515); border-radius: 25px; border: 1px solid #E1AD01; }
-        .btn-download { display: inline-block; padding: 15px 40px; background: transparent; border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; }
+        .btn-download { display: inline-block; padding: 15px 40px; background: transparent; border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; cursor: pointer; }
         .btn-logout { margin-top: 20px; background: transparent; border: 1px solid #ff4444; color: #ff4444; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 12px; }
+
+        /* ESTILO DA MENSAGEM DE ORIENTAÇÃO */
+        .instrucao-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+        }
+        .instrucao-card {
+            background: #111; padding: 30px; border-radius: 20px; border: 2px solid #E1AD01; text-align: center; max-width: 400px;
+        }
+        .instrucao-card h4 { color: #E1AD01; margin-bottom: 15px; font-size: 1.5rem; }
+        .instrucao-card p { color: #ccc; margin-bottom: 20px; line-height: 1.5; }
+        .btn-entendi { background: #E1AD01; color: #000; border: none; padding: 12px 30px; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+
         #logged-out-view, #logged-in-view { display: none; }
         @media (max-width: 768px) { .navbar { height: auto; flex-direction: column; padding: 15px 5% 10px; border-bottom: 3px solid #E1AD01 !important; } .login-wrapper { flex-direction: column; gap: 30px; } .download-box { order: -1; width: 100%; } }
     </style>
@@ -43,6 +56,15 @@
         </div>
         <a href="index.html" class="back-link">Voltar</a>
     </nav>
+
+    <!-- OVERLAY DE INSTRUÇÃO -->
+    <div id="instrucaoOverlay" class="instrucao-overlay">
+        <div class="instrucao-card">
+            <h4>Download Iniciado!</h4>
+            <p>O download do seu app começou. Assim que terminar, clique na notificação de <b>"Download concluído"</b> no topo da sua tela para instalar o Doranovel.</p>
+            <button class="btn-entendi" onclick="fecharAviso()">ENTENDI</button>
+        </div>
+    </div>
 
     <main class="login-wrapper">
         <section class="login-box" id="logged-out-view">
@@ -68,8 +90,7 @@
             <p id="user-greeting" style="margin-bottom: 10px; color: #fff; font-weight: 700;"></p>
             <p style="margin-bottom: 30px; color: #ccc;">Acesso liberado. Baixe agora o app oficial da Doranovel.</p>
             
-            <!-- O ID 'downloadLink' é usado pelo script para trocar o endereço -->
-            <a href="#" id="downloadLink" class="btn-download">BAIXAR APP</a>
+            <a href="https://github.com/ALPDUARTE/doranovel-site/raw/main/app-debug_2.apk" id="downloadLink" class="btn-download">BAIXAR APP</a>
             
             <br>
             <button class="btn-logout" id="logoutBtn">Sair da Conta</button>
@@ -96,58 +117,44 @@
         const loggedInView = document.getElementById('logged-in-view');
         const userGreeting = document.getElementById('user-greeting');
         const downloadLink = document.getElementById('downloadLink');
+        const overlay = document.getElementById('instrucaoOverlay');
 
-        // LÓGICA DE DOWNLOAD INTELIGENTE
-        const GITHUB_URL = "https://github.com/ALPDUARTE/doranovel-site/raw/main/app-debug_2.apk";
-        const LOCAL_URL = "doranovel-v1.apk";
+        // FUNÇÃO PARA MOSTRAR O AVISO
+        downloadLink.onclick = () => {
+            overlay.style.display = 'flex';
+        };
 
-        function configurarDownload() {
-            const jaBaixou = localStorage.getItem('doranovel_primeiro_acesso');
-            
-            if (!jaBaixou) {
-                // Primeira vez: Link do GitHub
-                downloadLink.href = GITHUB_URL;
-                downloadLink.onclick = () => {
-                    localStorage.setItem('doranovel_primeiro_acesso', 'true');
-                    // Opcional: Recarregar após um tempo para mudar o link na próxima vez
-                };
-            } else {
-                // Demais vezes: Link Local
-                downloadLink.href = LOCAL_URL;
-            }
-        }
+        // FUNÇÃO GLOBAL PARA FECHAR (usada no botão do card)
+        window.fecharAviso = () => {
+            overlay.style.display = 'none';
+        };
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loggedOutView.style.display = 'none';
                 loggedInView.style.display = 'block';
                 userGreeting.innerText = user.displayName ? "Olá, " + user.displayName : "Olá!";
-                configurarDownload(); // Chama a lógica de download ao logar
             } else {
                 loggedOutView.style.display = 'block';
                 loggedInView.style.display = 'none';
             }
         });
 
-        // LOGIN GOOGLE
+        // LOGIN / CADASTRO LÓGICA MANTIDA
         document.getElementById('googleBtn').onclick = () => {
-            signInWithPopup(auth, provider)
-                .catch((error) => { alert("Erro no login Google: " + error.message); });
+            signInWithPopup(auth, provider).catch((error) => { alert("Erro: " + error.message); });
         };
 
-        // LOGIN / CADASTRO SMART
         document.getElementById('loginSmartBtn').onclick = async () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             if (!email || !password) return alert("Preencha os campos.");
-
             try {
                 await signInWithEmailAndPassword(auth, email, password);
             } catch (error) {
                 if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
-                    try {
-                        await createUserWithEmailAndPassword(auth, email, password);
-                    } catch (err) { alert("Erro no cadastro: " + err.message); }
+                    try { await createUserWithEmailAndPassword(auth, email, password); } 
+                    catch (err) { alert("Erro no cadastro: " + err.message); }
                 } else { alert("Erro: " + error.message); }
             }
         };
