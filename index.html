@@ -31,6 +31,7 @@
 
         .download-box { flex: 1; max-width: 500px; text-align: center; padding: 40px; background: linear-gradient(145deg, #0a0a0a, #151515); border-radius: 25px; border: 1px solid #E1AD01; }
         .btn-download { display: inline-block; padding: 15px 40px; background: transparent; border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; cursor: pointer; }
+        .btn-download:hover { background: #E1AD01; color: #000; }
         .btn-logout { margin-top: 20px; background: transparent; border: 1px solid #ff4444; color: #ff4444; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 12px; }
 
         /* ESTILO DO PASSO A PASSO (OVERLAY) */
@@ -97,7 +98,7 @@
             <p id="user-greeting" style="margin-bottom: 10px; color: #fff; font-weight: 700;"></p>
             <p style="margin-bottom: 30px; color: #ccc;">Acesso liberado. Baixe agora o app oficial da Doranovel.</p>
             
-            <a href="https://github.com/ALPDUARTE/doranovel-site/raw/main/app-debug_2.apk" id="downloadLink" class="btn-download">BAIXAR APP</a>
+            <a href="https://github.com/ALPDUARTE/doranovel-site/releases/download/v1.0/app-debug_2.apk" id="downloadLink" class="btn-download" download>BAIXAR APP</a>
             
             <br>
             <button class="btn-logout" id="logoutBtn">Sair da Conta</button>
@@ -127,8 +128,13 @@
         const stepOverlay = document.getElementById('stepOverlay');
 
         // FUNÇÃO DE DOWNLOAD E AVISO
-        downloadLink.onclick = () => {
+        downloadLink.onclick = (e) => {
+            e.preventDefault();
             stepOverlay.style.display = 'block';
+            // Inicia o download após mostrar o overlay
+            setTimeout(() => {
+                window.location.href = downloadLink.href;
+            }, 500);
         };
 
         onAuthStateChanged(auth, (user) => {
