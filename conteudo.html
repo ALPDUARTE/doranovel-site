@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doranovel | Catálogo Premium</title>
+    <!-- Fontes e Ícones -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,7 +23,7 @@
             background-color: #000;
         }
 
-        /* --- NAVBAR AJUSTADA --- */
+        /* --- NAVBAR --- */
         .navbar {
             width: 100%; min-height: 80px; display: flex; align-items: center; justify-content: space-between;
             padding: 10px 5%; background: rgba(0, 0, 0, 0.95); border-bottom: 2px solid #E1AD01;
@@ -36,9 +38,10 @@
 
         .nav-right { display: flex; align-items: center; justify-content: flex-end; gap: 15px; flex: 1; }
         
-        /* Estilo do Usuário */
-        .user-profile { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 400; }
+        /* Perfil do Usuário */
+        .user-profile { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
         .user-avatar { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #E1AD01; object-fit: cover; }
+        
         .btn-sair { 
             color: #E1AD01; text-decoration: none; font-weight: 700; font-size: 0.8rem; 
             border: 1px solid #E1AD01; padding: 6px 15px; border-radius: 20px; transition: 0.3s;
@@ -68,16 +71,16 @@
         .card {
             border-radius: 15px; padding: 10px; position: relative; transition: 0.3s;
             display: flex; flex-direction: column; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
         }
         .card:hover { transform: scale(1.03); background: rgba(255,255,255,0.1); }
         .card-img-container { width: 100%; aspect-ratio: 2/3; border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
         .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
         .card-info { text-align: center; }
-        .card-title { font-weight: 700; font-size: 0.9rem; }
-        .card-category { font-size: 0.65rem; text-transform: uppercase; opacity: 0.7; margin-bottom: 5px; }
+        .card-title { font-weight: 700; font-size: 0.9rem; margin-top: 5px; }
+        .card-category { font-size: 0.65rem; text-transform: uppercase; opacity: 0.7; }
 
-        /* CORES CATEGORIAS */
+        /* CORES POR CATEGORIA */
         .cat-encontros { border-bottom: 4px solid #D48498; }
         .cat-suspense { border-bottom: 4px solid #F0F0F0; }
         .cat-melodramas { border-bottom: 4px solid #A52A2A; }
@@ -102,7 +105,6 @@
         </div>
 
         <div class="nav-right" id="authSection">
-            <!-- Renderizado via JS conforme status do Firebase -->
             <a href="login.html" class="btn-sair">ENTRAR</a>
         </div>
     </nav>
@@ -125,7 +127,7 @@
     </div>
 
     <main class="content-grid" id="contentGrid">
-        <p style="grid-column: 1/-1; text-align:center;">Conectando ao catálogo...</p>
+        <p style="grid-column: 1/-1; text-align:center; padding: 50px;">Conectando ao catálogo...</p>
     </main>
 
     <script type="module">
@@ -148,7 +150,7 @@
         const grid = document.getElementById('contentGrid');
         const authSection = document.getElementById('authSection');
 
-        // --- LÓGICA DE USUÁRIO (ITEM 2) ---
+        // --- GESTÃO DE AUTENTICAÇÃO ---
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const photoURL = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
@@ -162,13 +164,16 @@
                     <a href="#" id="btnLogout" class="btn-sair">SAIR</a>
                 `;
 
-                document.getElementById('btnLogout').onclick = () => signOut(auth);
+                document.getElementById('btnLogout').onclick = (e) => {
+                    e.preventDefault();
+                    signOut(auth);
+                };
             } else {
                 authSection.innerHTML = `<a href="login.html" class="btn-sair">ENTRAR</a>`;
             }
         });
 
-        // --- CARREGAMENTO DE CONTEÚDO ---
+        // --- CARREGAMENTO DO CATÁLOGO ---
         const colorMap = {
             "Encontros e Destinos": "cat-encontros",
             "Suspense & Mistério": "cat-suspense",
@@ -197,26 +202,31 @@
                                 <div class="card-title">${item.nome}</div>
                             </div>
                         `;
+                        // Adiciona clique para abrir detalhes (se houver página de detalhes)
+                        card.onclick = () => { console.log("Abrindo:", item.nome); };
                         grid.appendChild(card);
                     });
                 };
 
                 render(data);
 
-                // Filtros
+                // Lógica de Busca em Tempo Real
                 document.getElementById('searchInput').oninput = (e) => {
                     const term = e.target.value.toLowerCase();
-                    render(data.filter(i => i.nome.toLowerCase().includes(term)));
+                    const filtered = data.filter(i => i.nome.toLowerCase().includes(term));
+                    render(filtered);
                 };
 
+                // Filtro por Categoria
                 document.getElementById('categorySelect').onchange = (e) => {
                     const val = e.target.value;
-                    render(val === 'all' ? data : data.filter(i => i.categoria === val));
+                    const filtered = val === 'all' ? data : data.filter(i => i.categoria === val);
+                    render(filtered);
                 };
 
-            } catch (e) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Erro ao carregar dados do Firebase.</p>';
-                console.error(e);
+            } catch (error) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Erro ao carregar dados. Verifique sua conexão.</p>';
+                console.error("Erro Firebase:", error);
             }
         }
 
