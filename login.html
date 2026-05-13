@@ -6,7 +6,7 @@
     <title>Doranovel | Acesso Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILO BASE PRESERVADO --- */
+        /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
 
@@ -22,18 +22,18 @@
 
         .login-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; gap: 50px; }
 
-        /* CAIXA DE ACESSO COM IMAGEM DE FUNDO AJUSTADA */
+        /* CAIXA DE ACESSO COM CORREÇÃO DA IMAGEM */
         .login-box { 
             flex: 1; 
             max-width: 450px; 
-            min-height: 500px; /* Garante altura para a imagem aparecer */
+            min-height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             
-            /* Ajuste na declaração do background para máxima compatibilidade */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
-                              url('https://raw.githubusercontent.com/ALPDUARTE/doranovel-site/main/fundo2.png');
+            /* Usando CDN jsDelivr para garantir que o navegador carregue a imagem do GitHub corretamente */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                              url('https://cdn.jsdelivr.net/gh/ALPDUARTE/doranovel-site@main/fundo2.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -101,7 +101,6 @@
     </nav>
 
     <main class="login-wrapper">
-        <!-- ÁREA PARA QUEM NÃO ESTÁ LOGADO -->
         <section class="login-box" id="logged-out-view">
             <h2>Acessar</h2>
             <div class="input-group">
@@ -121,7 +120,6 @@
             </button>
         </section>
 
-        <!-- ÁREA PARA QUEM ESTÁ LOGADO -->
         <section class="download-box" id="logged-in-view">
             <h3 style="color: #E1AD01; margin-bottom: 15px; font-size: 1.8rem;">Bem-vindo!</h3>
             <p id="user-greeting" style="margin-bottom: 10px; color: #fff; font-weight: 700;"></p>
@@ -158,19 +156,14 @@
                 loggedInView.style.display = 'block';
                 userGreeting.innerText = user.displayName ? "Olá, " + user.displayName : "Olá!";
             } else {
-                loggedOutView.style.display = 'flex'; // Alterado de block para flex para manter alinhamento
+                loggedOutView.style.display = 'flex';
                 loggedInView.style.display = 'none';
             }
         });
 
         document.getElementById('googleBtn').onclick = () => {
             signInWithPopup(auth, provider)
-                .then((result) => {
-                    console.log("Logado com sucesso via Google!");
-                })
-                .catch((error) => {
-                    alert("Erro no login Google: " + error.message);
-                });
+                .catch((error) => alert("Erro no login Google: " + error.message));
         };
 
         document.getElementById('loginSmartBtn').onclick = async () => {
