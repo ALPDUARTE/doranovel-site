@@ -6,7 +6,7 @@
     <title>Doranovel | Acesso Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILO BASE E FUNDO DA TELA TODA --- */
+        /* --- ESTILO BASE E FUNDO MAIS CLARO --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
@@ -16,14 +16,14 @@
             display: flex; 
             flex-direction: column; 
             
-            /* AQUI A IMAGEM VAI PARA O FUNDO DO SITE INTEIRO */
-            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+            /* Ajustado de 0.85 para 0.50 para clarear o fundo */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
                         url('fundo2.png'),
                         url('https://raw.githubusercontent.com/ALPDUARTE/doranovel-site/main/fundo2.png'),
                         url('https://cdn.jsdelivr.net/gh/ALPDUARTE/doranovel-site@main/fundo2.png');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Mantém o fundo parado ao rolar */
+            background-attachment: fixed;
             background-repeat: no-repeat;
             background-color: #000;
         }
@@ -31,7 +31,7 @@
         .navbar {
             width: 100%; height: 100px; display: flex; align-items: center; justify-content: space-between;
             padding: 0 5%; background: rgba(0, 0, 0, 0.8); border-bottom: 2px solid #E1AD01;
-            backdrop-filter: blur(10px); /* Leve desfoque na barra */
+            backdrop-filter: blur(10px);
         }
         .logo-container { display: flex; align-items: center; gap: 15px; }
         .mini-logo { height: 60px; width: auto; }
@@ -41,7 +41,6 @@
 
         .login-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; }
 
-        /* --- BLOCOS CENTRALIZADOS (EFEITO TRANSPARENTE) --- */
         .login-box, .download-box { 
             flex: 1; 
             max-width: 450px; 
@@ -51,25 +50,32 @@
             justify-content: center;
             padding: 40px; 
             border-radius: 25px; 
-            border: 1px solid rgba(225, 173, 1, 0.5); /* Borda dourada semi-transparente */
+            border: 1px solid rgba(225, 173, 1, 0.5); 
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             text-align: center;
-            
-            /* Efeito de Vidro: deixa o fundo aparecer levemente através do card */
-            background: rgba(0, 0, 0, 0.6); 
+            background: rgba(0, 0, 0, 0.75); 
             backdrop-filter: blur(15px); 
             -webkit-backdrop-filter: blur(15px);
         }
 
         .login-box h2, .download-box h3 { font-size: 2.2rem; margin-bottom: 20px; color: #E1AD01; text-shadow: 2px 2px 10px #000; }
         
-        .input-group { margin-bottom: 18px; text-align: left; }
-        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #E1AD01; text-transform: uppercase; font-weight: bold; }
-        .input-group input { 
-            width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(225, 173, 1, 0.3); 
-            border-radius: 10px; color: #fff; font-family: 'Montserrat'; outline: none; transition: 0.3s;
+        /* Botão Acesse pelo Site (Destaque) */
+        .btn-site { 
+            display: inline-block; padding: 16px 30px; background: #E1AD01; color: #000; 
+            border-radius: 50px; text-decoration: none; font-weight: 700; 
+            text-transform: uppercase; transition: 0.4s; margin-bottom: 15px; 
         }
-        .input-group input:focus { background: rgba(0, 0, 0, 0.5); border-color: #E1AD01; }
+        .btn-site:hover { background: #fff; transform: translateY(-3px); }
+
+        /* Botão Download (Contorno) */
+        .btn-download { 
+            display: inline-block; padding: 14px 30px; background: transparent; 
+            border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; 
+            text-decoration: none; font-weight: 700; text-transform: uppercase; 
+            transition: 0.4s; 
+        }
+        .btn-download:hover { background: rgba(225, 173, 1, 0.1); color: #fff; border-color: #fff; }
 
         .btn-access { 
             width: 100%; padding: 16px; background: #E1AD01; border: none; border-radius: 10px; 
@@ -84,11 +90,15 @@
             justify-content: center; gap: 12px; font-weight: 700; font-size: 13px; transition: 0.3s;
         }
 
-        .btn-download { display: inline-block; padding: 16px 40px; background: #E1AD01; color: #000; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; margin-top: 15px; }
-        .btn-download:hover { background: #fff; transform: translateY(-3px); }
-        
         .btn-logout { margin-top: 30px; background: transparent; border: 1px solid #ff4444; color: #ff4444; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 10px; transition: 0.3s; }
         .btn-logout:hover { background: #ff4444; color: #fff; }
+
+        .input-group { margin-bottom: 18px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #E1AD01; text-transform: uppercase; font-weight: bold; }
+        .input-group input { 
+            width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(225, 173, 1, 0.3); 
+            border-radius: 10px; color: #fff; font-family: 'Montserrat'; outline: none; transition: 0.3s;
+        }
 
         #logged-out-view, #logged-in-view { display: none; }
 
@@ -108,6 +118,7 @@
     </nav>
 
     <main class="login-wrapper">
+        <!-- ÁREA DE ACESSO -->
         <section class="login-box" id="logged-out-view">
             <h2>Acessar</h2>
             <div class="input-group">
@@ -126,11 +137,18 @@
             </button>
         </section>
 
+        <!-- ÁREA LOGADA -->
         <section class="download-box" id="logged-in-view">
             <h3>Bem-vindo!</h3>
             <p id="user-greeting" style="margin-bottom: 10px; color: #E1AD01; font-weight: 700; font-size: 1.3rem;"></p>
-            <p style="margin-bottom: 25px; color: #fff; line-height: 1.6;">Acesso liberado. Baixe agora o app oficial da Doranovel para Android ou assista pelo site.</p>
-            <a href="doranovel-v1.apk" class="btn-download">BAIXAR APP</a>
+            <p style="margin-bottom: 25px; color: #fff; line-height: 1.6;">Acesso liberado. Escolha como deseja aproveitar seu conteúdo premium.</p>
+            
+            <!-- NOVO BOTÃO CONTEÚDO -->
+            <a href="conteudo.html" class="btn-site">ACESSE PELO SITE</a>
+            
+            <!-- BOTÃO DOWNLOAD ATUALIZADO -->
+            <a href="doranovel-v1.apk" class="btn-download">BAIXAR APP - ANDROID</a>
+            
             <br>
             <button class="btn-logout" id="logoutBtn">Sair da Conta</button>
         </section>
