@@ -22,22 +22,32 @@
 
         .login-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; gap: 50px; }
 
-        /* CAIXA DE ACESSO */
+        /* CAIXA DE ACESSO COM IMAGEM DE FUNDO */
         .login-box { 
-            flex: 1; max-width: 450px; background: #111; padding: 40px; border-radius: 20px; 
-            border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            flex: 1; 
+            max-width: 450px; 
+            /* Alteração abaixo: Adicionado a imagem do GitHub e ajustes de exibição */
+            background: linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.8)), 
+                        url('https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/fundo2.png');
+            background-size: cover;
+            background-position: center;
+            padding: 40px; 
+            border-radius: 20px; 
+            border: 1px solid #E1AD01; /* Destaque em dourado para combinar com o tema */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
-        .login-box h2 { font-size: 2rem; margin-bottom: 20px; color: #E1AD01; }
+
+        .login-box h2 { font-size: 2rem; margin-bottom: 20px; color: #E1AD01; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
         .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #999; text-transform: uppercase; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #ccc; text-transform: uppercase; font-weight: bold; }
         .input-group input { 
-            width: 100%; padding: 15px; background: #222; border: 1px solid #333; 
+            width: 100%; padding: 15px; background: rgba(34, 34, 34, 0.9); border: 1px solid #333; 
             border-radius: 8px; color: #fff; font-family: 'Montserrat'; outline: none; transition: 0.3s;
         }
         .input-group input:focus { border-color: #E1AD01; }
 
         .forgot-password { text-align: right; margin-bottom: 20px; }
-        .forgot-password a { color: #999; font-size: 12px; text-decoration: none; }
+        .forgot-password a { color: #ccc; font-size: 12px; text-decoration: none; font-weight: bold; }
 
         .btn-access { 
             width: 100%; padding: 15px; background: #E1AD01; border: none; border-radius: 8px; 
@@ -114,7 +124,6 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        // IMPORTANTE: Alterado para incluir signInWithPopup[cite: 3]
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -133,7 +142,6 @@
         const loggedInView = document.getElementById('logged-in-view');
         const userGreeting = document.getElementById('user-greeting');
 
-        // MONITOR DE ESTADO - ATUALIZA A TELA AUTOMATICAMENTE
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loggedOutView.style.display = 'none';
@@ -145,7 +153,6 @@
             }
         });
 
-        // GOOGLE LOGIN CORRIGIDO: Voltamos para signInWithPopup[cite: 3]
         document.getElementById('googleBtn').onclick = () => {
             signInWithPopup(auth, provider)
                 .then((result) => {
@@ -156,7 +163,6 @@
                 });
         };
 
-        // SMART LOGIN (LOGIN OU CADASTRO AUTOMÁTICO)
         document.getElementById('loginSmartBtn').onclick = async () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -173,7 +179,6 @@
             }
         };
 
-        // LOGOUT E RESET
         document.getElementById('logoutBtn').onclick = () => signOut(auth);
         document.getElementById('forgotBtn').onclick = async (e) => {
             e.preventDefault();
