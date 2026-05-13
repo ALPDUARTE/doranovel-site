@@ -10,93 +10,86 @@
     <style>
         /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body { 
             font-family: 'Montserrat', sans-serif; 
-            color: #fff; 
-            min-height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('fundo2.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-color: #000;
+            color: #fff; min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('fundo2.png');
+            background-size: cover; background-position: center; background-attachment: fixed;
         }
 
-        /* --- NAVBAR (Logo e Nome Alinhados) --- */
+        /* --- NAVBAR --- */
         .navbar {
             width: 100%; min-height: 80px; display: flex; align-items: center; justify-content: space-between;
             padding: 10px 5%; background: rgba(0, 0, 0, 0.95); border-bottom: 2px solid #E1AD01;
             position: sticky; top: 0; z-index: 1000;
         }
-
         .brand-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
-        .logo-img { height: 50px; width: auto; }
-        .brand-gold { color: #E1AD01; font-weight: 700; font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; }
+        .logo-img { height: 50px; }
+        .brand-gold { color: #E1AD01; font-weight: 700; font-size: 1.8rem; text-transform: uppercase; }
 
         .nav-right { display: flex; align-items: center; gap: 20px; }
-        .user-profile { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
-        .user-avatar { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #E1AD01; object-fit: cover; }
-        
-        .btn-sair { 
-            color: #E1AD01; text-decoration: none; font-weight: 700; font-size: 0.8rem; 
-            border: 1px solid #E1AD01; padding: 8px 20px; border-radius: 20px; transition: 0.3s;
-        }
-        .btn-sair:hover { background: #E1AD01; color: #000; }
+        .user-avatar { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #E1AD01; }
+        .btn-sair { color: #E1AD01; text-decoration: none; font-weight: 700; border: 1px solid #E1AD01; padding: 8px 20px; border-radius: 20px; }
 
         /* --- FILTROS --- */
-        .search-container {
-            padding: 20px 5%; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;
-            background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
-        }
-        .search-box { flex: 2; min-width: 280px; }
-        .search-box input {
-            width: 100%; padding: 15px 25px; border-radius: 50px; border: 1px solid rgba(225, 173, 1, 0.5);
+        .search-container { padding: 20px 5%; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        .search-box input, .category-filter {
+            padding: 15px 25px; border-radius: 50px; border: 1px solid #E1AD01;
             background: rgba(0,0,0,0.7); color: #fff; outline: none;
         }
+        .search-box { flex: 2; min-width: 280px; }
+        .category-filter { flex: 1; min-width: 200px; }
 
-        .category-filter {
-            flex: 1; min-width: 200px; padding: 15px; border-radius: 50px;
-            border: 1px solid #E1AD01; background: #000; color: #fff; cursor: pointer;
-        }
-
-        /* --- GRID E CARDS --- */
+        /* --- GRID E CARDS ESTILO 163820.jpg --- */
         .content-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 25px; padding: 40px 5%;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px; padding: 40px 5%;
         }
 
         .card {
-            background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden;
-            transition: 0.3s; position: relative; border: 1px solid rgba(255,255,255,0.1);
-            display: flex; flex-direction: column;
+            border-radius: 25px; overflow: hidden; transition: 0.3s;
+            cursor: pointer; display: flex; flex-direction: column; padding: 12px;
+            height: 380px;
         }
-        .card:hover { transform: translateY(-5px); }
+        .card:hover { transform: scale(1.05); }
 
-        .card-img-container { width: 100%; aspect-ratio: 2/3; overflow: hidden; position: relative; }
+        .card-img-container { 
+            width: 100%; flex-grow: 1; border-radius: 18px; 
+            overflow: hidden; position: relative; background: #000;
+        }
         .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Ícone de Favorito */
         .btn-fav {
-            position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5);
-            border: none; color: #fff; padding: 8px; border-radius: 50%; cursor: pointer; transition: 0.3s;
+            position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5);
+            border: none; color: #fff; padding: 8px; border-radius: 50%; z-index: 10;
         }
-        .btn-fav:hover { color: #ff4757; transform: scale(1.2); }
 
-        .card-info { padding: 12px; text-align: center; background: #000; }
-        .card-category { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
-        .card-title { font-weight: 700; font-size: 0.9rem; line-height: 1.2; height: 2.4em; overflow: hidden; }
+        .card-info { padding: 15px 5px 5px 5px; text-align: center; color: #000; }
+        .card-category { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; opacity: 0.8; }
+        .card-title { font-weight: 700; font-size: 0.85rem; line-height: 1.1; }
 
-        /* CORES DAS BORDAS POR CATEGORIA (Conforme imagem e95c55) */
-        .cat-encontros { border-bottom: 5px solid #D48498 !important; } /* Rosa */
-        .cat-melodramas { border-bottom: 5px solid #A52A2A !important; } /* Vermelho/Castanho */
-        .cat-suspense { border-bottom: 5px solid #F0F0F0 !important; } /* Branco */
-        .cat-epicos { border-bottom: 5px solid #CD7F32 !important; } /* Bronze */
-        .cat-medicina { border-bottom: 5px solid #00D1FF !important; } /* Azul */
+        /* CORES DE FUNDO DOS CARDS (Baseado na imagem 163820.jpg) */
+        .cat-encontros { background-color: #D48498; } /* Rosa */
+        .cat-melodramas { background-color: #A52A2A; } /* Vermelho */
+        .cat-suspense { background-color: #F0F0F0; } /* Branco */
+        .cat-epicos { background-color: #CD7F32; } /* Bronze */
+        .cat-medicina { background-color: #4CAF50; } /* Verde */
 
-        @media (max-width: 768px) {
-            .navbar { flex-direction: column; gap: 10px; }
-            .brand-container { justify-content: center; }
+        /* --- MODAL DO PLAYER --- */
+        .video-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000;
         }
+        .modal-content { width: 90%; max-width: 1000px; position: relative; border: 2px solid #E1AD01; border-radius: 15px; overflow: hidden; background: #000;}
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; }
+        .video-wrapper iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+        }
+        .close-modal {
+            position: absolute; top: -40px; right: 0; color: #E1AD01; font-size: 2rem; cursor: pointer;
+        }
+
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 15px; } }
     </style>
 </head>
 <body>
@@ -113,7 +106,7 @@
 
     <div class="search-container">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="O que vamos assistir hoje?">
+            <input type="text" id="searchInput" placeholder="Pesquisar dorama ou livro...">
         </div>
         <select class="category-filter" id="categorySelect">
             <option value="all">Todas Categorias</option>
@@ -125,9 +118,17 @@
         </select>
     </div>
 
-    <main class="content-grid" id="contentGrid">
-        <p style="grid-column: 1/-1; text-align:center;">Sincronizando com o Firebase...</p>
-    </main>
+    <main class="content-grid" id="contentGrid"></main>
+
+    <!-- Modal de Vídeo -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times; fechar</span>
+            <div class="video-wrapper">
+                <iframe id="videoIframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -145,9 +146,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const grid = document.getElementById('contentGrid');
+        let allData = []; // Variável global para manter os dados originais
 
-        // Mapeamento de Cores para Categorias
         const colorMap = {
             "Encontros e Destinos": "cat-encontros",
             "Melodramas Intensos": "cat-melodramas",
@@ -156,79 +156,88 @@
             "Medicina & Vida": "cat-medicina"
         };
 
-        // Gestão de Usuário
-        onAuthStateChanged(auth, (user) => {
-            const authSection = document.getElementById('authSection');
-            if (user) {
-                authSection.innerHTML = `
-                    <div class="user-profile">
-                        <span>Olá, <strong>${user.displayName || user.email.split('@')[0]}</strong></span>
-                        <img src="${user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" class="user-avatar">
+        // --- FUNÇÃO DE RENDERIZAÇÃO ---
+        function render(list) {
+            const grid = document.getElementById('contentGrid');
+            grid.innerHTML = list.length ? '' : '<p style="grid-column:1/-1; text-align:center;">Nenhum conteúdo encontrado.</p>';
+            
+            list.forEach(item => {
+                const colorClass = colorMap[item.categoria] || '';
+                const card = document.createElement('div');
+                card.className = `card ${colorClass}`;
+                card.innerHTML = `
+                    <div class="card-img-container">
+                        <button class="btn-fav"><i class="fas fa-heart"></i></button>
+                        <img src="${item.capa}" alt="${item.titulo}">
                     </div>
+                    <div class="card-info">
+                        <div class="card-category">${item.categoria}</div>
+                        <div class="card-title">${item.titulo}</div>
+                    </div>
+                `;
+                
+                // Abrir Vídeo no Clique
+                card.onclick = () => openVideo(item.video);
+                grid.appendChild(card);
+            });
+        }
+
+        // --- CONTROLE DO MODAL ---
+        function openVideo(url) {
+            if(!url) return alert("Vídeo não disponível.");
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoIframe');
+            // Formata URL para embed e autoplay
+            let embedUrl = url.replace("watch?v=", "embed/").split('&')[0];
+            iframe.src = `${embedUrl}?autoplay=1&rel=0&modestbranding=1`;
+            modal.style.display = 'flex';
+        }
+
+        document.getElementById('closeModal').onclick = () => {
+            document.getElementById('videoModal').style.display = 'none';
+            document.getElementById('videoIframe').src = '';
+        };
+
+        // --- BUSCA E FILTRO ---
+        document.getElementById('searchInput').oninput = (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allData.filter(i => i.titulo.toLowerCase().includes(term));
+            render(filtered);
+        };
+
+        document.getElementById('categorySelect').onchange = (e) => {
+            const val = e.target.value;
+            const filtered = val === 'all' ? allData : allData.filter(i => i.categoria === val);
+            render(filtered);
+        };
+
+        // --- CARREGAR FIREBASE ---
+        async function init() {
+            const snap = await getDocs(collection(db, "Produções"));
+            snap.forEach(doc => {
+                const d = doc.data();
+                allData.push({
+                    titulo: d.Título || d.titulo,
+                    capa: d.Capa || d.capa,
+                    categoria: d.categoria || d.Categoria,
+                    video: d["Link do Episódio"] || d.video
+                });
+            });
+            render(allData);
+        }
+
+        init();
+
+        // Auth
+        onAuthStateChanged(auth, user => {
+            if(user) {
+                document.getElementById('authSection').innerHTML = `
+                    <img src="${user.photoURL || 'https://via.placeholder.com/35'}" class="user-avatar">
                     <a href="#" id="btnLogout" class="btn-sair">SAIR</a>
                 `;
                 document.getElementById('btnLogout').onclick = () => signOut(auth);
             }
         });
-
-        // Carregamento de Dados (Baseado na image_e95c55.jpg)
-        async function loadContent() {
-            try {
-                const querySnapshot = await getDocs(collection(db, "Produções"));
-                const data = [];
-                
-                querySnapshot.forEach(doc => {
-                    const d = doc.data();
-                    data.push({
-                        id: doc.id,
-                        titulo: d.Título || d.titulo || "Sem Título",
-                        capa: d.Capa || d.capa || "https://via.placeholder.com/200x300",
-                        categoria: d.categoria || d.Categoria || "Geral"
-                    });
-                });
-                
-                const render = (list) => {
-                    grid.innerHTML = list.length ? '' : '<p style="grid-column: 1/-1; text-align:center;">Nenhum resultado.</p>';
-                    list.forEach(item => {
-                        // Define a classe de cor baseada na categoria
-                        const colorClass = colorMap[item.categoria] || '';
-                        
-                        const card = document.createElement('div');
-                        card.className = `card ${colorClass}`;
-                        card.innerHTML = `
-                            <div class="card-img-container">
-                                <button class="btn-fav"><i class="far fa-heart"></i></button>
-                                <img src="${item.capa}" alt="${item.titulo}">
-                            </div>
-                            <div class="card-info">
-                                <div class="card-category" style="color: ${colorClass ? 'inherit' : '#E1AD01'}">${item.categoria}</div>
-                                <div class="card-title">${item.titulo}</div>
-                            </div>
-                        `;
-                        grid.appendChild(card);
-                    });
-                };
-
-                render(data);
-
-                // Filtros de busca e categoria
-                document.getElementById('searchInput').oninput = (e) => {
-                    const term = e.target.value.toLowerCase();
-                    render(data.filter(i => i.titulo.toLowerCase().includes(term)));
-                };
-
-                document.getElementById('categorySelect').onchange = (e) => {
-                    const val = e.target.value;
-                    render(val === 'all' ? data : data.filter(i => i.categoria === val));
-                };
-
-            } catch (e) {
-                console.error(e);
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Erro ao conectar ao banco de dados.</p>';
-            }
-        }
-
-        loadContent();
     </script>
 </body>
 </html>
