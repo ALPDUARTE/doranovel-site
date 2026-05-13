@@ -29,23 +29,30 @@
 
         .nav-right { display: flex; align-items: center; gap: 15px; }
         .user-info { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: 700; }
-        .user-photo { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #E1AD01; object-fit: cover; background: #333; }
+        
+        /* Ajuste do Ícone padrão conforme imagem 211850.png */
+        .user-avatar-container {
+            width: 38px; height: 38px; border-radius: 50%; 
+            background: #1a1a1a; display: flex; align-items: center; 
+            justify-content: center; border: 1px solid #E1AD01; overflow: hidden;
+        }
+        .user-photo { width: 100%; height: 100%; object-fit: cover; }
+        .default-avatar-icon { font-size: 22px; color: #E1AD01; }
+
         .btn-sair { 
             color: #E1AD01; text-decoration: none; font-weight: 700; border: 1px solid #E1AD01; 
             padding: 8px 20px; border-radius: 20px; font-size: 0.75rem; transition: 0.3s;
         }
         .btn-sair:hover { background: #E1AD01; color: #000; }
 
-        /* --- FILTROS PADRONIZADOS (image_e7a888.jpg) --- */
+        /* --- FILTROS --- */
         .search-container { padding: 30px 5% 10px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
         
-        /* Padronização da Paleta entre Busca e Categoria */
         .search-box input, .category-filter {
             width: 100%; max-width: 400px; padding: 12px 25px; border-radius: 25px; 
             border: 2px solid #E1AD01; background: rgba(0,0,0,0.8); color: #fff; 
             outline: none; font-family: 'Montserrat'; font-size: 0.9rem; text-align: center;
         }
-        .search-box input::placeholder { color: rgba(255,255,255,0.6); }
 
         /* --- GRID E CARDS --- */
         .content-grid {
@@ -69,13 +76,12 @@
             position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6);
             border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; z-index: 10;
         }
-        .btn-fav.active { color: #ff4757; }
 
         .card-info { padding: 10px 5px; text-align: center; color: #000; }
         .card-category { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; margin-bottom: 2px; }
         .card-title { font-weight: 700; font-size: 0.75rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* CORES POR CATEGORIA (225103.PNG) */
+        /* CORES DA TABELA 225103.PNG */
         .cat-encontros { background-color: #D48498; }
         .cat-suspense { background-color: #F0F0F0; }
         .cat-melodramas { background-color: #A52A2A; color: #fff !important; }
@@ -92,10 +98,10 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000;
         }
-        .modal-content { width: 100%; height: 100%; max-width: 500px; position: relative; }
+        .modal-content { width: 100%; height: 100%; max-width: 500px; }
         .close-modal {
             position: absolute; top: 20px; left: 20px; color: #fff; 
-            font-size: 1rem; cursor: pointer; z-index: 2100; background: rgba(0,0,0,0.5); padding: 8px 15px; border-radius: 20px; border: 1px solid #E1AD01;
+            font-size: 1rem; cursor: pointer; background: rgba(0,0,0,0.5); padding: 8px 15px; border-radius: 20px; border: 1px solid #E1AD01;
         }
 
         @media (max-width: 600px) {
@@ -120,7 +126,6 @@
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Pesquisar título...">
         </div>
-        <!-- Select agora usa data-clean para filtrar sem ícones -->
         <select class="category-filter" id="categorySelect">
             <option value="all">Todas Categorias</option>
             <option value="Encontros e Destinos">🌸 Encontros e Destinos</option>
@@ -139,7 +144,7 @@
     <div class="video-modal" id="videoModal">
         <span class="close-modal" id="closeModal"><i class="fas fa-chevron-left"></i> Voltar</span>
         <div class="modal-content">
-            <iframe id="videoIframe" width="100%" height="100%" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <iframe id="videoIframe" width="100%" height="450px" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -176,18 +181,21 @@
             const grid = document.getElementById('contentGrid');
             grid.innerHTML = "";
             list.forEach(item => {
-                const colorClass = colorMap[item.categoria] || '';
+                // Pega a primeira categoria da lista do Firebase para definir a cor
+                const mainCat = Array.isArray(item.categorias) ? item.categorias[0] : "Geral";
+                const colorClass = colorMap[mainCat] || '';
+                
                 const card = document.createElement('div');
                 card.className = `card ${colorClass}`;
                 card.innerHTML = `
                     <div class="card-img-container">
-                        <button class="btn-fav" onclick="event.stopPropagation(); this.classList.toggle('active')">
+                        <button class="btn-fav" onclick="event.stopPropagation();">
                             <i class="fas fa-heart"></i>
                         </button>
                         <img src="${item.capa}" alt="${item.titulo}">
                     </div>
                     <div class="card-info">
-                        <div class="card-category">${item.categoria}</div>
+                        <div class="card-category">${mainCat}</div>
                         <div class="card-title">${item.titulo}</div>
                     </div>
                 `;
@@ -200,7 +208,7 @@
             if(!url) return;
             const iframe = document.getElementById('videoIframe');
             let videoId = url.includes("v=") ? url.split("v=")[1].split("&")[0] : url.split("/").pop();
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
             document.getElementById('videoModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
@@ -211,17 +219,25 @@
             document.body.style.overflow = 'auto';
         };
 
-        // FILTRAGEM CORRIGIDA: Remove ícones e emojis para comparar com Firestore
+        // FILTRO ROBUSTO: Lida com Arrays do Firestore e Emojis no Select
         const filterData = () => {
             const search = document.getElementById('searchInput').value.toLowerCase();
-            const categoryRaw = document.getElementById('categorySelect').value;
+            const categorySelect = document.getElementById('categorySelect').value;
             
-            // Remove emojis e caracteres especiais para bater com o Firebase
-            const cleanCategory = categoryRaw.replace(/[^\w\s&]/gi, '').trim();
+            // Extrai apenas o texto removendo o emoji inicial (ex: "🌸 Cotidiano" vira "Cotidiano")
+            const cleanCategoryFilter = categorySelect.split(' ').slice(1).join(' ').trim();
 
             const filtered = allData.filter(i => {
                 const matchName = i.titulo.toLowerCase().includes(search);
-                const matchCat = (categoryRaw === 'all' || i.categoria.trim() === cleanCategory);
+                
+                // Verifica se o filtro está em 'all' ou se a categoria limpa existe na lista do Firestore
+                let matchCat = false;
+                if (categorySelect === 'all') {
+                    matchCat = true;
+                } else if (Array.isArray(i.categorias)) {
+                    matchCat = i.categorias.includes(cleanCategoryFilter);
+                }
+
                 return matchName && matchCat;
             });
             render(filtered);
@@ -230,15 +246,18 @@
         document.getElementById('searchInput').oninput = filterData;
         document.getElementById('categorySelect').onchange = filterData;
 
-        // AUTH & LOGOUT: Ícone padrão circular se não houver foto
+        // AUTH & LOGOUT: Ícone dinâmico conforme imagem 211850.png
         onAuthStateChanged(auth, user => {
             const authSection = document.getElementById('authSection');
             if(user) {
-                const photo = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; // Ícone padrão circular
+                const avatarHtml = user.photoURL 
+                    ? `<img src="${user.photoURL}" class="user-photo">` 
+                    : `<i class="fas fa-user-circle default-avatar-icon"></i>`;
+
                 authSection.innerHTML = `
                     <div class="user-info">
                         <span>${user.displayName || 'Usuário'}</span>
-                        <img src="${photo}" class="user-photo">
+                        <div class="user-avatar-container">${avatarHtml}</div>
                     </div>
                     <a href="#" id="btnLogout" class="btn-sair">SAIR</a>
                 `;
@@ -258,9 +277,9 @@
             snap.forEach(doc => {
                 const d = doc.data();
                 allData.push({
-                    titulo: d.Título || d.titulo,
-                    capa: d.Capa || d.capa,
-                    categoria: d.categoria || d.Categoria,
+                    titulo: d.Título || d.titulo || "Sem título",
+                    capa: d.Capa || d.capa || "https://via.placeholder.com/200",
+                    categorias: d.Categoria || [], // Recebe o Array visto na imagem 193629.png
                     video: d["Link do Episódio"] || d.video
                 });
             });
