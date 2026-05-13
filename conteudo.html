@@ -7,156 +7,110 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* --- ESTILO BASE E RESPONSIVIDADE --- */
+        /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             font-family: 'Montserrat', sans-serif; 
             color: #fff; 
             min-height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('fundo2.png');
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('fundo2.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-color: #000;
         }
 
-        /* --- NAVBAR ADAPTÁVEL --- */
+        /* --- NAVBAR AJUSTADA --- */
         .navbar {
-            width: 100%; height: auto; min-height: 80px; display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 5%; background: rgba(0, 0, 0, 0.9); border-bottom: 2px solid #E1AD01;
-            position: sticky; top: 0; z-index: 1000; flex-wrap: wrap;
+            width: 100%; min-height: 80px; display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 5%; background: rgba(0, 0, 0, 0.95); border-bottom: 2px solid #E1AD01;
+            position: sticky; top: 0; z-index: 1000;
         }
-        .brand-gold { color: #E1AD01; font-weight: 700; font-size: 1.5rem; text-transform: uppercase; }
 
-        /* --- FILTROS RESPONSIVOS --- */
+        .nav-left { display: flex; align-items: center; flex: 1; }
+        .logo-img { height: 50px; margin-right: 15px; }
+
+        .nav-center { flex: 2; text-align: center; }
+        .brand-gold { color: #E1AD01; font-weight: 700; font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        .nav-right { display: flex; align-items: center; justify-content: flex-end; gap: 15px; flex: 1; }
+        
+        /* Estilo do Usuário */
+        .user-profile { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 400; }
+        .user-avatar { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #E1AD01; object-fit: cover; }
+        .btn-sair { 
+            color: #E1AD01; text-decoration: none; font-weight: 700; font-size: 0.8rem; 
+            border: 1px solid #E1AD01; padding: 6px 15px; border-radius: 20px; transition: 0.3s;
+        }
+        .btn-sair:hover { background: #E1AD01; color: #000; }
+
+        /* --- FILTROS --- */
         .search-container {
-            padding: 20px 5%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(15px);
+            padding: 20px 5%; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(15px);
         }
-
-        .search-box {
-            flex: 2;
-            min-width: 280px;
-        }
-
+        .search-box { flex: 2; min-width: 280px; }
         .search-box input {
-            width: 100%;
-            padding: 15px 25px;
-            border-radius: 50px;
-            border: 1px solid #E1AD01;
-            background: rgba(0,0,0,0.8);
-            color: #fff;
-            outline: none;
-            font-size: 1rem;
+            width: 100%; padding: 15px 25px; border-radius: 50px; border: 1px solid #E1AD01;
+            background: rgba(0,0,0,0.8); color: #fff; outline: none;
         }
-
         .category-filter {
-            flex: 1;
-            min-width: 200px;
-            padding: 15px;
-            border-radius: 50px;
-            border: 1px solid #E1AD01;
-            background: #000;
-            color: #fff;
-            cursor: pointer;
-            font-family: 'Montserrat';
+            flex: 1; min-width: 200px; padding: 15px; border-radius: 50px;
+            border: 1px solid #E1AD01; background: #000; color: #fff; cursor: pointer;
         }
 
-        /* --- GRID DE CARDS INTELIGENTE --- */
+        /* --- GRID E CARDS --- */
         .content-grid {
-            display: grid;
-            /* Ajusta colunas automaticamente conforme o espaço disponível */
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px;
-            padding: 30px 5%;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px; padding: 40px 5%;
         }
-
-        /* CARD ESTILO APP (Baseado nas cores e categorias informadas) */
         .card {
-            border-radius: 20px;
-            padding: 12px;
-            position: relative;
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            border-radius: 15px; padding: 10px; position: relative; transition: 0.3s;
+            display: flex; flex-direction: column; background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
         }
-
-        .card:hover { transform: translateY(-8px); }
-
-        .card-img-container {
-            width: 100%;
-            aspect-ratio: 2/3; /* Proporção de poster de filme */
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 12px;
-            background: #111;
-        }
-
-        .card-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
+        .card:hover { transform: scale(1.03); background: rgba(255,255,255,0.1); }
+        .card-img-container { width: 100%; aspect-ratio: 2/3; border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+        .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
         .card-info { text-align: center; }
-        .card-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; line-height: 1.2; }
-        .card-category { font-size: 0.7rem; text-transform: uppercase; opacity: 0.8; letter-spacing: 1px; }
+        .card-title { font-weight: 700; font-size: 0.9rem; }
+        .card-category { font-size: 0.65rem; text-transform: uppercase; opacity: 0.7; margin-bottom: 5px; }
 
-        .fav-icon {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 1.3rem;
-            color: rgba(255,255,255,0.6);
-            cursor: pointer;
-            z-index: 10;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
-        }
+        /* CORES CATEGORIAS */
+        .cat-encontros { border-bottom: 4px solid #D48498; }
+        .cat-suspense { border-bottom: 4px solid #F0F0F0; }
+        .cat-melodramas { border-bottom: 4px solid #A52A2A; }
+        .cat-epicos { border-bottom: 4px solid #CD7F32; }
 
-        .fav-icon.active { color: #ff4757; }
-
-        /* CORES DAS CATEGORIAS */
-        .cat-encontros { background-color: #D48498; }
-        .cat-suspense { background-color: #F0F0F0; color: #000; }
-        .cat-melodramas { background-color: #A52A2A; }
-        .cat-epicos { background-color: #CD7F32; }
-        .cat-cotidiano { background-color: #D2B48C; color: #000; }
-        .cat-direito { background-color: #000080; }
-        .cat-medicina { background-color: #50C878; }
-        .cat-juventude { background-color: #E1AD01; color: #000; }
-
-        /* --- MEDIA QUERIES PARA AJUSTES FINOS --- */
-        @media (min-width: 1024px) {
-            .content-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 30px; }
-        }
-
-        @media (max-width: 480px) {
-            .content-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; }
-            .card-title { font-size: 0.8rem; }
-            .navbar { justify-content: center; gap: 10px; }
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; padding: 15px; gap: 10px; }
+            .nav-left, .nav-right { justify-content: center; width: 100%; }
+            .brand-gold { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="brand-gold">Dora<span style="color:#fff">novel</span></div>
-        <a href="login.html" style="color: #E1AD01; text-decoration: none; font-weight: 700; font-size: 0.9rem; border: 1px solid #E1AD01; padding: 8px 15px; border-radius: 20px;">SAIR</a>
+        <div class="nav-left">
+            <img src="logo.png" alt="Doranovel Logo" class="logo-img">
+        </div>
+        
+        <div class="nav-center">
+            <div class="brand-gold">Dora<span style="color:#fff">novel</span></div>
+        </div>
+
+        <div class="nav-right" id="authSection">
+            <!-- Renderizado via JS conforme status do Firebase -->
+            <a href="login.html" class="btn-sair">ENTRAR</a>
+        </div>
     </nav>
 
     <div class="search-container">
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Pesquisar dorama ou livro...">
+            <input type="text" id="searchInput" placeholder="O que vamos assistir hoje?">
         </div>
-        
         <select class="category-filter" id="categorySelect">
             <option value="all">Todas Categorias</option>
             <option value="Encontros e Destinos">🌸 Encontros e Destinos</option>
@@ -171,12 +125,13 @@
     </div>
 
     <main class="content-grid" id="contentGrid">
-        <!-- Carregado via Firebase -->
+        <p style="grid-column: 1/-1; text-align:center;">Conectando ao catálogo...</p>
     </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
@@ -188,36 +143,54 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
+        
         const grid = document.getElementById('contentGrid');
+        const authSection = document.getElementById('authSection');
 
+        // --- LÓGICA DE USUÁRIO (ITEM 2) ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const photoURL = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+                const displayName = user.displayName || user.email.split('@')[0];
+                
+                authSection.innerHTML = `
+                    <div class="user-profile">
+                        <span>Olá, <strong>${displayName}</strong></span>
+                        <img src="${photoURL}" class="user-avatar">
+                    </div>
+                    <a href="#" id="btnLogout" class="btn-sair">SAIR</a>
+                `;
+
+                document.getElementById('btnLogout').onclick = () => signOut(auth);
+            } else {
+                authSection.innerHTML = `<a href="login.html" class="btn-sair">ENTRAR</a>`;
+            }
+        });
+
+        // --- CARREGAMENTO DE CONTEÚDO ---
         const colorMap = {
             "Encontros e Destinos": "cat-encontros",
             "Suspense & Mistério": "cat-suspense",
             "Melodramas Intensos": "cat-melodramas",
-            "Épicos Históricos": "cat-epicos",
-            "Cotidiano": "cat-cotidiano",
-            "Direito & Justiça": "cat-direito",
-            "Medicina & Vida": "cat-medicina",
-            "Juventude & Sonhos": "cat-juventude"
+            "Épicos Históricos": "cat-epicos"
         };
 
         async function loadContent() {
-            grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Carregando...</p>';
             try {
                 const querySnapshot = await getDocs(collection(db, "Produções"));
                 const data = [];
                 querySnapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
                 
                 const render = (list) => {
-                    grid.innerHTML = '';
+                    grid.innerHTML = list.length ? '' : '<p style="grid-column: 1/-1; text-align:center;">Nenhum resultado encontrado.</p>';
                     list.forEach(item => {
                         const colorClass = colorMap[item.categoria] || '';
                         const card = document.createElement('div');
                         card.className = `card ${colorClass}`;
                         card.innerHTML = `
-                            <i class="fa-solid fa-heart fav-icon" onclick="this.classList.toggle('active')"></i>
                             <div class="card-img-container">
-                                <img src="${item.capa}" alt="${item.nome}" loading="lazy">
+                                <img src="${item.capa}" alt="${item.nome}" onerror="this.src='https://via.placeholder.com/200x300?text=Sem+Capa'">
                             </div>
                             <div class="card-info">
                                 <div class="card-category">${item.categoria}</div>
@@ -230,18 +203,20 @@
 
                 render(data);
 
+                // Filtros
                 document.getElementById('searchInput').oninput = (e) => {
-                    const filtered = data.filter(i => i.nome.toLowerCase().includes(e.target.value.toLowerCase()));
-                    render(filtered);
+                    const term = e.target.value.toLowerCase();
+                    render(data.filter(i => i.nome.toLowerCase().includes(term)));
                 };
 
                 document.getElementById('categorySelect').onchange = (e) => {
-                    const filtered = e.target.value === 'all' ? data : data.filter(i => i.categoria === e.target.value);
-                    render(filtered);
+                    const val = e.target.value;
+                    render(val === 'all' ? data : data.filter(i => i.categoria === val));
                 };
 
             } catch (e) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Erro ao conectar ao Firebase.</p>';
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Erro ao carregar dados do Firebase.</p>';
+                console.error(e);
             }
         }
 
