@@ -30,7 +30,7 @@
         .nav-right { display: flex; align-items: center; gap: 15px; }
         .user-info { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: 700; }
         
-        /* Ajuste do Ícone padrão conforme imagem 211850.png */
+        /* Avatar Circular conforme imagem 211850.png */
         .user-avatar-container {
             width: 38px; height: 38px; border-radius: 50%; 
             background: #1a1a1a; display: flex; align-items: center; 
@@ -47,24 +47,25 @@
 
         /* --- FILTROS --- */
         .search-container { padding: 30px 5% 10px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
-        
         .search-box input, .category-filter {
             width: 100%; max-width: 400px; padding: 12px 25px; border-radius: 25px; 
             border: 2px solid #E1AD01; background: rgba(0,0,0,0.8); color: #fff; 
             outline: none; font-family: 'Montserrat'; font-size: 0.9rem; text-align: center;
         }
 
-        /* --- GRID E CARDS --- */
+        /* --- GRID E CARDS (RESTAURADOS) --- */
         .content-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 15px; padding: 20px 5%;
         }
 
         .card {
             border-radius: 20px; overflow: hidden; transition: 0.3s;
-            cursor: pointer; display: flex; flex-direction: column; padding: 8px;
-            height: 330px; position: relative;
+            cursor: pointer; display: flex; flex-direction: column; padding: 10px;
+            height: 340px; position: relative; border: 1px solid rgba(255,255,255,0.1);
         }
+        .card:hover { transform: translateY(-5px); }
 
         .card-img-container { 
             width: 100%; flex-grow: 1; border-radius: 15px; 
@@ -77,11 +78,11 @@
             border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; z-index: 10;
         }
 
-        .card-info { padding: 10px 5px; text-align: center; color: #000; }
-        .card-category { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; margin-bottom: 2px; }
-        .card-title { font-weight: 700; font-size: 0.75rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-info { padding: 12px 5px; text-align: center; color: #000; }
+        .card-category { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+        .card-title { font-weight: 700; font-size: 0.8rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* CORES DA TABELA 225103.PNG */
+        /* PALETA DE CORES OFICIAL (FIGURA 225103.PNG) */
         .cat-encontros { background-color: #D48498; }
         .cat-suspense { background-color: #F0F0F0; }
         .cat-melodramas { background-color: #A52A2A; color: #fff !important; }
@@ -98,15 +99,16 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000;
         }
-        .modal-content { width: 100%; height: 100%; max-width: 500px; }
+        .modal-content { width: 100%; height: 100%; max-width: 800px; display: flex; align-items: center; }
         .close-modal {
             position: absolute; top: 20px; left: 20px; color: #fff; 
             font-size: 1rem; cursor: pointer; background: rgba(0,0,0,0.5); padding: 8px 15px; border-radius: 20px; border: 1px solid #E1AD01;
         }
 
+        /* MOBILE 2 COLUNAS */
         @media (max-width: 600px) {
             .content-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
-            .card { height: 290px; }
+            .card { height: 300px; padding: 6px; }
         }
     </style>
 </head>
@@ -181,9 +183,9 @@
             const grid = document.getElementById('contentGrid');
             grid.innerHTML = "";
             list.forEach(item => {
-                // Pega a primeira categoria da lista do Firebase para definir a cor
-                const mainCat = Array.isArray(item.categorias) ? item.categorias[0] : "Geral";
-                const colorClass = colorMap[mainCat] || '';
+                // Pega a categoria do array (Firestore imagem 193629.png)
+                const categoriaFirebase = Array.isArray(item.categorias) ? item.categorias[0] : "Geral";
+                const colorClass = colorMap[categoriaFirebase] || '';
                 
                 const card = document.createElement('div');
                 card.className = `card ${colorClass}`;
@@ -195,7 +197,7 @@
                         <img src="${item.capa}" alt="${item.titulo}">
                     </div>
                     <div class="card-info">
-                        <div class="card-category">${mainCat}</div>
+                        <div class="card-category">${categoriaFirebase}</div>
                         <div class="card-title">${item.titulo}</div>
                     </div>
                 `;
@@ -219,23 +221,26 @@
             document.body.style.overflow = 'auto';
         };
 
-        // FILTRO ROBUSTO: Lida com Arrays do Firestore e Emojis no Select
+        // LÓGICA DE FILTRO CORRIGIDA PARA ARRAY DO FIRESTORE
         const filterData = () => {
             const search = document.getElementById('searchInput').value.toLowerCase();
-            const categorySelect = document.getElementById('categorySelect').value;
+            const categoryValue = document.getElementById('categorySelect').value;
             
-            // Extrai apenas o texto removendo o emoji inicial (ex: "🌸 Cotidiano" vira "Cotidiano")
-            const cleanCategoryFilter = categorySelect.split(' ').slice(1).join(' ').trim();
+            // Limpa o emoji do valor do Select para comparar com o texto do Banco
+            // Ex: "🌸 Encontros e Destinos" -> "Encontros e Destinos"
+            const cleanFilterName = categoryValue.includes(' ') 
+                ? categoryValue.substring(categoryValue.indexOf(' ') + 1) 
+                : categoryValue;
 
-            const filtered = allData.filter(i => {
-                const matchName = i.titulo.toLowerCase().includes(search);
+            const filtered = allData.filter(item => {
+                const matchName = item.titulo.toLowerCase().includes(search);
                 
-                // Verifica se o filtro está em 'all' ou se a categoria limpa existe na lista do Firestore
                 let matchCat = false;
-                if (categorySelect === 'all') {
+                if (categoryValue === 'all') {
                     matchCat = true;
-                } else if (Array.isArray(i.categorias)) {
-                    matchCat = i.categorias.includes(cleanCategoryFilter);
+                } else if (Array.isArray(item.categorias)) {
+                    // Verifica se o nome limpo está dentro da lista de categorias do Firebase
+                    matchCat = item.categorias.some(cat => cat.trim() === cleanFilterName.trim());
                 }
 
                 return matchName && matchCat;
@@ -246,7 +251,6 @@
         document.getElementById('searchInput').oninput = filterData;
         document.getElementById('categorySelect').onchange = filterData;
 
-        // AUTH & LOGOUT: Ícone dinâmico conforme imagem 211850.png
         onAuthStateChanged(auth, user => {
             const authSection = document.getElementById('authSection');
             if(user) {
@@ -272,18 +276,20 @@
         });
 
         async function init() {
-            const snap = await getDocs(collection(db, "Produções"));
-            allData = [];
-            snap.forEach(doc => {
-                const d = doc.data();
-                allData.push({
-                    titulo: d.Título || d.titulo || "Sem título",
-                    capa: d.Capa || d.capa || "https://via.placeholder.com/200",
-                    categorias: d.Categoria || [], // Recebe o Array visto na imagem 193629.png
-                    video: d["Link do Episódio"] || d.video
+            try {
+                const snap = await getDocs(collection(db, "Produções"));
+                allData = [];
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    allData.push({
+                        titulo: d.Título || d.titulo || "Sem título",
+                        capa: d.Capa || d.capa || "https://via.placeholder.com/200",
+                        categorias: d.Categoria || [], // Array conforme imagem 193629.png
+                        video: d["Link do Episódio"] || d.video
+                    });
                 });
-            });
-            render(allData);
+                render(allData);
+            } catch (e) { console.error("Erro ao carregar dados:", e); }
         }
         init();
     </script>
