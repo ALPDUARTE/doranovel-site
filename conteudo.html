@@ -15,6 +15,7 @@
             color: #fff; min-height: 100vh;
             background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('fundo2.png');
             background-size: cover; background-position: center; background-attachment: fixed;
+            overflow-x: hidden;
         }
 
         /* --- NAVBAR --- */
@@ -29,29 +30,29 @@
 
         .nav-right { display: flex; align-items: center; gap: 20px; }
         .user-avatar { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #E1AD01; }
-        .btn-sair { color: #E1AD01; text-decoration: none; font-weight: 700; border: 1px solid #E1AD01; padding: 8px 20px; border-radius: 20px; }
+        .btn-sair { color: #E1AD01; text-decoration: none; font-weight: 700; border: 1px solid #E1AD01; padding: 8px 20px; border-radius: 20px; font-size: 0.8rem; }
 
         /* --- FILTROS --- */
         .search-container { padding: 20px 5%; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
         .search-box input, .category-filter {
             padding: 15px 25px; border-radius: 50px; border: 1px solid #E1AD01;
-            background: rgba(0,0,0,0.7); color: #fff; outline: none;
+            background: rgba(0,0,0,0.7); color: #fff; outline: none; font-family: 'Montserrat';
         }
         .search-box { flex: 2; min-width: 280px; }
-        .category-filter { flex: 1; min-width: 200px; }
+        .category-filter { flex: 1; min-width: 200px; cursor: pointer; }
 
-        /* --- GRID E CARDS ESTILO 163820.jpg --- */
+        /* --- GRID E CARDS (ESTILO 163820.jpg) --- */
         .content-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 30px; padding: 40px 5%;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px; padding: 20px 5%;
         }
 
         .card {
             border-radius: 25px; overflow: hidden; transition: 0.3s;
-            cursor: pointer; display: flex; flex-direction: column; padding: 12px;
-            height: 380px;
+            cursor: pointer; display: flex; flex-direction: column; padding: 10px;
+            height: 350px; position: relative;
         }
-        .card:hover { transform: scale(1.05); }
+        .card:hover { transform: scale(1.03); }
 
         .card-img-container { 
             width: 100%; flex-grow: 1; border-radius: 18px; 
@@ -59,37 +60,66 @@
         }
         .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
 
+        /* Ícone de Favorito corrigido */
         .btn-fav {
-            position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5);
-            border: none; color: #fff; padding: 8px; border-radius: 50%; z-index: 10;
+            position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6);
+            border: none; color: #fff; width: 35px; height: 35px; border-radius: 50%; 
+            z-index: 10; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: 0.3s;
         }
+        .btn-fav.active { color: #ff4757; }
+        .btn-fav:hover { transform: scale(1.2); }
 
-        .card-info { padding: 15px 5px 5px 5px; text-align: center; color: #000; }
-        .card-category { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; opacity: 0.8; }
-        .card-title { font-weight: 700; font-size: 0.85rem; line-height: 1.1; }
+        .card-info { padding: 12px 5px; text-align: center; color: #000; }
+        .card-category { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; }
+        .card-title { font-weight: 700; font-size: 0.8rem; line-height: 1.2; }
 
-        /* CORES DE FUNDO DOS CARDS (Baseado na imagem 163820.jpg) */
-        .cat-encontros { background-color: #D48498; } /* Rosa */
-        .cat-melodramas { background-color: #A52A2A; } /* Vermelho */
-        .cat-suspense { background-color: #F0F0F0; } /* Branco */
-        .cat-epicos { background-color: #CD7F32; } /* Bronze */
-        .cat-medicina { background-color: #4CAF50; } /* Verde */
+        /* CORES DE CATEGORIA */
+        .cat-encontros { background-color: #D48498; }
+        .cat-melodramas { background-color: #A52A2A; color: #fff !important; }
+        .cat-melodramas .card-info { color: #fff; }
+        .cat-suspense { background-color: #F0F0F0; }
+        .cat-epicos { background-color: #CD7F32; }
+        .cat-medicina { background-color: #50C878; }
 
-        /* --- MODAL DO PLAYER --- */
+        /* --- MODAL DO PLAYER VERTICAL (FULLSCREEN FEEL) --- */
         .video-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000;
+            background: #000; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000;
         }
-        .modal-content { width: 90%; max-width: 1000px; position: relative; border: 2px solid #E1AD01; border-radius: 15px; overflow: hidden; background: #000;}
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; }
+        .modal-content { 
+            width: 100%; 
+            height: 100%; 
+            max-width: 500px; /* Largura de um celular para manter proporção vertical */
+            position: relative; 
+            background: #000;
+        }
+        .video-wrapper { 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden;
+            position: relative;
+        }
+        /* Ajuste para esconder bordas do YouTube e forçar aspecto vertical */
         .video-wrapper iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vh; /* Inverte proporção para cobrir a tela */
+            height: 100vw;
+            transform: translate(-50%, -50%) rotate(0deg);
+            width: 100%;
+            height: 100%;
+            border: none;
         }
         .close-modal {
-            position: absolute; top: -40px; right: 0; color: #E1AD01; font-size: 2rem; cursor: pointer;
+            position: absolute; top: 20px; left: 20px; color: #fff; 
+            font-size: 1.5rem; cursor: pointer; z-index: 2100;
+            background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px;
+            border: 1px solid #E1AD01;
         }
 
-        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 15px; } }
+        @media (max-width: 768px) { .navbar { flex-direction: column; padding: 15px; } }
     </style>
 </head>
 <body>
@@ -120,12 +150,11 @@
 
     <main class="content-grid" id="contentGrid"></main>
 
-    <!-- Modal de Vídeo -->
     <div class="video-modal" id="videoModal">
+        <span class="close-modal" id="closeModal"><i class="fas fa-chevron-left"></i> Voltar</span>
         <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times; fechar</span>
             <div class="video-wrapper">
-                <iframe id="videoIframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe id="videoIframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -146,7 +175,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        let allData = []; // Variável global para manter os dados originais
+        
+        let allData = []; // Banco de dados local
 
         const colorMap = {
             "Encontros e Destinos": "cat-encontros",
@@ -156,10 +186,9 @@
             "Medicina & Vida": "cat-medicina"
         };
 
-        // --- FUNÇÃO DE RENDERIZAÇÃO ---
         function render(list) {
             const grid = document.getElementById('contentGrid');
-            grid.innerHTML = list.length ? '' : '<p style="grid-column:1/-1; text-align:center;">Nenhum conteúdo encontrado.</p>';
+            grid.innerHTML = "";
             
             list.forEach(item => {
                 const colorClass = colorMap[item.categoria] || '';
@@ -167,7 +196,9 @@
                 card.className = `card ${colorClass}`;
                 card.innerHTML = `
                     <div class="card-img-container">
-                        <button class="btn-fav"><i class="fas fa-heart"></i></button>
+                        <button class="btn-fav" onclick="event.stopPropagation(); this.classList.toggle('active')">
+                            <i class="fas fa-heart"></i>
+                        </button>
                         <img src="${item.capa}" alt="${item.titulo}">
                     </div>
                     <div class="card-info">
@@ -176,44 +207,52 @@
                     </div>
                 `;
                 
-                // Abrir Vídeo no Clique
                 card.onclick = () => openVideo(item.video);
                 grid.appendChild(card);
             });
         }
 
-        // --- CONTROLE DO MODAL ---
         function openVideo(url) {
-            if(!url) return alert("Vídeo não disponível.");
+            if(!url) return;
             const modal = document.getElementById('videoModal');
             const iframe = document.getElementById('videoIframe');
-            // Formata URL para embed e autoplay
-            let embedUrl = url.replace("watch?v=", "embed/").split('&')[0];
-            iframe.src = `${embedUrl}?autoplay=1&rel=0&modestbranding=1`;
+            
+            // Transformar link normal em Embed Vertical
+            let videoId = "";
+            if(url.includes("v=")) videoId = url.split("v=")[1].split("&")[0];
+            else if(url.includes("shorts/")) videoId = url.split("shorts/")[1].split("?")[0];
+            else videoId = url.split("/").pop();
+
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3`;
             modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Trava o scroll do site
         }
 
         document.getElementById('closeModal').onclick = () => {
             document.getElementById('videoModal').style.display = 'none';
             document.getElementById('videoIframe').src = '';
+            document.body.style.overflow = 'auto';
         };
 
-        // --- BUSCA E FILTRO ---
-        document.getElementById('searchInput').oninput = (e) => {
-            const term = e.target.value.toLowerCase();
-            const filtered = allData.filter(i => i.titulo.toLowerCase().includes(term));
+        // FILTROS CORRIGIDOS
+        const filterData = () => {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryTerm = document.getElementById('categorySelect').value;
+
+            const filtered = allData.filter(item => {
+                const matchesSearch = item.titulo.toLowerCase().includes(searchTerm);
+                const matchesCategory = (categoryTerm === 'all' || item.categoria === categoryTerm);
+                return matchesSearch && matchesCategory;
+            });
             render(filtered);
         };
 
-        document.getElementById('categorySelect').onchange = (e) => {
-            const val = e.target.value;
-            const filtered = val === 'all' ? allData : allData.filter(i => i.categoria === val);
-            render(filtered);
-        };
+        document.getElementById('searchInput').oninput = filterData;
+        document.getElementById('categorySelect').onchange = filterData;
 
-        // --- CARREGAR FIREBASE ---
-        async function init() {
+        async function load() {
             const snap = await getDocs(collection(db, "Produções"));
+            allData = [];
             snap.forEach(doc => {
                 const d = doc.data();
                 allData.push({
@@ -226,14 +265,15 @@
             render(allData);
         }
 
-        init();
+        load();
 
-        // Auth
         onAuthStateChanged(auth, user => {
             if(user) {
                 document.getElementById('authSection').innerHTML = `
-                    <img src="${user.photoURL || 'https://via.placeholder.com/35'}" class="user-avatar">
-                    <a href="#" id="btnLogout" class="btn-sair">SAIR</a>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <img src="${user.photoURL || 'https://via.placeholder.com/35'}" class="user-avatar">
+                        <a href="#" id="btnLogout" class="btn-sair">SAIR</a>
+                    </div>
                 `;
                 document.getElementById('btnLogout').onclick = () => signOut(auth);
             }
