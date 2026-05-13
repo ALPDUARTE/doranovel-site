@@ -22,61 +22,71 @@
 
         .login-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; gap: 50px; }
 
-        /* CAIXA DE ACESSO COM IMAGEM DE FUNDO */
+        /* CAIXA DE ACESSO COM IMAGEM DE FUNDO AJUSTADA */
         .login-box { 
             flex: 1; 
             max-width: 450px; 
-            /* Alteração abaixo: Adicionado a imagem do GitHub e ajustes de exibição */
-            background: linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.8)), 
-                        url('https://raw.githubusercontent.com/ALPDUARTE/doranovel-site/main/fundo2.png');
+            min-height: 500px; /* Garante altura para a imagem aparecer */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+            /* Ajuste na declaração do background para máxima compatibilidade */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+                              url('https://raw.githubusercontent.com/ALPDUARTE/doranovel-site/main/fundo2.png');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
+            
             padding: 40px; 
             border-radius: 20px; 
-            border: 1px solid #E1AD01; /* Destaque em dourado para combinar com o tema */
+            border: 1px solid #E1AD01; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         }
 
-        .login-box h2 { font-size: 2rem; margin-bottom: 20px; color: #E1AD01; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
+        .login-box h2 { font-size: 2rem; margin-bottom: 20px; color: #E1AD01; text-shadow: 2px 2px 8px rgba(0,0,0,1); }
         .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #ccc; text-transform: uppercase; font-weight: bold; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #eee; text-transform: uppercase; font-weight: bold; text-shadow: 1px 1px 3px #000; }
         .input-group input { 
-            width: 100%; padding: 15px; background: rgba(34, 34, 34, 0.9); border: 1px solid #333; 
+            width: 100%; padding: 15px; background: rgba(20, 20, 20, 0.85); border: 1px solid #444; 
             border-radius: 8px; color: #fff; font-family: 'Montserrat'; outline: none; transition: 0.3s;
         }
-        .input-group input:focus { border-color: #E1AD01; }
+        .input-group input:focus { border-color: #E1AD01; background: rgba(30, 30, 30, 0.95); }
 
         .forgot-password { text-align: right; margin-bottom: 20px; }
-        .forgot-password a { color: #ccc; font-size: 12px; text-decoration: none; font-weight: bold; }
+        .forgot-password a { color: #E1AD01; font-size: 12px; text-decoration: none; font-weight: bold; }
 
         .btn-access { 
             width: 100%; padding: 15px; background: #E1AD01; border: none; border-radius: 8px; 
             color: #000; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-bottom: 15px;
+            transition: 0.3s;
         }
+        .btn-access:hover { background: #fff; transform: translateY(-2px); }
         
-        /* BOTÃO GOOGLE */
         .social-login { 
             width: 100%; padding: 12px; background: #fff; border: none; 
             border-radius: 8px; color: #757575; cursor: pointer; display: flex; align-items: center; 
             justify-content: center; gap: 12px; font-weight: 700; margin-bottom: 20px;
             font-size: 14px; transition: 0.3s;
         }
+        .social-login:hover { background: #f1f1f1; }
         .google-icon { width: 20px; height: 20px; }
 
-        /* BOX DE DOWNLOAD */
         .download-box { 
             flex: 1; max-width: 500px; text-align: center; padding: 40px; 
             background: linear-gradient(145deg, #0a0a0a, #151515); border-radius: 25px; border: 1px solid #E1AD01;
         }
         .btn-download { display: inline-block; padding: 15px 40px; background: transparent; border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; }
+        .btn-download:hover { background: #E1AD01; color: #000; }
         .btn-logout { margin-top: 20px; background: transparent; border: 1px solid #ff4444; color: #ff4444; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 12px; }
 
         #logged-out-view, #logged-in-view { display: none; }
 
         @media (max-width: 768px) { 
-            .navbar { height: auto; flex-direction: column; padding: 15px 5% 10px; border-bottom: 3px solid #E1AD01 !important; }
+            .navbar { height: auto; flex-direction: column; padding: 15px 5% 10px; }
             .login-wrapper { flex-direction: column; gap: 30px; } 
             .download-box { order: -1; width: 100%; } 
+            .login-box { width: 100%; min-height: 400px; }
         }
     </style>
 </head>
@@ -148,7 +158,7 @@
                 loggedInView.style.display = 'block';
                 userGreeting.innerText = user.displayName ? "Olá, " + user.displayName : "Olá!";
             } else {
-                loggedOutView.style.display = 'block';
+                loggedOutView.style.display = 'flex'; // Alterado de block para flex para manter alinhamento
                 loggedInView.style.display = 'none';
             }
         });
