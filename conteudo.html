@@ -4,108 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doranovel | Catálogo Premium</title>
-    <!-- Fontes e Ícones -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
             font-family: 'Montserrat', sans-serif; 
             color: #fff; 
             min-height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('fundo2.png');
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('fundo2.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-color: #000;
         }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR CORRIGIDA (Logo + Nome juntos à esquerda) --- */
         .navbar {
             width: 100%; min-height: 80px; display: flex; align-items: center; justify-content: space-between;
             padding: 10px 5%; background: rgba(0, 0, 0, 0.95); border-bottom: 2px solid #E1AD01;
             position: sticky; top: 0; z-index: 1000;
         }
 
-        .nav-left { display: flex; align-items: center; flex: 1; }
-        .logo-img { height: 50px; margin-right: 15px; }
-
-        .nav-center { flex: 2; text-align: center; }
+        .brand-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-img { height: 50px; width: auto; }
         .brand-gold { color: #E1AD01; font-weight: 700; font-size: 1.8rem; text-transform: uppercase; letter-spacing: 2px; }
 
-        .nav-right { display: flex; align-items: center; justify-content: flex-end; gap: 15px; flex: 1; }
-        
-        /* Perfil do Usuário */
+        .nav-right { display: flex; align-items: center; gap: 20px; }
         .user-profile { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
         .user-avatar { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #E1AD01; object-fit: cover; }
         
         .btn-sair { 
             color: #E1AD01; text-decoration: none; font-weight: 700; font-size: 0.8rem; 
-            border: 1px solid #E1AD01; padding: 6px 15px; border-radius: 20px; transition: 0.3s;
+            border: 1px solid #E1AD01; padding: 8px 20px; border-radius: 20px; transition: 0.3s;
         }
         .btn-sair:hover { background: #E1AD01; color: #000; }
 
         /* --- FILTROS --- */
         .search-container {
             padding: 20px 5%; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
         }
         .search-box { flex: 2; min-width: 280px; }
         .search-box input {
-            width: 100%; padding: 15px 25px; border-radius: 50px; border: 1px solid #E1AD01;
-            background: rgba(0,0,0,0.8); color: #fff; outline: none;
+            width: 100%; padding: 15px 25px; border-radius: 50px; border: 1px solid rgba(225, 173, 1, 0.5);
+            background: rgba(0,0,0,0.7); color: #fff; outline: none; transition: 0.3s;
         }
+        .search-box input:focus { border-color: #E1AD01; box-shadow: 0 0 10px rgba(225, 173, 1, 0.3); }
+
         .category-filter {
             flex: 1; min-width: 200px; padding: 15px; border-radius: 50px;
             border: 1px solid #E1AD01; background: #000; color: #fff; cursor: pointer;
         }
 
-        /* --- GRID E CARDS --- */
+        /* --- GRID E CARDS (Resolução do Undefined) --- */
         .content-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 25px; padding: 40px 5%;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px; padding: 40px 5%;
         }
         .card {
-            border-radius: 15px; padding: 10px; position: relative; transition: 0.3s;
-            display: flex; flex-direction: column; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
+            background: rgba(255,255,255,0.05); border-radius: 15px; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1); transition: 0.4s; position: relative;
         }
-        .card:hover { transform: scale(1.03); background: rgba(255,255,255,0.1); }
-        .card-img-container { width: 100%; aspect-ratio: 2/3; border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+        .card:hover { transform: translateY(-10px); border-color: #E1AD01; background: rgba(255,255,255,0.1); }
+        
+        .card-img-container { width: 100%; aspect-ratio: 2/3; overflow: hidden; }
         .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
-        .card-info { text-align: center; }
-        .card-title { font-weight: 700; font-size: 0.9rem; margin-top: 5px; }
-        .card-category { font-size: 0.65rem; text-transform: uppercase; opacity: 0.7; }
-
-        /* CORES POR CATEGORIA */
-        .cat-encontros { border-bottom: 4px solid #D48498; }
-        .cat-suspense { border-bottom: 4px solid #F0F0F0; }
-        .cat-melodramas { border-bottom: 4px solid #A52A2A; }
-        .cat-epicos { border-bottom: 4px solid #CD7F32; }
+        
+        .card-overlay {
+            padding: 15px; text-align: center;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        }
+        .card-category { font-size: 0.7rem; color: #E1AD01; text-transform: uppercase; margin-bottom: 5px; font-weight: 700; }
+        .card-title { font-weight: 700; font-size: 1rem; color: #fff; }
 
         @media (max-width: 768px) {
-            .navbar { flex-direction: column; padding: 15px; gap: 10px; }
-            .nav-left, .nav-right { justify-content: center; width: 100%; }
-            .brand-gold { font-size: 1.4rem; }
+            .navbar { flex-direction: column; gap: 15px; text-align: center; }
+            .brand-container { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="nav-left">
-            <img src="logo.png" alt="Doranovel Logo" class="logo-img">
-        </div>
-        
-        <div class="nav-center">
+        <a href="#" class="brand-container">
+            <img src="logo.png" alt="Logo" class="logo-img">
             <div class="brand-gold">Dora<span style="color:#fff">novel</span></div>
-        </div>
+        </a>
 
         <div class="nav-right" id="authSection">
-            <a href="login.html" class="btn-sair">ENTRAR</a>
+            <!-- Loading inicial para evitar pulos de layout -->
+            <span style="font-size: 0.8rem; opacity: 0.5;">Verificando acesso...</span>
         </div>
     </nav>
 
@@ -119,15 +110,11 @@
             <option value="Suspense & Mistério">🔍 Suspense & Mistério</option>
             <option value="Melodramas Intensos">❤️‍🔥 Melodramas Intensos</option>
             <option value="Épicos Históricos">📜 Épicos Históricos</option>
-            <option value="Cotidiano">☕ Cotidiano</option>
-            <option value="Direito & Justiça">⚖️ Direito & Justiça</option>
-            <option value="Medicina & Vida">🏥 Medicina & Vida</option>
-            <option value="Juventude & Sonhos">🎓 Juventude & Sonhos</option>
         </select>
     </div>
 
     <main class="content-grid" id="contentGrid">
-        <p style="grid-column: 1/-1; text-align:center; padding: 50px;">Conectando ao catálogo...</p>
+        <p style="grid-column: 1/-1; text-align:center; padding: 50px;">Carregando produções exclusivas...</p>
     </main>
 
     <script type="module">
@@ -146,87 +133,83 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        
         const grid = document.getElementById('contentGrid');
-        const authSection = document.getElementById('authSection');
 
-        // --- GESTÃO DE AUTENTICAÇÃO ---
+        // --- AUTH COM TRATAMENTO DE INTERFACE ---
         onAuthStateChanged(auth, (user) => {
+            const authSection = document.getElementById('authSection');
             if (user) {
-                const photoURL = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-                const displayName = user.displayName || user.email.split('@')[0];
-                
+                const name = user.displayName || user.email.split('@')[0];
                 authSection.innerHTML = `
                     <div class="user-profile">
-                        <span>Olá, <strong>${displayName}</strong></span>
-                        <img src="${photoURL}" class="user-avatar">
+                        <span>Olá, <strong>${name}</strong></span>
+                        <img src="${user.photoURL || 'https://via.placeholder.com/35'}" class="user-avatar">
                     </div>
                     <a href="#" id="btnLogout" class="btn-sair">SAIR</a>
                 `;
-
-                document.getElementById('btnLogout').onclick = (e) => {
-                    e.preventDefault();
-                    signOut(auth);
-                };
+                document.getElementById('btnLogout').onclick = () => signOut(auth);
             } else {
                 authSection.innerHTML = `<a href="login.html" class="btn-sair">ENTRAR</a>`;
             }
         });
 
-        // --- CARREGAMENTO DO CATÁLOGO ---
-        const colorMap = {
-            "Encontros e Destinos": "cat-encontros",
-            "Suspense & Mistério": "cat-suspense",
-            "Melodramas Intensos": "cat-melodramas",
-            "Épicos Históricos": "cat-epicos"
-        };
-
+        // --- CARREGAMENTO DO CATÁLOGO (Proteção contra undefined) ---
         async function loadContent() {
             try {
                 const querySnapshot = await getDocs(collection(db, "Produções"));
                 const data = [];
-                querySnapshot.forEach(doc => data.push({ id: doc.id, ...doc.data() }));
+                
+                querySnapshot.forEach(doc => {
+                    const docData = doc.data();
+                    // IMPORTANTE: Verifica se o campo é 'nome' ou 'Nome' (case sensitive)
+                    data.push({
+                        id: doc.id,
+                        nome: docData.nome || docData.Nome || "Título Indisponível",
+                        categoria: docData.categoria || docData.Categoria || "Geral",
+                        capa: docData.capa || docData.Capa || "https://via.placeholder.com/200x300?text=Sem+Imagem"
+                    });
+                });
                 
                 const render = (list) => {
-                    grid.innerHTML = list.length ? '' : '<p style="grid-column: 1/-1; text-align:center;">Nenhum resultado encontrado.</p>';
+                    if (list.length === 0) {
+                        grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Nenhum título encontrado.</p>';
+                        return;
+                    }
+
+                    grid.innerHTML = '';
                     list.forEach(item => {
-                        const colorClass = colorMap[item.categoria] || '';
                         const card = document.createElement('div');
-                        card.className = `card ${colorClass}`;
+                        card.className = 'card';
                         card.innerHTML = `
                             <div class="card-img-container">
-                                <img src="${item.capa}" alt="${item.nome}" onerror="this.src='https://via.placeholder.com/200x300?text=Sem+Capa'">
+                                <img src="${item.capa}" alt="${item.nome}">
                             </div>
-                            <div class="card-info">
+                            <div class="card-overlay">
                                 <div class="card-category">${item.categoria}</div>
                                 <div class="card-title">${item.nome}</div>
                             </div>
                         `;
-                        // Adiciona clique para abrir detalhes (se houver página de detalhes)
-                        card.onclick = () => { console.log("Abrindo:", item.nome); };
                         grid.appendChild(card);
                     });
                 };
 
                 render(data);
 
-                // Lógica de Busca em Tempo Real
-                document.getElementById('searchInput').oninput = (e) => {
+                // Busca
+                document.getElementById('searchInput').addEventListener('input', (e) => {
                     const term = e.target.value.toLowerCase();
-                    const filtered = data.filter(i => i.nome.toLowerCase().includes(term));
-                    render(filtered);
-                };
+                    render(data.filter(i => i.nome.toLowerCase().includes(term)));
+                });
 
-                // Filtro por Categoria
-                document.getElementById('categorySelect').onchange = (e) => {
+                // Categoria
+                document.getElementById('categorySelect').addEventListener('change', (e) => {
                     const val = e.target.value;
-                    const filtered = val === 'all' ? data : data.filter(i => i.categoria === val);
-                    render(filtered);
-                };
+                    render(val === 'all' ? data : data.filter(i => i.categoria === val));
+                });
 
             } catch (error) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Erro ao carregar dados. Verifique sua conexão.</p>';
                 console.error("Erro Firebase:", error);
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Erro de conexão com o banco de dados.</p>';
             }
         }
 
