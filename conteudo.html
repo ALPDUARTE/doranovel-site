@@ -17,11 +17,11 @@
             background-size: cover; background-position: center; background-attachment: fixed;
         }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR CORRIGIDA --- */
         .navbar {
             width: 100%; min-height: 80px; display: flex; align-items: center; justify-content: space-between;
             padding: 10px 5%; background: rgba(0, 0, 0, 0.95); border-bottom: 2px solid #E1AD01;
-            position: sticky; top: 0; z-index: 1000;
+            position: sticky; top: 0; z-index: 1000; flex-wrap: wrap; gap: 10px;
         }
         .brand-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
         .logo-img { height: 50px; }
@@ -30,12 +30,10 @@
         .nav-right { display: flex; align-items: center; gap: 15px; }
         .user-info { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: 700; }
         
-        /* Container do Avatar Corrigido */
         .user-avatar-container {
             width: 38px; height: 38px; border-radius: 50%; 
             background: #1a1a1a; display: flex; align-items: center; 
-            justify-content: center; border: 1px solid #E1AD01; overflow: hidden;
-            flex-shrink: 0;
+            justify-content: center; border: 1px solid #E1AD01; overflow: hidden; flex-shrink: 0;
         }
         .user-photo { width: 100%; height: 100%; object-fit: cover; }
         .default-avatar-icon { font-size: 20px; color: #E1AD01; }
@@ -46,37 +44,50 @@
         }
         .btn-sair:hover { background: #E1AD01; color: #000; }
 
-        /* --- FILTROS --- */
+        /* --- FILTROS E FAVORITOS --- */
         .search-container { padding: 30px 5% 10px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        
+        .search-row { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 400px; }
+        .search-box { flex-grow: 1; }
         .search-box input, .category-filter {
-            width: 100%; max-width: 400px; padding: 12px 25px; border-radius: 25px; 
+            width: 100%; padding: 12px 25px; border-radius: 25px; 
             border: 2px solid #E1AD01; background: rgba(0,0,0,0.8); color: #fff; 
             outline: none; font-family: 'Montserrat'; font-size: 0.9rem; text-align: center;
         }
+
+        .btn-filter-fav {
+            background: rgba(0,0,0,0.8); border: 2px solid #E1AD01; color: #E1AD01;
+            width: 45px; height: 45px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: 0.3s;
+        }
+        .btn-filter-fav.active { background: #E1AD01; color: #000; }
 
         /* --- GRID E CARDS --- */
         .content-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 15px; padding: 20px 5%;
         }
-
         .card {
             border-radius: 20px; overflow: hidden; transition: 0.3s;
             cursor: pointer; display: flex; flex-direction: column; padding: 10px;
             height: 340px; position: relative; border: 1px solid rgba(255,255,255,0.1);
         }
-
-        .card-img-container { 
-            width: 100%; flex-grow: 1; border-radius: 15px; 
-            overflow: hidden; position: relative; background: #000;
-        }
+        .card-img-container { width: 100%; flex-grow: 1; border-radius: 15px; overflow: hidden; position: relative; }
         .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Botão Coração no Card */
+        .card-fav-btn {
+            position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5);
+            border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%;
+            cursor: pointer; z-index: 5; transition: 0.3s;
+        }
+        .card-fav-btn.is-fav { color: #ff4757; background: rgba(255,255,255,0.9); }
 
         .card-info { padding: 12px 5px; text-align: center; color: #000; }
         .card-category { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
         .card-title { font-weight: 700; font-size: 0.8rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* CORES POR CATEGORIA */
+        /* CATEGORIAS */
         .cat-encontros { background-color: #D48498; }
         .cat-suspense { background-color: #F0F0F0; }
         .cat-melodramas { background-color: #A52A2A; color: #fff !important; }
@@ -88,18 +99,11 @@
         .cat-medicina { background-color: #50C878; }
         .cat-juventude { background-color: #E1AD01; }
 
-        /* PLAYER MODAL */
-        .video-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000;
-        }
-        .modal-content { width: 95%; height: 80%; max-width: 800px; position: relative; }
-        .close-modal {
-            position: absolute; top: -50px; left: 0; color: #fff; 
-            font-size: 1rem; cursor: pointer; background: rgba(0,0,0,0.5); padding: 8px 15px; border-radius: 20px; border: 1px solid #E1AD01;
-        }
-
+        /* RESPONSIVIDADE CELULAR (QUEBRA DE LINHA) */
         @media (max-width: 600px) {
+            .navbar { justify-content: center; flex-direction: column; padding: 15px 0; }
+            .nav-right { width: 100%; justify-content: center; flex-direction: column; gap: 10px; }
+            .user-info { flex-direction: column; gap: 5px; }
             .content-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
             .card { height: 300px; padding: 6px; }
         }
@@ -118,8 +122,13 @@
     </nav>
 
     <div class="search-container">
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Pesquisar título...">
+        <div class="search-row">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Pesquisar título...">
+            </div>
+            <button class="btn-filter-fav" id="filterFavBtn" title="Meus Favoritos">
+                <i class="fas fa-heart"></i>
+            </button>
         </div>
         <select class="category-filter" id="categorySelect">
             <option value="all">Todas Categorias</option>
@@ -135,13 +144,6 @@
     </div>
 
     <main class="content-grid" id="contentGrid"></main>
-
-    <div class="video-modal" id="videoModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModal"><i class="fas fa-chevron-left"></i> Voltar</span>
-            <iframe id="videoIframe" width="100%" height="100%" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-        </div>
-    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -159,7 +161,10 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
+        
         let allData = [];
+        let favorites = JSON.parse(localStorage.getItem('doranovel_favs')) || [];
+        let filterOnlyFavs = false;
 
         const colorMap = {
             "Encontros e Destinos": "cat-encontros",
@@ -172,11 +177,22 @@
             "Juventude & Sonhos": "cat-juventude"
         };
 
+        function toggleFav(id, event) {
+            event.stopPropagation();
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(favId => favId !== id);
+            } else {
+                favorites.push(id);
+            }
+            localStorage.setItem('doranovel_favs', JSON.stringify(favorites));
+            filterData();
+        }
+
         function render(list) {
             const grid = document.getElementById('contentGrid');
             grid.innerHTML = "";
             list.forEach(item => {
-                // Pega a primeira categoria do Array para definir a cor do card
+                const isFav = favorites.includes(item.id);
                 const mainCat = Array.isArray(item.categorias) ? item.categorias[0] : "Geral";
                 const colorClass = colorMap[mainCat] || '';
                 
@@ -184,6 +200,9 @@
                 card.className = `card ${colorClass}`;
                 card.innerHTML = `
                     <div class="card-img-container">
+                        <button class="card-fav-btn ${isFav ? 'is-fav' : ''}" onclick="window.toggleFav('${item.id}', event)">
+                            <i class="fas fa-heart"></i>
+                        </button>
                         <img src="${item.capa}" alt="${item.titulo}">
                     </div>
                     <div class="card-info">
@@ -191,71 +210,51 @@
                         <div class="card-title">${item.titulo}</div>
                     </div>
                 `;
-                card.onclick = () => openVideo(item.video);
+                card.onclick = () => window.open(item.video, '_blank');
                 grid.appendChild(card);
             });
         }
 
-        function openVideo(url) {
-            if(!url) return;
-            const iframe = document.getElementById('videoIframe');
-            let videoId = url.includes("v=") ? url.split("v=")[1].split("&")[0] : url.split("/").pop();
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            document.getElementById('videoModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
+        window.toggleFav = toggleFav;
 
-        document.getElementById('closeModal').onclick = () => {
-            document.getElementById('videoModal').style.display = 'none';
-            document.getElementById('videoIframe').src = '';
-            document.body.style.overflow = 'auto';
-        };
-
-        // FILTRO PARA ARRAY DO FIRESTORE
         const filterData = () => {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const selectedCat = document.getElementById('categorySelect').value;
 
             const filtered = allData.filter(item => {
                 const matchName = item.titulo.toLowerCase().includes(search);
+                const matchCat = selectedCat === 'all' || (Array.isArray(item.categorias) && item.categorias.includes(selectedCat));
+                const matchFav = filterOnlyFavs ? favorites.includes(item.id) : true;
                 
-                let matchCat = false;
-                if (selectedCat === 'all') {
-                    matchCat = true;
-                } else if (Array.isArray(item.categorias)) {
-                    // Verifica se a categoria selecionada está dentro do Array do banco
-                    matchCat = item.categorias.some(cat => cat.trim() === selectedCat.trim());
-                }
-                
-                return matchName && matchCat;
+                return matchName && matchCat && matchFav;
             });
             render(filtered);
         };
 
         document.getElementById('searchInput').oninput = filterData;
         document.getElementById('categorySelect').onchange = filterData;
+        
+        document.getElementById('filterFavBtn').onclick = function() {
+            filterOnlyFavs = !filterOnlyFavs;
+            this.classList.toggle('active');
+            filterData();
+        };
 
-        // AUTH: Ícone circular corrigido
         onAuthStateChanged(auth, user => {
             const authSection = document.getElementById('authSection');
             if(user) {
-                const avatarContent = user.photoURL 
-                    ? `<img src="${user.photoURL}" class="user-photo">` 
-                    : `<i class="fas fa-user-circle default-avatar-icon"></i>`;
-
+                const avatar = user.photoURL ? `<img src="${user.photoURL}" class="user-photo">` : `<i class="fas fa-user-circle default-avatar-icon"></i>`;
                 authSection.innerHTML = `
                     <div class="user-info">
-                        <span>${user.displayName || 'Usuário'}</span>
-                        <div class="user-avatar-container">
-                            ${avatarContent}
-                        </div>
+                        <span>${user.displayName || 'Dora Fã'}</span>
+                        <div class="user-avatar-container">${avatar}</div>
                     </div>
                     <a href="#" id="btnLogout" class="btn-sair">SAIR</a>
                 `;
                 document.getElementById('btnLogout').onclick = async (e) => {
                     e.preventDefault();
                     await signOut(auth);
-                    window.location.reload();
+                    window.location.href = "https://doranovel.com";
                 };
             } else {
                 authSection.innerHTML = `<a href="login.html" class="btn-sair">ENTRAR</a>`;
@@ -268,10 +267,11 @@
             snap.forEach(doc => {
                 const d = doc.data();
                 allData.push({
-                    titulo: d.Título || d.titulo || "Sem título",
+                    id: doc.id,
+                    titulo: d.Título || d.titulo || "Título Indisponível",
                     capa: d.Capa || d.capa || "",
-                    categorias: d.Categoria || d.categoria || [], // Suporta o Array do Firestore
-                    video: d["Link do Episódio"] || d.video || ""
+                    categorias: d.Categoria || d.categoria || [],
+                    video: d["Link do Episódio"] || d.video || "#"
                 });
             });
             render(allData);
