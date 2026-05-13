@@ -23,7 +23,7 @@
             padding: 10px 5%; background: rgba(0, 0, 0, 0.95); border-bottom: 2px solid #E1AD01;
             position: sticky; top: 0; z-index: 1000;
         }
-        .brand-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+       .brand-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
         .logo-img { height: 50px; }
         .brand-gold { color: #E1AD01; font-weight: 700; font-size: 1.5rem; text-transform: uppercase; }
 
@@ -38,34 +38,34 @@
         }
         .user-photo { width: 100%; height: 100%; object-fit: cover; }
         .default-avatar-icon { font-size: 22px; color: #E1AD01; }
-
         .btn-sair { 
             color: #E1AD01; text-decoration: none; font-weight: 700; border: 1px solid #E1AD01; 
             padding: 8px 20px; border-radius: 20px; font-size: 0.75rem; transition: 0.3s;
         }
         .btn-sair:hover { background: #E1AD01; color: #000; }
 
-        /* --- FILTROS --- */
+        /* --- FILTROS PADRONIZADOS (image_e7a888.jpg) --- */
         .search-container { padding: 30px 5% 10px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        
+        /* Padronização da Paleta entre Busca e Categoria */
         .search-box input, .category-filter {
             width: 100%; max-width: 400px; padding: 12px 25px; border-radius: 25px; 
             border: 2px solid #E1AD01; background: rgba(0,0,0,0.8); color: #fff; 
             outline: none; font-family: 'Montserrat'; font-size: 0.9rem; text-align: center;
         }
+        .search-box input::placeholder { color: rgba(255,255,255,0.6); }
 
-        /* --- GRID E CARDS (RESTAURADOS) --- */
+        /* --- GRID E CARDS --- */
         .content-grid {
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 15px; padding: 20px 5%;
         }
 
         .card {
             border-radius: 20px; overflow: hidden; transition: 0.3s;
-            cursor: pointer; display: flex; flex-direction: column; padding: 10px;
-            height: 340px; position: relative; border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer; display: flex; flex-direction: column; padding: 8px;
+            height: 330px; position: relative;
         }
-        .card:hover { transform: translateY(-5px); }
 
         .card-img-container { 
             width: 100%; flex-grow: 1; border-radius: 15px; 
@@ -77,12 +77,13 @@
             position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6);
             border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; z-index: 10;
         }
+        .btn-fav.active { color: #ff4757; }
 
-        .card-info { padding: 12px 5px; text-align: center; color: #000; }
-        .card-category { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
-        .card-title { font-weight: 700; font-size: 0.8rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-info { padding: 10px 5px; text-align: center; color: #000; }
+        .card-category { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; margin-bottom: 2px; }
+        .card-title { font-weight: 700; font-size: 0.75rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        /* PALETA DE CORES OFICIAL (FIGURA 225103.PNG) */
+        /* CORES POR CATEGORIA (225103.PNG) */
         .cat-encontros { background-color: #D48498; }
         .cat-suspense { background-color: #F0F0F0; }
         .cat-melodramas { background-color: #A52A2A; color: #fff !important; }
@@ -99,16 +100,15 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000;
         }
-        .modal-content { width: 100%; height: 100%; max-width: 800px; display: flex; align-items: center; }
+        .modal-content { width: 100%; height: 100%; max-width: 500px; position: relative; }
         .close-modal {
             position: absolute; top: 20px; left: 20px; color: #fff; 
-            font-size: 1rem; cursor: pointer; background: rgba(0,0,0,0.5); padding: 8px 15px; border-radius: 20px; border: 1px solid #E1AD01;
+            font-size: 1rem; cursor: pointer; z-index: 2100; background: rgba(0,0,0,0.5); padding: 8px 15px; border-radius: 20px; border: 1px solid #E1AD01;
         }
 
-        /* MOBILE 2 COLUNAS */
         @media (max-width: 600px) {
             .content-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
-            .card { height: 300px; padding: 6px; }
+            .card { height: 290px; }
         }
     </style>
 </head>
@@ -128,16 +128,17 @@
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Pesquisar título...">
         </div>
+        <!-- Select agora usa data-clean para filtrar sem ícones -->
         <select class="category-filter" id="categorySelect">
             <option value="all">Todas Categorias</option>
-            <option value="Encontros e Destinos">🌸 Encontros e Destinos</option>
-            <option value="Suspense & Mistério">🔍 Suspense & Mistério</option>
-            <option value="Melodramas Intensos">❤️‍🔥 Melodramas Intensos</option>
-            <option value="Épicos Históricos">📜 Épicos Históricos</option>
-            <option value="Cotidiano">☕ Cotidiano</option>
-            <option value="Direito & Justiça">⚖️ Direito & Justiça</option>
-            <option value="Medicina & Vida">🏥 Medicina & Vida</option>
-            <option value="Juventude & Sonhos">🎓 Juventude & Sonhos</option>
+            <option value="Encontros e Destinos">Encontros e Destinos</option>
+            <option value="Suspense & Mistério">Suspense & Mistério</option>
+            <option value="Melodramas Intensos">Melodramas Intensos</option>
+            <option value="Épicos Históricos">Épicos Históricos</option>
+            <option value="Cotidiano">Cotidiano</option>
+            <option value="Direito & Justiça">Direito & Justiça</option>
+            <option value="Medicina & Vida">Medicina & Vida</option>
+            <option value="Juventude & Sonhos">Juventude & Sonhos</option>
         </select>
     </div>
 
@@ -146,7 +147,7 @@
     <div class="video-modal" id="videoModal">
         <span class="close-modal" id="closeModal"><i class="fas fa-chevron-left"></i> Voltar</span>
         <div class="modal-content">
-            <iframe id="videoIframe" width="100%" height="450px" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            <iframe id="videoIframe" width="100%" height="100%" src="" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -183,21 +184,18 @@
             const grid = document.getElementById('contentGrid');
             grid.innerHTML = "";
             list.forEach(item => {
-                // Pega a categoria do array (Firestore imagem 193629.png)
-                const categoriaFirebase = Array.isArray(item.categorias) ? item.categorias[0] : "Geral";
-                const colorClass = colorMap[categoriaFirebase] || '';
-                
+                const colorClass = colorMap[item.categoria] || '';
                 const card = document.createElement('div');
                 card.className = `card ${colorClass}`;
                 card.innerHTML = `
                     <div class="card-img-container">
-                        <button class="btn-fav" onclick="event.stopPropagation();">
+                        <button class="btn-fav" onclick="event.stopPropagation(); this.classList.toggle('active')">
                             <i class="fas fa-heart"></i>
                         </button>
                         <img src="${item.capa}" alt="${item.titulo}">
                     </div>
                     <div class="card-info">
-                        <div class="card-category">${categoriaFirebase}</div>
+                        <div class="card-category">${item.categoria}</div>
                         <div class="card-title">${item.titulo}</div>
                     </div>
                 `;
@@ -210,7 +208,7 @@
             if(!url) return;
             const iframe = document.getElementById('videoIframe');
             let videoId = url.includes("v=") ? url.split("v=")[1].split("&")[0] : url.split("/").pop();
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
             document.getElementById('videoModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
@@ -221,28 +219,17 @@
             document.body.style.overflow = 'auto';
         };
 
-        // LÓGICA DE FILTRO CORRIGIDA PARA ARRAY DO FIRESTORE
+        // FILTRAGEM CORRIGIDA: Remove ícones e emojis para comparar com Firestore
         const filterData = () => {
             const search = document.getElementById('searchInput').value.toLowerCase();
-            const categoryValue = document.getElementById('categorySelect').value;
+            const categoryRaw = document.getElementById('categorySelect').value;
             
-            // Limpa o emoji do valor do Select para comparar com o texto do Banco
-            // Ex: "🌸 Encontros e Destinos" -> "Encontros e Destinos"
-            const cleanFilterName = categoryValue.includes(' ') 
-                ? categoryValue.substring(categoryValue.indexOf(' ') + 1) 
-                : categoryValue;
+            // Remove emojis e caracteres especiais para bater com o Firebase
+            const cleanCategory = categoryRaw.replace(/[^\w\s&]/gi, '').trim();
 
-            const filtered = allData.filter(item => {
-                const matchName = item.titulo.toLowerCase().includes(search);
-                
-                let matchCat = false;
-                if (categoryValue === 'all') {
-                    matchCat = true;
-                } else if (Array.isArray(item.categorias)) {
-                    // Verifica se o nome limpo está dentro da lista de categorias do Firebase
-                    matchCat = item.categorias.some(cat => cat.trim() === cleanFilterName.trim());
-                }
-
+            const filtered = allData.filter(i => {
+                const matchName = i.titulo.toLowerCase().includes(search);
+                const matchCat = (categoryRaw === 'all' || i.categoria.trim() === cleanCategory);
                 return matchName && matchCat;
             });
             render(filtered);
@@ -251,17 +238,15 @@
         document.getElementById('searchInput').oninput = filterData;
         document.getElementById('categorySelect').onchange = filterData;
 
+        // AUTH & LOGOUT: Ícone padrão circular se não houver foto
         onAuthStateChanged(auth, user => {
             const authSection = document.getElementById('authSection');
             if(user) {
-                const avatarHtml = user.photoURL 
-                    ? `<img src="${user.photoURL}" class="user-photo">` 
-                    : `<i class="fas fa-user-circle default-avatar-icon"></i>`;
-
+                const photo = user.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; // Ícone padrão circular
                 authSection.innerHTML = `
                     <div class="user-info">
                         <span>${user.displayName || 'Usuário'}</span>
-                        <div class="user-avatar-container">${avatarHtml}</div>
+                        <img src="${photo}" class="user-photo">
                     </div>
                     <a href="#" id="btnLogout" class="btn-sair">SAIR</a>
                 `;
@@ -276,20 +261,18 @@
         });
 
         async function init() {
-            try {
-                const snap = await getDocs(collection(db, "Produções"));
-                allData = [];
-                snap.forEach(doc => {
-                    const d = doc.data();
-                    allData.push({
-                        titulo: d.Título || d.titulo || "Sem título",
-                        capa: d.Capa || d.capa || "https://via.placeholder.com/200",
-                        categorias: d.Categoria || [], // Array conforme imagem 193629.png
-                        video: d["Link do Episódio"] || d.video
-                    });
+            const snap = await getDocs(collection(db, "Produções"));
+            allData = [];
+            snap.forEach(doc => {
+                const d = doc.data();
+                allData.push({
+                    titulo: d.Título || d.titulo,
+                    capa: d.Capa || d.capa,
+                    categoria: d.categoria || d.Categoria,
+                    video: d["Link do Episódio"] || d.video
                 });
-                render(allData);
-            } catch (e) { console.error("Erro ao carregar dados:", e); }
+            });
+            render(allData);
         }
         init();
     </script>
