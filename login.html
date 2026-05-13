@@ -8,7 +8,14 @@
     <style>
         /* --- ESTILO BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #000; 
+            color: #fff; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+        }
 
         .navbar {
             width: 100%; height: 100px; display: flex; align-items: center; justify-content: space-between;
@@ -22,70 +29,70 @@
 
         .login-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; gap: 50px; }
 
-        /* ESTILO UNIFICADO PARA AS CAIXAS (LOGIN E DOWNLOAD) */
+        /* --- CORREÇÃO PROFUNDA DA IMAGEM DE FUNDO --- */
         .login-box, .download-box { 
             flex: 1; 
             max-width: 450px; 
-            min-height: 500px;
+            min-height: 520px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 40px; 
-            border-radius: 20px; 
-            border: 1px solid #E1AD01; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 25px; 
+            border: 2px solid #E1AD01; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
             text-align: center;
+            position: relative;
+            overflow: hidden;
 
-            /* Configuração da Imagem de Fundo */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
-                              url('https://cdn.jsdelivr.net/gh/ALPDUARTE/doranovel-site@main/fundo2.png');
+            /* Camada 1: Gradiente de proteção (para o texto ficar legível) */
+            /* Camada 2: Tentativa Local | Camada 3: Tentativa GitHub | Camada 4: Tentativa CDN */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
+                        url('fundo2.png'),
+                        url('https://raw.githubusercontent.com/ALPDUARTE/doranovel-site/main/fundo2.png'),
+                        url('https://cdn.jsdelivr.net/gh/ALPDUARTE/doranovel-site@main/fundo2.png');
+            
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
 
-        .login-box h2, .download-box h3 { font-size: 2rem; margin-bottom: 20px; color: #E1AD01; text-shadow: 2px 2px 8px rgba(0,0,0,1); }
+        .login-box h2, .download-box h3 { font-size: 2.2rem; margin-bottom: 20px; color: #E1AD01; text-shadow: 2px 2px 10px #000; }
         
-        /* Ajustes de Formulário */
-        .input-group { margin-bottom: 15px; text-align: left; }
-        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #eee; text-transform: uppercase; font-weight: bold; text-shadow: 1px 1px 3px #000; }
+        .input-group { margin-bottom: 18px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; font-size: 12px; color: #E1AD01; text-transform: uppercase; font-weight: bold; }
         .input-group input { 
-            width: 100%; padding: 15px; background: rgba(20, 20, 20, 0.85); border: 1px solid #444; 
-            border-radius: 8px; color: #fff; font-family: 'Montserrat'; outline: none; transition: 0.3s;
+            width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.6); border: 1px solid #E1AD01; 
+            border-radius: 10px; color: #fff; font-family: 'Montserrat'; outline: none; transition: 0.3s;
         }
-        .input-group input:focus { border-color: #E1AD01; background: rgba(30, 30, 30, 0.95); }
+        .input-group input:focus { background: rgba(0, 0, 0, 0.85); box-shadow: 0 0 10px rgba(225, 173, 1, 0.3); }
 
         .forgot-password { text-align: right; margin-bottom: 20px; }
-        .forgot-password a { color: #E1AD01; font-size: 12px; text-decoration: none; font-weight: bold; }
+        .forgot-password a { color: #fff; font-size: 11px; text-decoration: none; opacity: 0.8; }
+        .forgot-password a:hover { color: #E1AD01; opacity: 1; }
 
         .btn-access { 
-            width: 100%; padding: 15px; background: #E1AD01; border: none; border-radius: 8px; 
+            width: 100%; padding: 16px; background: #E1AD01; border: none; border-radius: 10px; 
             color: #000; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-bottom: 15px;
-            transition: 0.3s;
+            transition: 0.3s; font-size: 14px;
         }
-        .btn-access:hover { background: #fff; transform: translateY(-2px); }
+        .btn-access:hover { background: #fff; transform: scale(1.02); }
         
         .social-login { 
             width: 100%; padding: 12px; background: #fff; border: none; 
-            border-radius: 8px; color: #757575; cursor: pointer; display: flex; align-items: center; 
-            justify-content: center; gap: 12px; font-weight: 700; margin-bottom: 20px;
-            font-size: 14px; transition: 0.3s;
+            border-radius: 10px; color: #000; cursor: pointer; display: flex; align-items: center; 
+            justify-content: center; gap: 12px; font-weight: 700; font-size: 13px; transition: 0.3s;
         }
-        .social-login:hover { background: #f1f1f1; }
-        .google-icon { width: 20px; height: 20px; }
 
-        /* Estilos da Tela Logada */
-        .btn-download { display: inline-block; padding: 15px 40px; background: transparent; border: 2px solid #E1AD01; color: #E1AD01; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; margin-top: 10px; }
-        .btn-download:hover { background: #E1AD01; color: #000; }
-        .btn-logout { margin-top: 25px; background: transparent; border: 1px solid #ff4444; color: #ff4444; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 11px; transition: 0.3s; }
-        .btn-logout:hover { background: #ff4444; color: #fff; }
+        .btn-download { display: inline-block; padding: 16px 40px; background: #E1AD01; color: #000; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: 0.4s; margin-top: 15px; }
+        .btn-download:hover { background: #fff; transform: translateY(-3px); }
+        .btn-logout { margin-top: 30px; background: transparent; border: 1px solid #ff4444; color: #ff4444; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 10px; }
 
         #logged-out-view, #logged-in-view { display: none; }
 
         @media (max-width: 768px) { 
-            .navbar { height: auto; flex-direction: column; padding: 15px 5% 10px; }
-            .login-wrapper { flex-direction: column; gap: 30px; } 
-            .login-box, .download-box { width: 100%; min-height: 450px; }
+            .login-wrapper { padding: 20px; }
+            .login-box, .download-box { min-height: 480px; }
         }
     </style>
 </head>
@@ -100,7 +107,6 @@
     </nav>
 
     <main class="login-wrapper">
-        <!-- VISÃO DESLOGADO -->
         <section class="login-box" id="logged-out-view">
             <h2>Acessar</h2>
             <div class="input-group">
@@ -113,19 +119,17 @@
             </div>
             <div class="forgot-password"><a href="#" id="forgotBtn">Esqueceu a senha?</a></div>
             <button class="btn-access" id="loginSmartBtn">Entrar</button>
-            
             <button class="social-login" id="googleBtn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="google-icon" alt="Google Logo"> 
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" style="width:18px" alt="G"> 
                 Entrar com Google
             </button>
         </section>
 
-        <!-- VISÃO LOGADO -->
         <section class="download-box" id="logged-in-view">
             <h3>Bem-vindo!</h3>
-            <p id="user-greeting" style="margin-bottom: 15px; color: #fff; font-weight: 700; font-size: 1.2rem;"></p>
-            <p style="margin-bottom: 30px; color: #eee; line-height: 1.5; text-shadow: 1px 1px 2px #000;">Acesso liberado. Baixe agora o app oficial da Doranovel para sistema Android, ou assista pelo site todo nosso acervo.</p>
-            <a href="doranovel-v1.apk" class="btn-download">BAIXAR APP - ANDROID</a>
+            <p id="user-greeting" style="margin-bottom: 10px; color: #E1AD01; font-weight: 700; font-size: 1.3rem;"></p>
+            <p style="margin-bottom: 25px; color: #fff; line-height: 1.6;">Acesso liberado. Baixe agora o app oficial da Doranovel para Android ou assista aqui mesmo.</p>
+            <a href="doranovel-v1.apk" class="btn-download">BAIXAR APP</a>
             <br>
             <button class="btn-logout" id="logoutBtn">Sair da Conta</button>
         </section>
@@ -162,34 +166,29 @@
             }
         });
 
-        document.getElementById('googleBtn').onclick = () => {
-            signInWithPopup(auth, provider).catch((error) => alert("Erro: " + error.message));
-        };
+        document.getElementById('googleBtn').onclick = () => signInWithPopup(auth, provider);
 
         document.getElementById('loginSmartBtn').onclick = async () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             if (!email || !password) return alert("Preencha os campos.");
-
             try {
                 await signInWithEmailAndPassword(auth, email, password);
             } catch (error) {
-                if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
-                    try {
-                        await createUserWithEmailAndPassword(auth, email, password);
-                    } catch (err) { alert("Erro no cadastro: " + err.message); }
+                if (error.code.includes('user-not-found') || error.code.includes('invalid-credential')) {
+                    try { await createUserWithEmailAndPassword(auth, email, password); } 
+                    catch (err) { alert("Erro no cadastro: " + err.message); }
                 } else { alert("Erro: " + error.message); }
             }
         };
 
         document.getElementById('logoutBtn').onclick = () => signOut(auth);
-        
         document.getElementById('forgotBtn').onclick = async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             if (!email) return alert("Insira o e-mail.");
             await sendPasswordResetEmail(auth, email);
-            alert("E-mail de recuperação enviado!");
+            alert("E-mail enviado!");
         };
     </script>
 </body>
