@@ -1,1 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinopse - Doranovel</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --dark-bg: #121212;
+            --text-white: #ffffff;
+            --text-gray: #b3b3b3;
+        }
 
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-white);
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px; /* Limite para manter o aspecto da imagem 87b2d8.jpg */
+            min-height: 100vh;
+            padding-bottom: 30px;
+            position: relative;
+        }
+
+        /* Banner e Overlay */
+        .poster-container {
+            width: 100%;
+            height: 450px;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .rating-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 5px 12px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .rating-badge span { color: var(--primary-gold); margin-right: 5px; }
+
+        /* Botão Assistir */
+        .btn-main {
+            display: block;
+            width: 90%;
+            margin: -25px auto 20px auto;
+            background: linear-gradient(to bottom, #f1c40f, #d4af37);
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        /* Conteúdo de Texto */
+        .content { padding: 0 20px; }
+
+        .title { font-size: 24px; margin-bottom: 5px; }
+        .category { color: var(--primary-gold); font-weight: 600; margin-bottom: 15px; }
+        .description { line-height: 1.6; color: var(--text-white); font-size: 16px; margin-bottom: 30px; }
+
+        /* Sistema de Voto */
+        .vote-section { text-align: center; border-top: 1px solid #333; padding-top: 20px; }
+        .vote-btn {
+            background: var(--primary-gold);
+            border: none;
+            padding: 8px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .vote-text { font-size: 12px; color: var(--text-gray); margin-bottom: 15px; }
+
+        .stars { font-size: 40px; color: #555; }
+        .star { cursor: pointer; transition: color 0.2s; }
+        .star.active { color: #fff; } /* Estrela selecionada (branca conforme imagem) */
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="poster" class="poster-container">
+        <div class="rating-badge">
+            <span>★</span> <span id="display-rating">0,0</span>
+        </div>
+    </div>
+
+    <a id="play-link" href="#" class="btn-main">Assistir / Ler Agora</a>
+
+    <div class="content">
+        <h1 id="title" class="title">Carregando...</h1>
+        <div id="category" class="category">Webnovel</div>
+        <p id="description" class="description">...</p>
+
+        <div class="vote-section">
+            <button class="vote-btn">VOTE</button>
+            <p class="vote-text">Avalie este conteúdo:<br>5 estrelas para excelente, 1 para péssimo.</p>
+            
+            <div class="stars" id="star-rating">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+    // Configuração do seu projeto (Substitua pelos seus dados do console Firebase)
+    const firebaseConfig = {
+        apiKey: "SUA_API_KEY",
+        authDomain: "doranovel.firebaseapp.com",
+        projectId: "doranovel",
+        storageBucket: "doranovel.appspot.com",
+        messagingSenderId: "SEU_ID",
+        appId: "SEU_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Captura o ID da produção via URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const prodId = urlParams.get('id');
+
+    async function loadContent() {
+        if (!prodId) return;
+        const docRef = doc(db, "Produções", prodId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            document.getElementById('title').innerText = data.nome || "Sem título";
+            document.getElementById('description').innerText = data.sinopse || "";
+            document.getElementById('poster').style.backgroundImage = `url('${data.capa}')`;
+            document.getElementById('play-link').href = data['link do epsódio'] || "#";
+            
+            // Cálculo da média de estrelas
+            if(data.votecount > 0) {
+                const media = (data.totalStar / data.votecount).toFixed(1);
+                document.getElementById('display-rating').innerText = media.replace('.', ',');
+            }
+        }
+    }
+
+    // Lógica das Estrelas
+    let selectedRating = 0;
+    const stars = document.querySelectorAll('.star');
+    
+    stars.forEach(star => {
+        star.onclick = () => {
+            selectedRating = parseInt(star.getAttribute('data-value'));
+            stars.forEach((s, i) => {
+                s.classList.toggle('active', i < selectedRating);
+            });
+        };
+    });
+
+    // Enviar Voto
+    document.querySelector('.vote-btn').onclick = async () => {
+        if(selectedRating === 0) return alert("Selecione as estrelas primeiro!");
+        
+        const docRef = doc(db, "Produções", prodId);
+        try {
+            await updateDoc(docRef, {
+                totalStar: increment(selectedRating),
+                votecount: increment(1)
+            });
+            alert("Voto enviado com sucesso!");
+            location.reload();
+        } catch (e) {
+            console.error("Erro ao votar:", e);
+        }
+    };
+
+    loadContent();
+</script>
+
+</body>
+</html>
