@@ -6,9 +6,11 @@
     <title>Sinopse - Doranovel</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary-gold: #D4AF37;
+            --primary-gold: #E1AD01;
             --dark-bg: #121212;
             --text-white: #ffffff;
             --text-gray: #b3b3b3;
@@ -21,35 +23,50 @@
             color: var(--text-white);
             display: flex;
             justify-content: center;
+            overflow-x: hidden;
         }
 
         .container {
             width: 100%;
-            max-width: 500px; /* Limite para manter o aspecto da imagem 87b2d8.jpg */
+            max-width: 500px;
             min-height: 100vh;
-            padding-bottom: 30px;
+            padding-bottom: 50px;
             position: relative;
+            background: #000;
         }
 
         /* Banner e Overlay */
         .poster-container {
             width: 100%;
-            height: 450px;
+            height: 550px;
             position: relative;
             background-size: cover;
             background-position: center;
+            transition: 0.5s;
+        }
+
+        .poster-container::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(to top, #000, transparent);
         }
 
         .rating-badge {
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(0,0,0,0.7);
-            padding: 5px 12px;
-            border-radius: 5px;
+            background: rgba(0,0,0,0.8);
+            padding: 6px 15px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             font-weight: bold;
+            border: 1px solid var(--primary-gold);
+            z-index: 5;
         }
 
         .rating-badge span { color: var(--primary-gold); margin-right: 5px; }
@@ -58,12 +75,12 @@
         .btn-main {
             display: block;
             width: 90%;
-            margin: -25px auto 20px auto;
+            margin: -30px auto 30px auto;
             background: linear-gradient(to bottom, #f1c40f, #d4af37);
             border: none;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: bold;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 800;
             text-transform: uppercase;
             color: #000;
             text-align: center;
@@ -71,32 +88,60 @@
             position: relative;
             z-index: 10;
             cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            transition: 0.3s;
         }
 
-        /* Conteúdo de Texto */
-        .content { padding: 0 20px; }
+        .btn-main:active { transform: scale(0.95); }
 
-        .title { font-size: 24px; margin-bottom: 5px; }
-        .category { color: var(--primary-gold); font-weight: 600; margin-bottom: 15px; }
-        .description { line-height: 1.6; color: var(--text-white); font-size: 16px; margin-bottom: 30px; }
+        /* Conteúdo de Texto */
+        .content { padding: 0 25px; }
+
+        .title { font-size: 26px; font-weight: 700; margin-bottom: 5px; color: var(--primary-gold); }
+        .category { color: var(--text-gray); font-size: 0.9rem; font-weight: 400; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .description { line-height: 1.8; color: #ddd; font-size: 1rem; margin-bottom: 40px; text-align: justify; }
 
         /* Sistema de Voto */
-        .vote-section { text-align: center; border-top: 1px solid #333; padding-top: 20px; }
+        .vote-section { 
+            text-align: center; 
+            background: #1a1a1a; 
+            padding: 30px 20px; 
+            border-radius: 20px;
+            margin-top: 20px;
+        }
         .vote-btn {
             background: var(--primary-gold);
             border: none;
-            padding: 8px 30px;
-            border-radius: 5px;
+            padding: 10px 40px;
+            border-radius: 25px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             cursor: pointer;
+            transition: 0.3s;
         }
+        .vote-btn:hover { background: #fff; }
 
-        .vote-text { font-size: 12px; color: var(--text-gray); margin-bottom: 15px; }
+        .vote-text { font-size: 13px; color: var(--text-gray); margin-bottom: 20px; }
 
-        .stars { font-size: 40px; color: #555; }
-        .star { cursor: pointer; transition: color 0.2s; }
-        .star.active { color: #fff; } /* Estrela selecionada (branca conforme imagem) */
+        .stars { font-size: 35px; color: #444; display: flex; justify-content: center; gap: 10px; }
+        .star { cursor: pointer; transition: 0.2s; }
+        .star.active { color: #fff; }
+
+        /* MODAL DE VÍDEO VERTICAL (FULLSCREEN) */
+        .video-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; display: none; z-index: 5000;
+        }
+        .video-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
+        #videoIframe { width: 100%; height: 100%; border: none; }
+
+        .close-modal {
+            position: absolute; top: 30px; right: 25px; color: #fff; 
+            font-size: 2rem; cursor: pointer; z-index: 5100;
+            background: rgba(0,0,0,0.5); width: 50px; height: 50px; 
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
@@ -108,16 +153,16 @@
         </div>
     </div>
 
-    <a id="play-link" href="#" class="btn-main">Assistir / Ler Agora</a>
+    <button id="play-btn" class="btn-main">Assistir / Ler Agora</button>
 
     <div class="content">
         <h1 id="title" class="title">Carregando...</h1>
-        <div id="category" class="category">Webnovel</div>
-        <p id="description" class="description">...</p>
+        <div id="category" class="category">Premium Content</div>
+        <p id="description" class="description">Carregando sinopse oficial...</p>
 
         <div class="vote-section">
-            <button class="vote-btn">VOTE</button>
-            <p class="vote-text">Avalie este conteúdo:<br>5 estrelas para excelente, 1 para péssimo.</p>
+            <button class="vote-btn">VOTAR</button>
+            <p class="vote-text">O que achou desta produção?<br>Sua avaliação ajuda a comunidade.</p>
             
             <div class="stars" id="star-rating">
                 <span class="star" data-value="1">★</span>
@@ -130,27 +175,34 @@
     </div>
 </div>
 
-<!-- Firebase SDKs -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-    import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+<!-- Modal para Vídeo Vertical -->
+<div class="video-modal" id="videoModal">
+    <div class="close-modal" id="closeModal">
+        <i class="fas fa-times"></i>
+    </div>
+    <div class="video-container">
+        <iframe id="videoIframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+</div>
 
-    // Configuração do seu projeto (Substitua pelos seus dados do console Firebase)
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
     const firebaseConfig = {
-        apiKey: "SUA_API_KEY",
+        apiKey: "AIzaSyAKnX6uIhWGmV51lDq80zor6TP9xlyMhcY",
         authDomain: "doranovel.firebaseapp.com",
         projectId: "doranovel",
-        storageBucket: "doranovel.appspot.com",
-        messagingSenderId: "SEU_ID",
-        appId: "SEU_APP_ID"
+        storageBucket: "doranovel.firebasestorage.app",
+        appId: "1:105334550592:web:eaf414923e311ae62eafa5"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Captura o ID da produção via URL
     const urlParams = new URLSearchParams(window.location.search);
     const prodId = urlParams.get('id');
+    let videoUrl = "";
 
     async function loadContent() {
         if (!prodId) return;
@@ -159,18 +211,53 @@
 
         if (docSnap.exists()) {
             const data = docSnap.data();
-            document.getElementById('title').innerText = data.nome || "Sem título";
-            document.getElementById('description').innerText = data.sinopse || "";
-            document.getElementById('poster').style.backgroundImage = `url('${data.capa}')`;
-            document.getElementById('play-link').href = data['link do epsódio'] || "#";
+            
+            // Mapeamento dos Campos conforme solicitado
+            document.getElementById('title').innerText = data.Título || data.titulo || "Sem título";
+            document.getElementById('description').innerText = data.Sinopse || data.sinopse || "Sinopse não disponível.";
+            document.getElementById('poster').style.backgroundImage = `url('${data.Capa || data.capa}')`;
+            
+            // Pega a primeira categoria se for array
+            const cat = data.Categoria || data.categoria;
+            document.getElementById('category').innerText = Array.isArray(cat) ? cat[0] : (cat || "Dorama");
+
+            // Armazena o link do episódio para o botão
+            videoUrl = data["Link do Episódio"] || data.video || "";
             
             // Cálculo da média de estrelas
-            if(data.votecount > 0) {
+            if(data.votecount && data.votecount > 0) {
                 const media = (data.totalStar / data.votecount).toFixed(1);
                 document.getElementById('display-rating').innerText = media.replace('.', ',');
             }
         }
     }
+
+    // Lógica do Modal de Vídeo Vertical
+    document.getElementById('play-btn').onclick = () => {
+        if(!videoUrl) return alert("Vídeo não disponível ainda.");
+        
+        const iframe = document.getElementById('videoIframe');
+        let videoId = "";
+        
+        if(videoUrl.includes("v=")) {
+            videoId = videoUrl.split("v=")[1].split("&")[0];
+        } else {
+            videoId = videoUrl.split("/").pop();
+        }
+
+        // Parâmetros para esconder elementos do YT e forçar verticalidade
+        // rel=0, modestbranding=1, controls=1, showinfo=0
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1&iv_load_policy=3&showinfo=0`;
+        
+        document.getElementById('videoModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    };
+
+    document.getElementById('closeModal').onclick = () => {
+        document.getElementById('videoModal').style.display = 'none';
+        document.getElementById('videoIframe').src = '';
+        document.body.style.overflow = 'auto';
+    };
 
     // Lógica das Estrelas
     let selectedRating = 0;
@@ -187,7 +274,7 @@
 
     // Enviar Voto
     document.querySelector('.vote-btn').onclick = async () => {
-        if(selectedRating === 0) return alert("Selecione as estrelas primeiro!");
+        if(selectedRating === 0) return alert("Por favor, selecione uma nota de 1 a 5.");
         
         const docRef = doc(db, "Produções", prodId);
         try {
@@ -195,7 +282,7 @@
                 totalStar: increment(selectedRating),
                 votecount: increment(1)
             });
-            alert("Voto enviado com sucesso!");
+            alert("Obrigado por avaliar!");
             location.reload();
         } catch (e) {
             console.error("Erro ao votar:", e);
