@@ -49,23 +49,12 @@
         /* --- FILTROS --- */
         .search-container { 
             padding: 25px 5% 10px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+            display: flex; flex-direction: column; gap: 15px; width: 100%;
+            max-width: 1200px; margin: 0 auto;
         }
 
-        .filters-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 100%;
-        }
-
+        .filters-wrapper { display: flex; flex-direction: column; gap: 15px; width: 100%; }
         .search-row { display: flex; align-items: center; gap: 10px; width: 100%; }
-        
         .search-box { flex-grow: 1; }
         .search-box input, .category-filter {
             width: 100%; padding: 12px 20px; border-radius: 25px; 
@@ -78,7 +67,6 @@
             background: rgba(0,0,0,0.6); border: 1px solid #E1AD01; color: #E1AD01;
             width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
             display: flex; align-items: center; justify-content: center; transition: 0.3s;
-            flex-shrink: 0;
         }
         .btn-filter-fav.active { background: #E1AD01; color: #000; }
 
@@ -95,6 +83,16 @@
         .card:hover { transform: translateY(-5px); border-color: #E1AD01; }
         .card-img-container { width: 100%; flex-grow: 1; border-radius: 12px; overflow: hidden; position: relative; }
         .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* BADGE DE NOTA (ESTRELAS) */
+        .card-rating-badge {
+            position: absolute; top: 8px; left: 8px;
+            background: rgba(0, 0, 0, 0.8); color: #fff;
+            padding: 4px 8px; border-radius: 6px; font-size: 0.7rem;
+            font-weight: 700; display: flex; align-items: center; gap: 4px;
+            border: 1px solid rgba(225, 173, 1, 0.4); z-index: 5;
+        }
+        .card-rating-badge i { color: #E1AD01; font-size: 0.65rem; }
 
         .card-fav-btn {
             position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6);
@@ -236,10 +234,19 @@
                 const isFav = favorites.includes(item.id);
                 const mainCat = Array.isArray(item.categorias) ? item.categorias[0] : "Geral";
                 
+                // Cálculo da Média de Estrelas
+                let media = "0,0";
+                if(item.votecount && item.votecount > 0) {
+                    media = (item.totalStar / item.votecount).toFixed(1).replace('.', ',');
+                }
+
                 const card = document.createElement('div');
                 card.className = `card ${colorMap[mainCat] || ''}`;
                 card.innerHTML = `
                     <div class="card-img-container">
+                        <div class="card-rating-badge">
+                            <i class="fas fa-star"></i> ${media}
+                        </div>
                         <button class="card-fav-btn ${isFav ? 'is-fav' : ''}" onclick="window.toggleFav('${item.id}', event)">
                             <i class="fas fa-heart"></i>
                         </button>
@@ -250,7 +257,6 @@
                         <div class="card-title">${item.titulo}</div>
                     </div>
                 `;
-                // ALTERAÇÃO: Agora envia para a sinopse em vez de abrir o vídeo
                 card.onclick = () => {
                     window.location.href = `sinopse.html?id=${item.id}`;
                 };
@@ -265,7 +271,6 @@
             filterData();
         };
 
-        // Função para abrir o vídeo (chamada se vier da sinopse)
         function openVideo(url) {
             if(!url) return;
             const iframe = document.getElementById('videoIframe');
@@ -279,7 +284,6 @@
             document.getElementById('videoModal').style.display = 'none';
             document.getElementById('videoIframe').src = '';
             document.body.style.overflow = 'auto';
-            // Limpa a URL para não reabrir o vídeo ao recarregar
             const url = new URL(window.location);
             url.searchParams.delete('play');
             window.history.replaceState({}, '', url);
@@ -334,11 +338,12 @@
                 titulo: doc.data().Título || doc.data().titulo || "Sem Título",
                 capa: doc.data().Capa || doc.data().capa || "",
                 categorias: doc.data().Categoria || doc.data().categoria || [],
-                video: doc.data()["Link do Episódio"] || doc.data().video || ""
+                video: doc.data()["Link do Episódio"] || doc.data().video || "",
+                totalStar: doc.data().totalStar || 0,
+                votecount: doc.data().votecount || 0
             }));
             render(allData);
 
-            // LOGICA PARA VOLTAR DA SINOPSE E ABRIR O VÍDEO
             const urlParams = new URLSearchParams(window.location.search);
             const playId = urlParams.get('play');
             if(playId) {
