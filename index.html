@@ -77,6 +77,70 @@
         .phone-preview { flex: 1.2; display: flex; justify-content: center; }
         .phone-preview img { width: 100%; max-width: 680px; filter: drop-shadow(0 0 30px rgba(225, 173, 1, 0.3)); transform: rotate(-2deg); }
 
+        /* --- NOVO ESTILO: BANNER DE LOGIN (SCROLL POPUP) --- */
+        .login-popup {
+            position: fixed;
+            bottom: -150px; /* Começa escondido abaixo da tela */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            background: rgba(17, 17, 17, 0.95);
+            border: 2px solid #E1AD01;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            z-index: 99999;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .login-popup.show {
+            bottom: 30px; /* Sobe para a tela ao ativar */
+        }
+        .login-popup p {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.4;
+        }
+        .popup-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-popup-login {
+            background: #E1AD01;
+            color: #000;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .btn-popup-login:hover {
+            background: #fff;
+        }
+        .btn-popup-close {
+            background: transparent;
+            border: 1px solid #555;
+            color: #999;
+            cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .btn-popup-close:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+
         /* ----------------------------------------------------------- */
         /* --- AJUSTES MOBILE (ESTABILIZAÇÃO DE BORDAS E CORTES) --- */
         /* ----------------------------------------------------------- */
@@ -87,7 +151,6 @@
                 padding: 15px 5% 15px; 
                 align-items: center;
                 background: #000; 
-                /* Trava a borda sempre no fundo do contêiner mobile */
                 border-bottom: 3px solid #E1AD01 !important; 
                 position: fixed;
             } 
@@ -106,25 +169,34 @@
             .links a { font-size: 11px; margin-left: 0; }
             .btn-login { padding: 8px 12px; font-size: 11px; }
 
-            /* HERO 1 MOBILE: Previne corte do frame */
             .hero-main { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; }
             .hero-text { width: 100%; margin-top: -60px; }
             .hero-text h1 { font-size: 1.8rem; padding: 0 15px; } 
 
-            /* Ajuste da Película para não cortar no mobile */
             .film-strip { 
                 padding: 30px 0; 
-                height: 180px; /* Altura fixa no mobile para estabilidade */
+                height: 180px; 
                 display: flex;
                 align-items: center;
             }
             .film-track img { height: 120px; width: 180px; outline: 6px solid #1a1a1a; }
 
-            /* Hero 2 e 3 Mobile */
             .hero-categories, .hero-features { flex-direction: column; text-align: center; padding: 100px 5% 60px; }
             .feature-text h2 { font-size: 2.2rem !important; }
             .categories-wrapper { transform: none; height: 500px; width: 100%; flex: none; justify-content: center; }
             .card { height: 220px; }
+
+            /* Ajuste do popup para telas menores */
+            .login-popup {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+                gap: 12px;
+            }
+            .popup-actions {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -163,7 +235,7 @@
     <section class="hero-categories">
         <div class="text-side">
             <h2>Séries e Livros <span class="brand-gold">Catalogados</span> por Cores.</h2>
-            <p>Explore nosso catálogo exclusivo, organizado por cores para sua melhor experiência.</p>
+            <p>Explore nosso catálogo exclusivo, organized por cores para sua melhor experiência.</p>
         </div>
         <div class="categories-wrapper">
             <div class="cat-col col-extremidade">
@@ -195,17 +267,45 @@
         <div class="phone-preview"><img src="celular.png" alt="App Preview"></div>
     </section>
 
+    <!-- COMPONENTE ADICIONADO: BANNER FLUTUANTE DE LOGIN -->
+    <div class="login-popup" id="loginPopup">
+        <p>Faça o login para assistir todo nosso conteúdo</p>
+        <div class="popup-actions">
+            <a href="login.html" class="btn-popup-login">Fazer Login</a>
+            <button class="btn-popup-close" onclick="closePopup()">✕</button>
+        </div>
+    </div>
+
     <footer style="padding: 60px; text-align: center; background: #000; border-top: 1px solid #222;">
         <img src="logo.png" alt="Logo" style="height: 50px; margin-bottom: 20px;">
         <p>www.doranovel.com | Copyright 2026</p>
     </footer>
 
     <script>
+        // Variável de controle para verificar se o usuário fechou manualmente o banner
+        let popupClosedManually = false;
+
         window.onscroll = function() {
+            // Controle da Navbar (Mantido original)
             const nav = document.getElementById('mainNavbar');
             if (window.pageYOffset > 50) { nav.classList.add('scrolled'); }
             else { nav.classList.remove('scrolled'); }
+
+            // Lógica do Popup de Login por Scroll
+            const popup = document.getElementById('loginPopup');
+            if (window.pageYOffset > 200 && !popupClosedManually) {
+                popup.classList.add('show');
+            } else {
+                popup.classList.remove('show');
+            }
         };
+
+        // Função para apagar/fechar o banner
+        function closePopup() {
+            const popup = document.getElementById('loginPopup');
+            popup.classList.remove('show');
+            popupClosedManually = true; // Impede que o banner reapareça na mesma sessão de navegação
+        }
     </script>
 </body>
 </html>
